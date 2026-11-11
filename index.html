@@ -754,7 +754,7 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
     role:'student', profile:{name:'Lara',classCode:'8B',avatar:{kind:'female',skin:'#c98268',hair:'#3b2633',outfit:'#7864c8',accessory:'star'}},
     xp:0, coins:0, hearts:3, maxHearts:3, completed:[], hints:[], customMissions:[], inventory:['base'], equippedItem:'base', classes:['8º B'],
     settings:{xpDefault:50,recovery:20,fontScale:1,reduceMotion:false}, assessment:{initial:null,post:null},
-    avatarDone:false, welcomed:false, attempts:{}, lastSeen:0, activeView:'dashboard', activeBook:'metamorphosis', activeMission:null, activeAssessment:null
+    avatarDone:false, welcomed:false, attempts:{}, lastSeen:0, updatedAt:0, activeView:'dashboard', activeBook:'metamorphosis', activeMission:null, activeAssessment:null
   };
   const state = loadState();
   let missionAttempt = {selected:[], hintUsed:false, correct:false, feedback:null};
@@ -810,7 +810,7 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
     copy.settings={...base.settings,...(saved.settings||{})}; copy.assessment={...base.assessment,...(saved.assessment||{})};
     return copy;
   }
-  function persist(){ try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){console.warn('Não foi possível salvar a demonstração.',e);} }
+  function persist(){ state.updatedAt=Date.now();if(window.__sb&&window.__sb.on)window.__sb.push(state); try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){console.warn('Não foi possível salvar a demonstração.',e);} }
   const TRAIL=[{xp:0,i:'🌱',n:'Aprendiz da Praça',r:'Ponto de Partida na Praça da Liga'},{xp:100,i:'🧭',n:'Explorador de Pistas',r:'Insígnia de Bronze'},{xp:250,i:'✨',n:'Decifrador de Enigmas',r:'Aura Mística no Avatar'},{xp:450,i:'🛡️',n:'Guardião dos Clássicos',r:'Capa Dourada no Avatar'},{xp:700,i:'👑',n:'Mestre da Interpretação',r:'Coroa Literária no Avatar'},{xp:1000,i:'🏆',n:'Lenda da Liga dos Leitores',r:'Trono do Saber Literário'}];
   let lvlUp=false;
   function levelInfo(){const n=Math.max(0,state.xp);let k=0;TRAIL.forEach((t,j)=>{if(n>=t.xp)k=j});const c=TRAIL[k],x=TRAIL[k+1],into=x?n-c.xp:1,need=x?x.xp-c.xp:1;return{level:k+1,name:c.n,into,need,next:x||null,left:x?x.xp-n:0,percent:x?Math.min(100,into/need*100):100};}
@@ -911,14 +911,6 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
     <div class="tr-track"><div class="tr-line"><i style="width:${pct}%"></i></div>${TRAIL.map((t,j)=>{const ok=n>=t.xp,cur=j===k;return `<div class="tr-step ${ok?'ok':'lock'} ${cur?'cur':''}">${cur?`<div class="tr-here"><span>▼ VOCÊ ESTÁ AQUI</span><div class="tr-av">${photoUrl()?`<img class="ph" src="${photoUrl()}" alt="">`:miniAv()}</div><small class="tr-name">${esc(state.profile.name)}</small></div>`:''}<div class="tr-node"><b>${t.i}</b><small>NV. ${j+1}</small></div><div class="tr-info"><em>${fmt(t.xp)} XP ${ok?'✓':'🔒'}</em><strong>${t.n}</strong><span>🎁 ${t.r}</span></div></div>`}).join('')}</div></section>`;
   }
   function renderCreator(){return `<div class="rk-banner"><div><strong>Crie seu Aventureiro</strong><br><small>Escolha e personalize o personagem que percorrerá os mundos literários.</small></div><button class="btn btn-primary" data-action="finish-avatar">Concluir avatar →</button></div>`+renderProfile();}
-  function renderAccounts(){
-    const KEY='liga-contas-v1';let L=[];try{L=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
-    const rows=L.map((u,idx)=>{const pf=(()=>{try{const st=JSON.parse(localStorage.getItem('liga-leitores-nova-demo-v1:'+u.email)||'null');return st&&st.profile}catch(e){return null}})();
-      const av=pf&&/^data:image\//.test(pf.photo||'')?`<div class="ac-av"><img class="ph" src="${pf.photo}" alt=""></div>`:pf&&pf.avatar?`<div class="ac-av"><img class="pxav" alt="" src="${avatarURL(avxNorm(pf.avatar),{crop:CROPB})}"></div>`:`<div class="ac-av">${esc((pf&&pf.name||u.name||'?')[0].toUpperCase())}</div>`;
-      return `<tr data-row="${idx}"><td>${av}</td><td><strong>${esc(pf&&pf.name||u.name)}</strong><div style="font-size:11px;color:var(--muted)">${esc(u.email)}</div></td><td class="ac-col-role"><span class="ac-role">${u.role==='teacher'?'PROFESSOR(A)':'ESTUDANTE'}</span></td><td class="ac-col-email" style="font-size:12px;color:var(--muted)">${esc(u.email)}</td><td><div class="ac-pwd"><input class="field-input" type="password" id="apw_${idx}" placeholder="Nova senha (8+ chars)" autocomplete="new-password" style="font-size:13px;padding:8px 10px"><button class="eye" data-eye="${idx}" title="Mostrar/ocultar">👁</button></div></td><td><button class="btn btn-quiet" style="font-size:12px;padding:7px 12px" data-action="admin-reset-pw" data-idx="${idx}">Redefinir</button></td></tr>`}).join('');
-    return `${viewHeader('GESTÃO PEDAGÓGICA','Contas de usuários','Nomes, perfis e senhas de todas as contas criadas neste navegador. Use a coluna de senha para redefinir o acesso de um aluno.')}
-    <section class="surface-card teacher-panel"><div class="card-heading"><div><h3>Todas as contas</h3><p class="panel-sub">${L.length} conta(s) neste navegador</p></div></div>${L.length?`<div class="teacher-table-wrap"><table class="ac-tbl"><thead><tr><th></th><th>Nome / E-mail</th><th class="ac-col-role">Função</th><th class="ac-col-email">E-mail</th><th>Nova senha</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`:'<p class="muted-note">Nenhuma conta cadastrada ainda.</p>'}</section>`;
-  }
   function renderChangePassword(){
     return `${viewHeader('MEU ESPAÇO','Alterar senha','Escolha uma nova senha para a sua conta.')}
     <section class="surface-card settings-card"><h3>Alterar sua senha</h3>
@@ -940,10 +932,6 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
   function renderTeacherSettings0(){return `${viewHeader('GESTÃO PEDAGÓGICA','Configurações da Liga','Ajuste as regras da demonstração. Estas preferências não controlam um servidor ou contas reais.')}<section class="surface-card settings-card"><h3>Regras de jogo</h3><div class="settings-row"><div><strong>Corações por jornada</strong><small>Quantidade de tentativas antes da recuperação.</small></div><input class="field-input" id="setting-hearts" type="number" min="1" max="5" value="${state.maxHearts}" style="width:80px"></div><div class="settings-row"><div><strong>XP padrão para novas missões</strong><small>Recompensa inicial sugerida.</small></div><input class="field-input" id="setting-xp" type="number" min="10" max="200" value="${state.settings.xpDefault}" style="width:100px"></div><div class="settings-row"><div><strong>Turma demonstrativa</strong><small>Código de exemplo para este navegador.</small></div><input class="field-input" id="setting-class" value="${esc(state.profile.classCode||'8B')}" style="width:100px"></div><button class="btn btn-primary" data-action="save-settings">Salvar preferências ↗</button></section><section class="surface-card settings-card"><h3>Dados locais</h3><p class="view-subtitle">Você pode exportar os dados demonstrativos ou limpar o progresso salvo neste navegador. Não há sincronização com outros computadores.</p><div class="hero-cta" style="margin-top:15px"><button class="btn btn-dark" data-action="export-data">Exportar demonstração (.json)</button><button class="btn btn-quiet" data-action="reset-demo">Limpar demonstração</button></div></section>`;}
 
   const ago=t=>{if(!t)return 'Nunca';const m=Math.round((Date.now()-t)/60000);return m<1?'Agora':m<60?m+'min atrás':m<1440?Math.round(m/60)+'h atrás':Math.round(m/1440)+'d atrás'};
-  function realStudents(){let L=[];try{L=JSON.parse(localStorage.getItem('liga-contas-v1')||'[]')}catch(e){}
-    return L.filter(u=>u.role==='student').map(u=>{let s=null;try{s=JSON.parse(localStorage.getItem('liga-leitores-nova-demo-v1:'+u.email)||'null')}catch(e){}
-      const xp=s?s.xp||0:0,comp=s?s.completed||[]:[],per=s?s.attempts||{}:{};let k=0,ok=0,bad=0;TRAIL.forEach((t,j)=>{if(xp>=t.xp)k=j});Object.values(per).forEach(a=>{ok+=a.ok||0;bad+=a.bad||0});
-      const pf=s&&s.profile;return{email:u.email,name:(pf&&pf.name)||u.name,avatar:(pf&&/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/.test(pf.photo||''))?'<img class="ph" src="'+pf.photo+'" alt="">':(pf&&pf.avatar?'<img class="pxav" alt="" src="'+avatarURL(avxNorm(pf.avatar),{crop:CROPB})+'">':'👩🏽‍🚀'),started:!!s,lv:k+1,xp,comp,done:comp.length,per,ok,bad,last:s?s.lastSeen||0:0};});}
   function renderTeacherReports(){const R=realStudents(),orig=renderTeacherReports0(),i=orig.indexOf('<div class="teacher-kpis">');
     const ok=R.reduce((n,s)=>n+s.ok,0),bad=R.reduce((n,s)=>n+s.bad,0),done=R.reduce((n,s)=>n+s.done,0),rate=ok+bad?Math.round(ok/(ok+bad)*100):0,pc=(a,b)=>a+b?Math.round(a/(a+b)*100):0;
     const mine=`<div class="teacher-kpis" style="grid-template-columns:repeat(3,1fr)"><article class="surface-card teacher-kpi"><small>TAXA DE ACERTO</small><strong>${rate}%</strong><span>${ok} acerto(s) de ${ok+bad}</span></article><article class="surface-card teacher-kpi"><small>MISSÕES CONCLUÍDAS</small><strong>${done}</strong><span>Total agregado</span></article><article class="surface-card teacher-kpi"><small>TENTATIVAS INCORRETAS</small><strong>${bad}</strong><span>Reflexão em andamento</span></article></div>
@@ -1168,8 +1156,6 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
     <div class="market-top-card"><div><span class="view-eyebrow">SEU SALDO</span><h2>${fmt(state.coins)} <small>moedas ◈</small></h2><p>Conquiste moedas completando missões.</p></div><div class="market-inventory"><span>🎒</span><div><strong>${CAT.filter(i=>own(i.id)).length}/${CAT.length}</strong><small>itens desbloqueados</small></div></div></div>
     <div class="shop-chips">${cats.map(c=>`<button class="${f===c[0]?'on':''}" data-avx="shopcat:${c[0]}">${c[1]}</button>`).join('')}</div><div class="library-grid shop-grid">${items.map(i=>shopCard(i,a)).join('')}</div>`}
   avxMigrate(state);
-  function rankEntries(){const uid=(localStorage.getItem('liga-uid')||'').slice(1),me={name:state.profile.name,avatar:avatarHTML(),xp:state.xp,isMe:true};
-    return [...realStudents().filter(s=>s.email!==uid).map(s=>({name:s.name,avatar:s.avatar,xp:s.xp})),me].sort((a,b)=>b.xp-a.xp)}
   function renderRanking(){const list=rankEntries(),me=list.find(s=>s.isMe),pos=list.indexOf(me)+1,above=list[pos-2],pod=[list[1],list[0],list[2]].filter(Boolean),medals=['🥇','🥈','🥉'];
     return `${viewHeader('RANKING DA TURMA','Quem está avançando junto.','Posição por XP acumulado entre os estudantes que têm conta neste navegador.')}
     <div class="rk-banner"><div><strong>Você está em ${pos}º lugar</strong><br><small>${above?`Faltam ${fmt(Math.max(1,above.xp-state.xp+1))} XP para ultrapassar ${esc(above.name)}.`:list.length>1?'Você lidera a turma. Continue assim!':'Você é o primeiro da Liga. Convide colegas para criarem conta e entrarem no ranking.'}</small></div><strong>${fmt(state.xp)} XP</strong></div>
@@ -1179,6 +1165,27 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
   function studentsTableHTML(R){const pr=s=>Math.round(s.done/missions.length*100);
     return R.length?`<div class="teacher-table-wrap"><table class="teacher-table"><thead><tr><th>ESTUDANTE</th><th>NÍVEL</th><th>PROGRESSO</th><th>MISSÕES</th><th>ÚLTIMO ACESSO</th><th>STATUS</th></tr></thead><tbody>${R.map(s=>{const on=s.last&&Date.now()-s.last<6048e5;return `<tr><td><div class="student-cell"><span class="student-avatar">${s.avatar}</span><strong>${esc(s.name)}</strong></div></td><td><span class="status-tag demo">${s.started?'NV.'+s.lv+' '+esc(TRAIL[s.lv-1].n.toUpperCase()):'NV.0 NÃO INICIADO'}</span></td><td><div class="table-progress"><i style="--progress:${pr(s)}%"></i><span>${pr(s)}%</span></div></td><td>${s.done}</td><td>${ago(s.last)}</td><td><span class="status-tag ${on?'':'attention'}">${on?'ATIVO':'INATIVO'}</span></td></tr>`}).join('')}</tbody></table></div>`:'<p class="muted-note">Nenhum estudante cadastrado ainda. As contas criadas em "Criar conta" aparecem aqui.</p>'}
   function renderTeacherStudents(){const R=realStudents();return `${viewHeader('GESTÃO PEDAGÓGICA','Estudantes','Acompanhe nível, progresso, missões e último acesso das contas criadas neste navegador.')}<div class="surface-card teacher-panel"><div class="card-heading"><div><h3>Lista de estudantes</h3><p class="panel-sub">${R.length} cadastrado(s)</p></div></div>${studentsTableHTML(R)}</div>`;}
+  const SBX=()=>window.__sb&&window.__sb.on?window.__sb:null,sbAt={r:0,s:0};
+  function ligaRerender(){if(['ranking','dashboard','teacher-dashboard','teacher-students','teacher-reports','accounts'].includes(state.activeView)){try{renderView(state.activeView)}catch(e){}}}
+  function mkStudent(email,accName,s,last,avJson){const pf=s&&s.profile||{},xp=s?s.xp||0:0,comp=s?s.completed||[]:[],per=s?s.attempts||{}:{};let k=0,ok=0,bad=0;TRAIL.forEach((t,j)=>{if(xp>=t.xp)k=j});Object.values(per).forEach(a=>{ok+=a.ok||0;bad+=a.bad||0});
+    const av=avJson||pf.avatar,photo=/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/.test(pf.photo||'')?pf.photo:'';
+    return{email,name:pf.name||accName,avatar:photo?'<img class="ph" src="'+photo+'" alt="">':(av?'<img class="pxav" alt="" src="'+avatarURL(avxNorm(av),{crop:CROPB})+'">':'👩🏽‍🚀'),started:!!s,lv:k+1,xp,comp,done:comp.length,per,ok,bad,last}}
+  function sbStudentsLoad(){const sb=SBX(),now=Date.now();if(!sb||state.role!=='teacher'||now-sbAt.s<4000)return;sbAt.s=now;sb.students().then(r=>{const j=JSON.stringify(r);if(j!==window.__sbStuJ){window.__sbStuJ=j;window.__sbStudents=r;ligaRerender()}}).catch(()=>{})}
+  function realStudents(){if(SBX()){sbStudentsLoad();return (window.__sbStudents||[]).filter(p=>p.role==='student').map(p=>mkStudent(p.email,p.name,p.state&&Object.keys(p.state).length?p.state:null,p.last_seen?Date.parse(p.last_seen):0,p.avatar))}
+    let L=[];try{L=JSON.parse(localStorage.getItem('liga-contas-v1')||'[]')}catch(e){}
+    return L.filter(u=>u.role==='student').map(u=>{let s=null;try{s=JSON.parse(localStorage.getItem('liga-leitores-nova-demo-v1:'+u.email)||'null')}catch(e){}return mkStudent(u.email,u.name,s,s?s.lastSeen||0:0,null)})}
+  function rankEntries(){const sb=SBX(),me={name:state.profile.name,avatar:avatarHTML(),xp:state.xp,isMe:true};
+    if(sb){const now=Date.now();if(now-sbAt.r>4000){sbAt.r=now;sb.ranking().then(r=>{const j=JSON.stringify(r);if(j!==window.__sbRankJ){window.__sbRankJ=j;window.__sbRank=r;ligaRerender()}}).catch(()=>{})}
+      const myId=sb.uid();return [...(window.__sbRank||[]).filter(r=>r.id!==myId).map(r=>({name:r.char_name||'Leitor(a)',avatar:r.avatar?'<img class="pxav" alt="" src="'+avatarURL(avxNorm(r.avatar),{crop:CROPB})+'">':'📖',xp:r.xp|0})),me].sort((a,b)=>b.xp-a.xp)}
+    const uid=(localStorage.getItem('liga-uid')||'').slice(1);return [...realStudents().filter(s=>s.email!==uid).map(s=>({name:s.name,avatar:s.avatar,xp:s.xp})),me].sort((a,b)=>b.xp-a.xp)}
+  function accList(){if(SBX()){sbStudentsLoad();return (window.__sbStudents||[]).map(p=>{const st=p.state||{},pf=st.profile||{};return{id:p.id,email:p.email,name:p.name,role:p.role,char:pf.name||p.char_name,photo:/^data:image\//.test(pf.photo||'')?pf.photo:'',av:p.avatar||pf.avatar,last:p.last_seen?Date.parse(p.last_seen):0}})}
+    let L=[];try{L=JSON.parse(localStorage.getItem('liga-contas-v1')||'[]')}catch(e){}
+    return L.map(u=>{let st=null;try{st=JSON.parse(localStorage.getItem('liga-leitores-nova-demo-v1:'+u.email)||'null')}catch(e){}const pf=st&&st.profile||{};return{id:null,email:u.email,name:u.name,role:u.role,char:pf.name,photo:/^data:image\//.test(pf.photo||'')?pf.photo:'',av:pf.avatar,last:st?st.lastSeen||0:0}})}
+  function renderAccounts(){const L=accList(),cloud=!!SBX();window.__accList=L;
+    const rows=L.map((u,idx)=>{const av=u.photo?`<div class="ac-av"><img class="ph" src="${u.photo}" alt=""></div>`:u.av?`<div class="ac-av"><img class="pxav" alt="" src="${avatarURL(avxNorm(u.av),{crop:CROPB})}"></div>`:`<div class="ac-av">${esc((u.char||u.name||'?')[0].toUpperCase())}</div>`;
+      return `<tr data-row="${idx}"><td>${av}</td><td><strong>${esc(u.name)}</strong><div style="font-size:11px;color:var(--muted)">${u.char&&u.char!==u.name?'Personagem: '+esc(u.char)+' · ':''}${esc(u.email)}</div></td><td class="ac-col-role"><span class="ac-role">${u.role==='teacher'?'PROFESSOR(A)':'ESTUDANTE'}</span></td><td class="ac-col-email" style="font-size:12px;color:var(--muted)">${u.last?ago(u.last):'Nunca'}</td><td><div class="ac-pwd"><input class="field-input" type="password" id="apw_${idx}" placeholder="Nova senha (8+ chars)" autocomplete="new-password" style="font-size:13px;padding:8px 10px"><button class="eye" data-eye="${idx}" title="Mostrar/ocultar">👁</button></div></td><td><button class="btn btn-quiet" style="font-size:12px;padding:7px 12px" data-action="admin-reset-pw" data-idx="${idx}">Redefinir</button></td></tr>`}).join('');
+    return `${viewHeader('GESTÃO PEDAGÓGICA','Contas de usuários','Nomes e perfis de todas as contas. As senhas ficam criptografadas e não podem ser exibidas: se um aluno esqueceu, digite uma nova senha na linha dele e clique em Redefinir.')}
+    <section class="surface-card teacher-panel"><div class="card-heading"><div><h3>Todas as contas</h3><p class="panel-sub">${L.length} conta(s) ${cloud?'na nuvem':'neste navegador'}</p></div></div>${L.length?`<div class="teacher-table-wrap"><table class="ac-tbl"><thead><tr><th></th><th>Nome / E-mail</th><th class="ac-col-role">Função</th><th class="ac-col-email">Último acesso</th><th>Nova senha</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`:`<p class="muted-note">${cloud?'Carregando contas…':'Nenhuma conta cadastrada ainda.'}</p>`}</section>`}
   function startMission(id){state.activeMission=id;missionAttempt={selected:[],hintUsed:false,correct:false,feedback:null};showView('mission');}
   function answerMission(index){const m=getMission(state.activeMission);if(!m||missionAttempt.correct||missionAttempt.selected.includes(index))return;missionAttempt.selected.push(index);const option=m.options[index];const A=(state.attempts[m.id]=state.attempts[m.id]||{ok:0,bad:0});if(option.correct){A.ok++;missionAttempt.correct=true;missionAttempt.feedback=option.feedback; }else{A.bad++;state.hearts=Math.max(0,state.hearts-1);missionAttempt.feedback=option.feedback;if(state.hearts===0){setTimeout(()=>{state.hearts=state.maxHearts;persist();if(state.activeView==='mission')renderView('mission');toast('Seus corações foram recuperados para continuar a jornada.','warning');},9000);}}persist();renderView('mission');}
   function useHint(){const m=getMission(state.activeMission);if(!m)return;missionAttempt.hintUsed=true;missionAttempt.feedback='A dica foi adicionada abaixo da pergunta.';renderView('mission');}
@@ -1209,7 +1216,7 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
     const role=e.target.closest('[data-role]');if(role){$$('.role-tab').forEach(t=>t.classList.toggle('active',t===role));const teacher=role.dataset.role==='teacher';$('#class-label').classList.toggle('hidden',teacher);$('#login-class').classList.toggle('hidden',teacher);$('#login-name').value=teacher?'Professora':(state.profile.name||'Lara');return;}
     const view=e.target.closest('[data-view]');if(view){showView(view.dataset.view);return;}
     const action=e.target.closest('[data-action]');if(action){const a=action.dataset.action;
-      if(a==='logout'){showLanding();return;}if(a==='home'){showView(state.role==='teacher'?'teacher-dashboard':'dashboard');return;}
+      if(a==='logout'){if(window.__sb&&window.__sb.on)window.__sb.signOut();showLanding();return;}if(a==='home'){showView(state.role==='teacher'?'teacher-dashboard':'dashboard');return;}
       if(a==='open-book'){state.activeBook=action.dataset.book||'metamorphosis';showView('book-detail');return;}
       if(a==='market-item'){marketItem(action.dataset.item);return;}
       if(a==='start-mission'){startMission(action.dataset.mission);return;}if(a==='answer'){answerMission(Number(action.dataset.answer));return;}
@@ -1218,15 +1225,18 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
       if(a==='assessment-answer'){answerAssessment(Number(action.dataset.answer));return;}
       if(a==='save-profile'){avxCommit();const v=$('#profile-name').value.trim();state.profile.name=v||'Leitor(a)';persist();updateTopbar();if(state.role==='student'&&!state.avatarDone){state.avatarDone=true;persist();showView('dashboard');toast('Personagem criado! Bem-vindo à Liga dos Leitores.','success');return;}renderView('profile');toast('Personagem atualizado.');return;}
       if(a==='save-settings'){state.maxHearts=Math.min(5,Math.max(1,Number($('#setting-hearts').value)||3));state.hearts=Math.min(state.hearts,state.maxHearts);state.settings.xpDefault=Math.min(200,Math.max(10,Number($('#setting-xp').value)||50));state.profile.classCode=$('#setting-class').value.trim();persist();toast('Preferências salvas neste navegador.');return;}
-      if(a==='finish-avatar'){avxCommit();const v=($('#profile-name')||{}).value;if(v&&v.trim())state.profile.name=v.trim();state.avatarDone=true;persist();updateTopbar();showView('dashboard');toast('Personagem criado! Bem-vindo à Liga dos Leitores.','success');return;}if(a==='photo-remove'){state.profile.photo='';persist();updateTopbar();renderView(state.activeView);return;}if(a==='admin-reset-pw'){const idx=Number(e.target.closest('[data-idx]').dataset.idx);const KEY='liga-contas-v1';let L=[];try{L=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(x){}
-        const nw=document.getElementById('apw_'+idx);if(!nw||nw.value.length<8){toast('A senha deve ter pelo menos 8 caracteres.','warning');return}
-        window.__hs(nw.value).then(hash=>{L[idx]={...L[idx],pass:hash};try{localStorage.setItem(KEY,JSON.stringify(L))}catch(x){}nw.value='';toast('Senha redefinida para '+esc(L[idx].name||L[idx].email)+'.','success')});return;}
-      if(a==='save-new-password'){const KEY='liga-contas-v1';let L=[];try{L=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(x){}
-        const uid=localStorage.getItem('liga-uid')||'';const em=uid.startsWith(':')?uid.slice(1):'';const idx=L.findIndex(u=>u.email===em);
-        const oldv=document.getElementById('pw-old').value,nw1=document.getElementById('pw-new1').value,nw2=document.getElementById('pw-new2').value;
+      if(a==='finish-avatar'){avxCommit();const v=($('#profile-name')||{}).value;if(v&&v.trim())state.profile.name=v.trim();state.avatarDone=true;persist();updateTopbar();showView('dashboard');toast('Personagem criado! Bem-vindo à Liga dos Leitores.','success');return;}if(a==='photo-remove'){state.profile.photo='';persist();updateTopbar();renderView(state.activeView);return;}if(a==='admin-reset-pw'){const idx=Number(e.target.closest('[data-idx]').dataset.idx),u=(window.__accList||[])[idx],nw=document.getElementById('apw_'+idx);
+        if(!u||!nw||nw.value.length<8){toast('A senha deve ter pelo menos 8 caracteres.','warning');return}
+        if(SBX()){if(!u.id){toast('Conta inválida.','warning');return}window.__sb.setPassword(u.id,nw.value).then(function(){nw.value='';toast('Senha redefinida para '+u.name+'.','success')}).catch(function(er){toast('Não foi possível redefinir a senha ('+(er.message||'erro')+').','error')});return}
+        const KEY='liga-contas-v1';let L=[];try{L=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(x){}
+        window.__hs(nw.value).then(function(hash){L[idx]={...L[idx],pass:hash};try{localStorage.setItem(KEY,JSON.stringify(L))}catch(x){}nw.value='';toast('Senha redefinida para '+u.name+'.','success')});return;}
+      if(a==='save-new-password'){const oldv=document.getElementById('pw-old').value,nw1=document.getElementById('pw-new1').value,nw2=document.getElementById('pw-new2').value;
         if(nw1!==nw2){toast('As senhas não coincidem.','warning');return}if(nw1.length<8){toast('Use pelo menos 8 caracteres.','warning');return}
-        window.__hs(oldv).then(h0=>{if(idx<0||L[idx].pass!==h0){toast('Senha atual incorreta.','error');return}
-          window.__hs(nw1).then(hh1=>{L[idx].pass=hh1;try{localStorage.setItem(KEY,JSON.stringify(L))}catch(x){}showView('profile');toast('Senha alterada com sucesso!','success')})});return;}
+        if(SBX()){window.__sb.changePassword(oldv,nw1).then(function(){toast('Senha alterada com sucesso!','success');setTimeout(function(){showView('profile')},600)}).catch(function(er){toast(/credentials|incorret/i.test(er.message||'')?'Senha atual incorreta.':'Não foi possível alterar a senha. Tente novamente.','error')});return}
+        const KEY='liga-contas-v1';let L=[];try{L=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(x){}
+        const uid=localStorage.getItem('liga-uid')||'',em=uid.startsWith(':')?uid.slice(1):'',idx=L.findIndex(function(u){return u.email===em});
+        window.__hs(oldv).then(function(h0){if(idx<0||L[idx].pass!==h0){toast('Senha atual incorreta.','error');return}window.__hs(nw1).then(function(hh1){L[idx].pass=hh1;try{localStorage.setItem(KEY,JSON.stringify(L))}catch(x){}toast('Senha alterada com sucesso!','success');setTimeout(function(){showView('profile')},600)})})
+        return;}
       if(a==='export-csv'){exportCSV();return;}if(a==='export-data'){downloadJSON();return;}if(a==='reset-demo'){resetDemo();return;}
     }
     
@@ -1250,6 +1260,50 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
 
 </script>
 <script>window.__hs=async function(s){try{var b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0')}).join('')}catch(e){return btoa(unescape(encodeURIComponent(s))||'')}};</script><script>
+(function(){
+var URL='https://ouawkteufqtqgmqkffij.supabase.co',KEY='sb_publishable_WeZwSLMLpUldtVgKQHNRmA_bJIQfGle',SK='liga-sb-session',S={on:false,sess:null},T=null,P=null;
+function ls(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
+function setSess(j){S.sess={access_token:j.access_token,refresh_token:j.refresh_token,expires_at:j.expires_at||Math.floor(Date.now()/1000)+(j.expires_in||3600),user:j.user||(S.sess&&S.sess.user)};ls(SK,S.sess)}
+async function api(path,o){o=o||{};var h={apikey:KEY,'Content-Type':'application/json'},ctl=null,tm=null;
+  if(o.auth!==false&&S.sess){if(S.sess.expires_at*1000-Date.now()<60000&&!o.noRefresh)await S.refresh();h.Authorization='Bearer '+S.sess.access_token}
+  if(o.timeout&&window.AbortController){ctl=new AbortController();tm=setTimeout(function(){ctl.abort()},o.timeout)}
+  try{var r=await fetch(URL+path,{method:o.method||'GET',headers:Object.assign(h,o.headers||{}),body:o.body!==undefined?JSON.stringify(o.body):undefined,keepalive:!!o.keepalive,signal:ctl?ctl.signal:undefined})}finally{if(tm)clearTimeout(tm)}
+  var t=await r.text(),j=null;try{j=t?JSON.parse(t):null}catch(e){}
+  if(!r.ok){var er=new Error((j&&(j.msg||j.message||j.error_description||j.error))||('HTTP '+r.status));er.status=r.status;er.code=j&&(j.error_code||j.code);throw er}
+  return j}
+S.refresh=async function(){if(!S.sess)return;var j=await api('/auth/v1/token?grant_type=refresh_token',{method:'POST',auth:false,body:{refresh_token:S.sess.refresh_token}});setSess(j)};
+S.uid=function(){return S.sess&&S.sess.user&&S.sess.user.id||null};
+S.email=function(){return S.sess&&S.sess.user&&(S.sess.user.email||'').toLowerCase()||''};
+S.ping=async function(){try{return (await api('/rest/v1/rpc/liga_ping',{method:'POST',auth:false,body:{},timeout:5000}))==='ok'}catch(e){return false}};
+S.checkCode=function(c){return api('/rest/v1/rpc/liga_check_code',{method:'POST',auth:false,body:{p_code:c}})};
+S.signUp=async function(email,pass,name){var j=await api('/auth/v1/signup',{method:'POST',auth:false,body:{email:email,password:pass,data:{name:name}}});if(j&&j.access_token){setSess(j);return{session:true}}return{session:false}};
+S.signIn=async function(email,pass){var j=await api('/auth/v1/token?grant_type=password',{method:'POST',auth:false,body:{email:email,password:pass}});setSess(j);return j};
+S.register=function(name,code,cls){return api('/rest/v1/rpc/liga_register',{method:'POST',body:{p_name:name||'',p_code:code||'',p_class:cls||''}})};
+S.profile=async function(){var r=await api('/rest/v1/liga_profiles?select=*&id=eq.'+S.uid());return r&&r[0]||null};
+S.ranking=function(){return api('/rest/v1/rpc/liga_ranking',{method:'POST',body:{}})};
+S.students=function(){return api('/rest/v1/liga_profiles?select=id,email,name,char_name,role,class_name,xp,coins,completed,avatar,state,last_seen,created_at&order=created_at.asc')};
+S.setPassword=function(id,pw){return api('/rest/v1/rpc/liga_set_password',{method:'POST',body:{p_target:id,p_password:pw}})};
+S.changePassword=async function(oldp,newp){await S.signIn(S.email(),oldp);return api('/auth/v1/user',{method:'PUT',body:{password:newp}})};
+function flush(ka){if(!P||!S.sess)return Promise.resolve();var st=P;P=null,av=st.profile&&st.profile.avatar;
+  return api('/rest/v1/liga_profiles?id=eq.'+S.uid(),{method:'PATCH',headers:{Prefer:'return=minimal'},keepalive:ka,body:{state:st,xp:st.xp|0,coins:st.coins|0,completed:(st.completed||[]).length,avatar:av||null,char_name:(st.profile&&st.profile.name||'').slice(0,24)||null,last_seen:new Date().toISOString()}}).catch(function(){P=P||st})}
+var av;
+S.push=function(st){if(!S.on||!S.sess)return;if(S.email()!==(localStorage.getItem('liga-uid')||'').slice(1))return;P=st;clearTimeout(T);T=setTimeout(function(){flush(false)},1500)};
+S.signOut=async function(){clearTimeout(T);try{await flush(false)}catch(e){}try{if(S.sess)await api('/auth/v1/logout',{method:'POST',noRefresh:true})}catch(e){}S.sess=null;ls(SK,null)};
+S.errmsg=function(e){var m=(e&&e.message||'')+' '+(e&&e.code||'');
+  if(/invalid.login|invalid_credentials/i.test(m))return 'E-mail ou senha incorretos.';
+  if(/already|exists/i.test(m))return 'Já existe uma conta com este e-mail.';
+  if(/codigo_invalido/i.test(m))return 'Código do professor inválido.';
+  if(/not.confirmed|email_not_confirmed/i.test(m))return 'Confirme seu e-mail antes de entrar (veja a caixa de entrada).';
+  if(/rate.limit|too many/i.test(m))return 'Muitas tentativas. Aguarde um pouco e tente de novo.';
+  if(/weak|at least|senha_curta/i.test(m))return 'Senha muito fraca. Use pelo menos 8 caracteres.';
+  if(/failed to fetch|network|abort/i.test(m))return 'Sem conexão com o servidor. Verifique a internet.';
+  return 'Não foi possível concluir. Tente novamente.'};
+addEventListener('pagehide',function(){flush(true)});document.addEventListener('visibilitychange',function(){if(document.hidden)flush(true)});
+S.sess=ls(SK);S.ready=S.ping().then(function(ok){S.on=ok;return ok});
+window.__sb=S;
+})();
+</script>
+<script>
 (()=>{const __hsl=window.__hs,hs=(s)=>__hsl(s),$=s=>document.querySelector(s),K='liga-contas-v1',CODE='ADM2026';let tab='login',err='';
 
 const users=()=>{try{return JSON.parse(localStorage.getItem(K)||'[]')}catch(e){return[]}},save=u=>{try{localStorage.setItem(K,JSON.stringify(u))}catch(e){}};
@@ -1260,8 +1314,8 @@ ${tab==='login'?`<form id="mx-f"><label>E-mail</label><input id="l_email" type="
 <div id="teacherExtra" style="display:none"><label>Nome da turma</label><input id="f_classname" placeholder="Ex.: 8º ano B"></div>
 <div style="margin-top:14px"><button class="mx-btn">Criar conta de <span id="roleLbl">estudante</span></button></div></form><p class="mx-tiny" style="margin-top:12px">Sem o código do professor, a conta será criada como <b>estudante</b>.<br>Professores: solicite o código à coordenação.</p>`}
 ${err?`<div class="mx-err">${err}</div>`:''}<button type="button" class="mx-tiny" data-back>← Voltar ao início</button>
-<p class="mx-tiny" style="margin-top:14px;text-align:center">Projeto de pesquisa <b>Liga dos Leitores</b> · leitura e gamificação</p>`}
-try{const au=sessionStorage.getItem('liga-auto');if(au){sessionStorage.removeItem('liga-auto');setTimeout(()=>go(JSON.parse(au)),0)}}catch(e){}
+<p class="mx-tiny" style="margin-top:14px;text-align:center">Projeto de pesquisa <b>Liga dos Leitores</b> · leitura e gamificação</p><p class="mx-tiny" style="margin-top:6px;text-align:center">${window.__sb&&window.__sb.on?'☁ Contas e progresso salvos na nuvem':'Modo local: contas e progresso só neste navegador'}</p>`}
+try{const au=sessionStorage.getItem('liga-auto');if(au){sessionStorage.removeItem('liga-auto');const u0=JSON.parse(au);Promise.resolve(window.__sb&&window.__sb.ready).then(()=>go(u0))}}catch(e){}
 window.__mxOpen=t=>{tab=t;err='';draw();$('#mx-auth').classList.add('open')};
 function enter(u){const id=':'+u.email;if((localStorage.getItem('liga-uid')||'')!==id){localStorage.setItem('liga-uid',id);try{sessionStorage.setItem('liga-auto',JSON.stringify(u))}catch(e){}location.reload();return}go(u)}
 function go(u){$('.role-tab[data-role="'+u.role+'"]').click();$('#login-name').value=u.name.slice(0,24);$('#login-class').value=u.cls||'';$('#mx-auth').classList.remove('open');$('#login-form').requestSubmit()}
@@ -1269,12 +1323,35 @@ document.addEventListener('click',e=>{const o=e.target.closest('[data-open-login
 const t=e.target.closest('#mx-card [data-t]');if(t){tab=t.dataset.t;err='';draw();return}
 if(e.target.closest('[data-forgot]')){err='Peça à coordenação para redefinir sua senha.';draw();return}
 if(e.target.closest('[data-back]'))$('#mx-auth').classList.remove('open')},true);
-document.addEventListener('input',e=>{if(e.target.id!=='f_tcode')return;const v=e.target.value.trim(),ok=v===CODE;$('#codeHint').innerHTML=!v?'':ok?'<span class="mx-ok">✓ Código válido: a conta será de professor.</span>':'<span class="mx-bad">Código inválido.</span>';$('#roleLbl').textContent=ok?'professor':'estudante';$('#teacherExtra').style.display=ok?'block':'none'});
-document.addEventListener('submit',async e=>{if(e.target.id!=='mx-f')return;e.preventDefault();const L=users();
+document.addEventListener('input',e=>{if(e.target.id!=='f_tcode')return;const v=e.target.value.trim(),cl=window.__sb&&window.__sb.on;if(cl){$('#codeHint').innerHTML=v?'<span class="mx-ok">O código será verificado ao criar a conta.</span>':'';$('#teacherExtra').style.display=v?'block':'none';return}const ok=v===CODE;$('#codeHint').innerHTML=!v?'':ok?'<span class="mx-ok">✓ Código válido: a conta será de professor.</span>':'<span class="mx-bad">Código inválido.</span>';$('#roleLbl').textContent=ok?'professor':'estudante';$('#teacherExtra').style.display=ok?'block':'none'});
+document.addEventListener('submit',async e=>{if(e.target.id!=='mx-f')return;e.preventDefault();if(window.__sb){try{await window.__sb.ready}catch(x){}if(window.__sb.on)return cloudSubmit()}const L=users();
 if(tab==='login'){const em=$('#l_email').value.trim().toLowerCase(),p=await hs($('#l_pass').value),u=L.find(x=>x.email===em&&x.pass===p);if(!u){err='E-mail ou senha incorretos.';return draw()}return enter(u)}
 const name=$('#f_name').value.trim(),em=$('#f_email').value.trim().toLowerCase(),pw=$('#f_pass').value,code=$('#f_tcode').value.trim();
 if(name.length<2)err='Digite seu nome (mínimo 2 letras).';else if(!/^\S+@\S+\.\S+$/.test(em))err='Digite um e-mail válido.';else if(pw.length<8)err='A senha precisa ter pelo menos 8 caracteres.';else if(code&&code!==CODE)err='Código do professor inválido.';else if(L.some(x=>x.email===em))err='Já existe uma conta com este e-mail.';else err='';
 if(err)return draw();const u={name,email:em,pass:await hs(pw),role:code===CODE?'teacher':'student',cls:($('#f_classname')?.value||'').trim()};L.push(u);save(L);enter(u)});
+
+const pend=()=>{try{return JSON.parse(localStorage.getItem('liga-sb-pending')||'null')}catch(e){return null}};
+async function cloudEnter(prof){const sb=window.__sb,u={name:prof.name,email:prof.email,role:prof.role,cls:prof.class_name||''},key='liga-leitores-nova-demo-v1:'+prof.email;let hyd=false;
+  try{const loc=JSON.parse(localStorage.getItem(key)||'null'),cl=prof.state&&Object.keys(prof.state).length?prof.state:null;if(cl&&(!loc||(cl.updatedAt||0)>(loc.updatedAt||0))){localStorage.setItem(key,JSON.stringify(cl));hyd=true}}catch(e){}
+  const id=':'+prof.email,cur=localStorage.getItem('liga-uid')||'';
+  if(cur!==id||hyd){localStorage.setItem('liga-uid',id);try{sessionStorage.setItem('liga-auto',JSON.stringify(u))}catch(e){}location.reload();return}
+  go(u)}
+async function cloudSubmit(){const sb=window.__sb,btn=document.querySelector('#mx-f .mx-btn');if(btn){btn.disabled=true;btn.textContent='Aguarde…'}
+  try{
+    if(tab==='login'){const em=$('#l_email').value.trim().toLowerCase(),pw=$('#l_pass').value;await sb.signIn(em,pw);let prof=await sb.profile();
+      if(!prof){const pd=pend(),mine=pd&&pd.email===em;await sb.register(mine?pd.name:em.split('@')[0],mine?pd.code:'',mine?pd.cls:'');try{localStorage.removeItem('liga-sb-pending')}catch(x){}prof=await sb.profile()}
+      if(!prof)throw new Error('perfil');return cloudEnter(prof)}
+    const name=$('#f_name').value.trim(),em=$('#f_email').value.trim().toLowerCase(),pw=$('#f_pass').value,code=$('#f_tcode').value.trim(),cls=($('#f_classname')?.value||'').trim();
+    if(name.length<2)err='Digite seu nome (mínimo 2 letras).';else if(!/^\S+@\S+\.\S+$/.test(em))err='Digite um e-mail válido.';else if(pw.length<8)err='A senha precisa ter pelo menos 8 caracteres.';else err='';
+    if(err)return draw();
+    if(code&&!(await sb.checkCode(code))){err='Código do professor inválido.';return draw()}
+    const r=await sb.signUp(em,pw,name);
+    if(!r.session){try{localStorage.setItem('liga-sb-pending',JSON.stringify({email:em,name,code,cls}))}catch(x){}tab='login';err='Conta criada! Confirme o e-mail que enviamos e depois entre.';return draw()}
+    await sb.register(name,code,cls);const prof=await sb.profile();if(!prof)throw new Error('perfil');return cloudEnter(prof)
+  }catch(e){err=sb.errmsg(e);draw()}}
+if(window.__sb)window.__sb.ready.then(async on=>{const sb=window.__sb;if(on&&$('#mx-auth').classList.contains('open')&&!document.querySelector('#mx-card input:not([type=hidden])')?.value)draw();
+  if(!on||!sb.sess)return;try{if(sessionStorage.getItem('liga-auto'))return}catch(e){}
+  try{await sb.refresh();const prof=await sb.profile();if(prof)cloudEnter(prof)}catch(e){if(e&&(e.status===400||e.status===401||e.status===403)){sb.sess=null;try{localStorage.removeItem('liga-sb-session')}catch(x){}}}});
 })();
 </script>
 <script>document.addEventListener('click',e=>{const b=e.target.closest('[data-shopf]');if(!b)return;document.querySelectorAll('[data-shopf]').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.shop-card[data-cat]').forEach(c=>c.style.display=(b.dataset.shopf==='all'||c.dataset.cat===b.dataset.shopf)?'':'none')});</script>
