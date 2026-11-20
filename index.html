@@ -630,6 +630,16 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
 html[data-theme=dark] .lx-b.ok{background:#12352c;color:#5eead4}html[data-theme=dark] .lx-b.wait{background:#3a2f12;color:#fbbf24}html[data-theme=dark] .lx-b.bad{background:#3d1d20;color:#fca5a5}
 html[data-theme=dark] .lx-pv{background:#2b2552}
 .mx-auth select{width:100%}
+.lx-bar{flex-wrap:wrap}
+.lx-codebox{display:inline-block;background:var(--violet-pale,#f3e8ff);color:var(--violet,#7c3aed);border:1px dashed var(--violet,#7c3aed);padding:4px 10px;border-radius:10px;font-weight:800;letter-spacing:1px;font-size:13px;user-select:all}
+.lx-codebox.big{font-size:17px;padding:6px 14px}
+.lx-join{margin-bottom:16px}.lx-join .lx-two{grid-template-columns:1fr auto}
+.lx-stus{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.lx-stu{display:inline-flex;align-items:center;gap:6px;background:var(--paper-2,#f3f0fa);padding:4px 6px 4px 10px;border-radius:99px;font-size:13px}
+.lx-x2{border:0;background:rgba(0,0,0,.08);width:20px;height:20px;border-radius:50%;cursor:pointer;line-height:1;font-size:14px;color:inherit}
+.lx-x2:hover{background:#e11d48;color:#fff}
+.lx-top-sel{width:auto;max-width:200px;margin:0 8px 0 0;padding:6px 10px;font-size:13px}
+.lx-plus{cursor:pointer;border:0;font-weight:800}
 </style>
 <meta name="color-scheme" content="light dark"><meta name="theme-color" id="theme-color" content="#f6f2eb"><script>try{var t=localStorage.getItem("liga-tema");if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t);var m=document.getElementById("theme-color");if(m)m.setAttribute("content",t==="dark"?"#120f1d":"#f6f2eb")}catch(e){}</script></head>
 <body>
@@ -774,6 +784,7 @@ html[data-theme=dark] .lx-pv{background:#2b2552}
       <nav id="teacher-nav" class="sidebar-nav hidden" aria-label="Área do professor">
         <div class="sidebar-section-label">PAINEL DO PROFESSOR</div>
         <button data-view="teacher-dashboard" class="side-link active"><span class="side-icon">▦</span> Visão geral</button>
+        <button data-view="teacher-classes" class="side-link"><span class="side-icon">⌂</span> Turmas</button>
         <button data-view="teacher-students" class="side-link"><span class="side-icon">♙</span> Estudantes</button>
         <button data-view="teacher-slides" class="side-link"><span class="side-icon">▣</span> Slides</button>
         <button data-view="teacher-activities" class="side-link"><span class="side-icon">✎</span> Atividades</button>
@@ -1318,7 +1329,7 @@ html[data-theme=dark] .lx-pv{background:#2b2552}
   document.addEventListener('click',e=>{if(e.target.id==='accessibility-button')return;const p=$('#accessibility-panel');if(p&&!p.contains(e.target))p.classList.remove('open');});
   if(state.settings.fontScale!==1)document.documentElement.style.fontSize=(16*state.settings.fontScale)+'px';if(state.settings.reduceMotion)document.body.classList.add('reduce-motion');
   // O protótipo sempre começa na página pública; as preferências e o progresso continuam salvos.
-  window.__L={get state(){return state},persist,renderView,showView,toast,esc,fmt,viewHeader,levelInfo,TRAIL,missions,mkStudent,realStudents,ago,lvName,renderMarket,renderProfile,updateTopbar};
+  window.__L={get state(){return state},persist,renderView,showView,toast,esc,fmt,viewHeader,levelInfo,TRAIL,missions,mkStudent,realStudents,ago,lvName,renderMarket,renderProfile,renderDashboard,renderRanking,updateTopbar};
   persist();
 })();
 
@@ -1345,7 +1356,7 @@ S.signIn=async function(email,pass){var j=await api('/auth/v1/token?grant_type=p
 S.register=function(name,code,cls){return api('/rest/v1/rpc/liga_register',{method:'POST',body:{p_name:name||'',p_code:code||'',p_class:cls||''}})};
 S.profile=async function(){var r=await api('/rest/v1/liga_profiles?select=*&id=eq.'+S.uid());return r&&r[0]||null};
 S.ranking=function(){return api('/rest/v1/rpc/liga_ranking',{method:'POST',body:{}})};
-S.students=function(){return api('/rest/v1/liga_profiles?select=id,email,name,char_name,role,class_name,xp,coins,completed,avatar,state,last_seen,created_at&order=created_at.asc')};
+S.students=function(){return api('/rest/v1/liga_profiles?select=id,email,name,char_name,role,class_name,class_code,xp,coins,completed,avatar,state,last_seen,created_at&order=created_at.asc')};
 S.rest=api;
 S.upload=async function(bucket,path,file,ct){if(S.sess.expires_at*1000-Date.now()<60000)await S.refresh();var r=await fetch(URL+'/storage/v1/object/'+bucket+'/'+path,{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+S.sess.access_token,'Content-Type':ct||'application/octet-stream','x-upsert':'false','cache-control':'3600'},body:file});var t=await r.text(),j=null;try{j=JSON.parse(t)}catch(e){}if(!r.ok){throw new Error((j&&(j.message||j.error))||('HTTP '+r.status))}return URL+'/storage/v1/object/public/'+bucket+'/'+path};
 S.removeFile=function(bucket,path){return api('/storage/v1/object/'+bucket+'/'+path,{method:'DELETE'})};
@@ -1392,7 +1403,7 @@ function toast(m,t){B().toast(m,t||'success')}
 function inApp(){var a=D.getElementById('app-shell');return !!a&&!a.classList.contains('hidden')}
 function role(){return ST().role}
 var ui={cls:'',reveal:{},shop:'itens',cat:'all',slideOpen:null,modal:false,busy:{}};
-var C={slides:[],activities:[],shop:[],achv:[],subs:[],creds:{},ij:'',sj:'',cj:''};
+var C={slides:[],activities:[],shop:[],achv:[],subs:[],creds:{},classes:[],me:{code:'',name:''},ij:'',sj:'',cj:'',kj:'',mj:''};
 var V={},ACT={},CHG={};
 
 /* ================= CATÁLOGO DA LOJA (vindo do MathXP) ================= */
@@ -1525,6 +1536,8 @@ function loadItems(){return api('/rest/v1/liga_items?select=id,kind,owner,data,c
  var j=JSON.stringify(n),ch=j!==C.ij;C.ij=j;C.slides=n.slide;C.activities=n.activity;C.shop=n.shop;C.achv=n.achv;return ch}).catch(function(){return false})}
 function loadSubs(){return api('/rest/v1/liga_subs?select=*&order=created_at.desc&limit=3000').then(function(rows){var j=JSON.stringify(rows),ch=j!==C.sj;C.sj=j;C.subs=rows;return ch}).catch(function(){return false})}
 function loadCreds(){return api('/rest/v1/liga_credentials?select=uid,pass').then(function(rows){var m={};rows.forEach(function(r){m[r.uid]=r.pass});var j=JSON.stringify(m),ch=j!==C.cj;C.cj=j;C.creds=m;return ch}).catch(function(){return false})}
+function loadClasses(){return api('/rest/v1/liga_classes?select=code,name,year,subject,teacher,created_at&order=created_at.asc').then(function(rows){var j=JSON.stringify(rows),ch=j!==C.kj;C.kj=j;C.classes=rows;return ch}).catch(function(){return false})}
+function loadMe(){return api('/rest/v1/liga_profiles?select=class_code,class_name&id=eq.'+CL().uid()).then(function(r){var p=r&&r[0]||{},n={code:p.class_code||'',name:p.class_name||''},j=JSON.stringify(n),ch=j!==C.mj;C.mj=j;C.me=n;return ch}).catch(function(){return false})}
 function loadStudents(){return CL().students().then(function(r){var j=JSON.stringify(r),ch=j!==W.__sbStuJ;if(ch){W.__sbStuJ=j;W.__sbStudents=r}return ch}).catch(function(){return false})}
 function applyGrants(){var c=CL(),uid=c.uid();
  return api('/rest/v1/liga_grants?select=id,title,xp,coins,ach,act&target=eq.'+uid+'&applied=eq.false&order=id.asc').then(function(rows){
@@ -1545,18 +1558,44 @@ function formDirty(){var a=D.activeElement;if(a&&/INPUT|TEXTAREA|SELECT/.test(a.
  return [].some.call(D.querySelectorAll('#app-content input,#app-content textarea'),function(el){var t=el.type;if(t==='file')return !!(el.files&&el.files.length);if(t==='hidden'||t==='button'||t==='submit'||t==='checkbox'||t==='radio')return false;return el.value!==el.defaultValue})}
 function render(){if(inApp())B().renderView(ST().activeView)}
 function refresh(){var c=CL();if(!c||!inApp()||ui.busy.refresh)return Promise.resolve();ui.busy.refresh=1;lastRef=Date.now();
- var teacher=role()==='teacher',p=[loadItems(),loadSubs()];
- if(teacher){p.push(loadCreds());p.push(loadStudents())}else p.push(applyGrants());
- return Promise.all(p).then(function(r){ui.busy.refresh=0;navBadges();var ch=r.some(Boolean);if(ch&&V[ST().activeView]&&!formDirty()&&!ui.modal)render()},function(){ui.busy.refresh=0})}
+ var teacher=role()==='teacher',p=[loadItems(),loadSubs(),loadClasses()];
+ if(teacher){p.push(loadCreds());p.push(loadStudents())}else{p.push(loadMe());p.push(applyGrants())}
+ return Promise.all(p).then(function(r){ui.busy.refresh=0;navBadges();chips();var ch=r.some(Boolean);if(ch&&V[ST().activeView]&&!formDirty()&&!ui.modal)render()},function(){ui.busy.refresh=0})}
 function startPoll(){stopPoll();pollT=setInterval(function(){if(!D.hidden)refresh()},25000)}
 function stopPoll(){if(pollT){clearInterval(pollT);pollT=null}}
 D.addEventListener('visibilitychange',function(){if(!D.hidden&&inApp())refresh()});
 
 /* ================= ALUNO: visibilidade por turma ================= */
-function myCls(){return norm(ST().profile&&ST().profile.classCode)}
-function visible(r){var c=norm(r.data&&r.data.cls);if(role()==='teacher')return true;return !c||c===myCls()}
+function uid(){return CL()&&CL().uid()}
+function myCode(){return C.me&&C.me.code||''}
+function myClasses(){var u=uid();return C.classes.filter(function(c){return c.teacher===u})}
+function myCodes(){return myClasses().map(function(c){return c.code})}
+function curCls(){var cs=myClasses();if(ui.cls==='*'&&cs.length>1)return '*';if(ui.cls&&cs.some(function(c){return c.code===ui.cls}))return ui.cls;return cs.length?cs[0].code:''}
+function clsName(code){var c=C.classes.find(function(x){return x.code===code});return c?c.name:(code||'')}
+function curLabel(){var c=curCls();return c==='*'?'Todas as minhas turmas':c?clsName(c):'—'}
+function visible(r){var c=r.data&&r.data.cls;return !!c&&c===myCode()}
+function tVis(r){var cur=curCls(),cd=r.data&&r.data.cls;if(cur==='*')return r.owner===uid()||myCodes().indexOf(cd)>=0;return !!cur&&cd===cur}
+function targets(sel){var cs=myCodes();return sel==='*'?cs:(cs.indexOf(sel)>=0?[sel]:[])}
+function emsg(e){var m=(e&&e.message)||'erro';
+ if(/turma_nao_encontrada/.test(m))return 'Código de turma não encontrado. Confira com o professor.';
+ if(/aluno_nao_encontrado/.test(m))return 'Aluno não encontrado por e-mail ou ID. Ele precisa ter criado a conta (ou crie a conta dele em Turmas).';
+ if(/turma_com_alunos/.test(m))return 'Tire os alunos da turma antes de excluir.';
+ if(/nome_invalido/.test(m))return 'Dê um nome à turma (mínimo 2 letras).';
+ if(/aluno_ja_na_turma/.test(m))return 'Aluno já vinculado a esta turma.';
+ if(/aluno_em_outra_turma/.test(m))return 'Aluno já pertence a outra turma. Peça para ele sair da turma primeiro.';
+ if(/email_ja_cadastrado/.test(m))return 'Já existe uma conta com este e-mail.';
+ if(/email_invalido/.test(m))return 'E-mail inválido.';
+ if(/senha_curta/.test(m))return 'A senha precisa de pelo menos 6 caracteres.';
+ if(/sem_permissao/.test(m))return 'Você não tem permissão para isso.';
+ return m}
+function joinCard(){return '<section class="surface-card lx-pad lx-form lx-join"><h3>🔑 Entre na sua turma</h3><p class="lx-sub">Peça o código da turma ao seu professor (ex.: LIG-A1B2) e digite aqui. Assim você vê os slides, atividades e o ranking da sua sala.</p><div class="lx-two"><input class="field-input" id="lx_code" maxlength="16" autocomplete="off" placeholder="LIG-XXXX" style="text-transform:uppercase"><button class="lx-btn" data-lx="joinclass">Entrar na turma</button></div></section>'}
+function noClassBox(){return '<div class="lx-empty"><b>Crie sua primeira turma</b><br>Cada sala (ex.: 8º ano A, 9º ano A) tem a sua turma e o seu código. Depois é só passar o código para os alunos.<br><button class="lx-btn" style="margin-top:12px" data-view="teacher-classes">➕ Criar turma</button></div>'}
 function mySubFor(actId){var uid=CL()&&CL().uid();return C.subs.find(function(s){return s.activity_id===actId&&s.student===uid})}
 function actStatus(a){var s=mySubFor(a.id);return s?s.status:'open'}
+ACT.joinclass=function(t){var i=D.getElementById('lx_code'),code=(i&&i.value||'').trim().toUpperCase();if(!code)return toast('Digite o código da turma.','warning');t.disabled=true;
+ api('/rest/v1/rpc/liga_join_class',{method:'POST',body:{p_code:code}}).then(function(name){ST().profile.classCode=name||code;B().persist();toast('🎉 Você entrou na turma '+(name||code)+'!');return Promise.all([loadMe(),loadClasses(),loadItems(),loadSubs()])}).then(function(){navBadges();render()}).catch(function(e){t.disabled=false;toast(emsg(e),'error')})};
+ACT.leaveclass=function(t){if(!confirm('Sair desta turma? Você deixa de ver os slides, atividades e o ranking dela. Seu XP, suas moedas e seus itens continuam com você. Para voltar, será preciso entrar de novo com o código da turma.'))return;t.disabled=true;
+ api('/rest/v1/rpc/liga_leave_class',{method:'POST',body:{}}).then(function(){ST().profile.classCode='';B().persist();toast('Você saiu da turma.');return Promise.all([loadMe(),loadClasses(),loadItems()])}).then(function(){navBadges();render()}).catch(function(e){t.disabled=false;toast(emsg(e),'error')})};
 function navBadges(){if(!inApp()||role()!=='student')return;var n=C.activities.filter(function(a){return visible(a)&&actStatus(a)==='open'}).length;
  var b=D.querySelector('#student-nav [data-view="activities"]');if(b){var i=b.querySelector('.lx-pill');if(n){if(!i){i=D.createElement('i');i.className='lx-pill';b.appendChild(i)}i.textContent=n}else if(i)i.remove()}}
 
@@ -1585,16 +1624,18 @@ function upload(file,folder){var c=CL(),ext=(file.name.split('.').pop()||'').toL
 function studs(){var raw=W.__sbStudents||[];
  if(CL()||raw.length)return raw.filter(function(p){return p.role==='student'}).map(function(p){var st=p.state&&Object.keys(p.state).length?p.state:null,
    ms=B().mkStudent(p.email,p.name,st,p.last_seen?Date.parse(p.last_seen):0,p.avatar);
-   ms.id=p.id;ms.cls=(p.class_name||'').trim();ms.coins=p.coins|0;ms.mx=st&&st.mx||null;ms.xp=p.xp|0;return ms});
- return B().realStudents().map(function(ms){ms.id=null;ms.cls='';ms.coins=0;ms.mx=null;return ms})}
-function studsF(){return studs().filter(function(p){return !ui.cls||norm(p.cls)===norm(ui.cls)})}
-function classes(){var seen={},out=[];studs().forEach(function(p){if(p.cls&&!seen[norm(p.cls)]){seen[norm(p.cls)]=1;out.push(p.cls)}});return out.sort()}
-function clsSel(){var cs=classes();return '<div class="lx-bar"><label class="lx-tiny">Turma</label><select class="field-select lx-sel" data-lxc="cls"><option value="">Todas as turmas</option>'+cs.map(function(c){return '<option value="'+esc(c)+'"'+(norm(c)===norm(ui.cls)?' selected':'')+'>'+esc(c)+'</option>'}).join('')+'</select></div>'}
-CHG.cls=function(t){ui.cls=t.value;render()};
-function clsOpts(){return '<option value="">Todas as turmas</option>'+classes().map(function(c){return '<option value="'+esc(c)+'">'+esc(c)+'</option>'}).join('')}
+   ms.id=p.id;ms.cls=p.class_code||'';ms.clsName=(p.class_name||'').trim();ms.coins=p.coins|0;ms.mx=st&&st.mx||null;ms.xp=p.xp|0;return ms});
+ return B().realStudents().map(function(ms){ms.id=null;ms.cls='';ms.clsName='';ms.coins=0;ms.mx=null;return ms})}
+function studsF(){var all=studs();if(!CL())return all;var cur=curCls(),codes=myCodes();return all.filter(function(p){return cur==='*'?codes.indexOf(p.cls)>=0:(!!cur&&p.cls===cur)})}
+function clsSel(){if(!CL())return '';var cs=myClasses(),cur=curCls();
+ if(!cs.length)return '<div class="lx-bar"><span class="lx-tiny">Você ainda não criou nenhuma turma.</span><button class="lx-btn ghost sm" data-lx="opennew">➕ Criar turma</button></div>';
+ var c=cs.find(function(x){return x.code===cur});if(!c)return '';
+ return '<div class="lx-bar"><span class="lx-tiny">Turma: <b>'+esc(c.name)+'</b> · Código: <span class="lx-codebox">'+esc(c.code)+'</span></span><button class="lx-btn ghost sm" data-lx="copycode" data-code="'+esc(c.code)+'">📋 copiar</button><button class="lx-btn ghost sm" data-lx="renameclass" data-code="'+esc(c.code)+'">✏ editar nome</button></div>'}
+CHG.cls=function(t){ui.cls=t.value;chips();render()};
+function clsOpts(){var cs=myClasses(),cur=curCls();return cs.map(function(c){return '<option value="'+esc(c.code)+'"'+(c.code===cur?' selected':'')+'>'+esc(c.name)+' · '+esc(c.code)+'</option>'}).join('')+(cs.length>1?'<option value="*"'+(cur==='*'?' selected':'')+'>Todas as minhas turmas</option>':'')}
 function noCloud(what){return '<div class="lx-empty"><b>'+what+'</b><br>Este recurso usa o banco de dados (Supabase). Entre com uma conta na nuvem para usar.</div>'}
 function dnOf(ms){return nameHTML(ms.name,ms.mx?{sy:eqValOf(ms.mx,'symbol'),nc:eqValOf(ms.mx,'nameColor')}:null)}
-function pendingSubs(){var ids={};C.activities.forEach(function(a){ids[a.id]=1});return C.subs.filter(function(s){return s.status==='pending'&&ids[s.activity_id]})}
+function pendingSubs(){var ids={};C.activities.filter(tVis).forEach(function(a){ids[a.id]=1});return C.subs.filter(function(s){return s.status==='pending'&&ids[s.activity_id]})}
 
 /* ================= SENHAS ================= */
 function pwCell(id){if(!id)return '<span class="lx-tiny">—</span>';
@@ -1615,11 +1656,11 @@ ACT.setpw=function(t){var id=t.dataset.id,i=D.getElementById('lx_pw1'),v=i?i.val
 
 V['teacher-students']=function(){var R=studsF(),cloud=!!CL();
  var rows=R.map(function(s){var lv=s.lv?B().TRAIL[s.lv-1].n:'—';
-  return '<tr><td><div class="student-cell"><span class="student-avatar">'+s.avatar+'</span><div><strong>'+dnOf(s)+'</strong><div class="lx-tiny">'+esc(s.email)+'</div></div></div></td><td>'+esc(s.cls||'—')+'</td><td><span class="status-tag demo">NV.'+s.lv+'</span> <span class="lx-tiny">'+esc(lv)+'</span></td><td>'+fmt(s.xp)+'</td><td>🪙 '+fmt(s.coins)+'</td><td>'+s.done+'/'+B().missions.length+'</td><td class="lx-tiny">'+B().ago(s.last)+'</td>'+
-  (cloud?'<td>'+pwCell(s.id)+'</td><td><div class="lx-row"><button class="lx-btn ghost sm" data-lx="reveal" data-id="'+esc(s.id)+'">'+(ui.reveal[s.id]?'ocultar':'ver senha')+'</button><button class="lx-btn sm" data-lx="pwmodal" data-id="'+esc(s.id)+'">redefinir</button></div></td>':'')+'</tr>'}).join('');
+  return '<tr><td><div class="student-cell"><span class="student-avatar">'+s.avatar+'</span><div><strong>'+dnOf(s)+'</strong><div class="lx-tiny">'+esc(s.email)+'</div></div></div></td><td>'+esc(s.clsName||'—')+'</td><td><span class="status-tag demo">NV.'+s.lv+'</span> <span class="lx-tiny">'+esc(lv)+'</span></td><td>'+fmt(s.xp)+'</td><td>🪙 '+fmt(s.coins)+'</td><td>'+s.done+'/'+B().missions.length+'</td><td class="lx-tiny">'+B().ago(s.last)+'</td>'+
+  (cloud?'<td>'+pwCell(s.id)+'</td><td><div class="lx-row"><button class="lx-btn ghost sm" data-lx="rmstu" data-id="'+esc(s.id)+'">remover da turma</button><button class="lx-btn ghost sm" data-lx="reveal" data-id="'+esc(s.id)+'">'+(ui.reveal[s.id]?'ocultar':'ver senha')+'</button><button class="lx-btn sm" data-lx="pwmodal" data-id="'+esc(s.id)+'">redefinir</button></div></td>':'')+'</tr>'}).join('');
  return B().viewHeader('PAINEL DO PROFESSOR','Estudantes','Acompanhe nível, moedas e progresso. Você pode ver e redefinir a senha de cada aluno.','<button class="btn btn-dark" data-lx="revealall">👁 Mostrar / ocultar todas as senhas</button>')+clsSel()+
- '<section class="surface-card teacher-panel"><div class="card-heading"><div><h3>Lista de estudantes</h3><p class="panel-sub">'+R.length+' cadastrado(s)'+(ui.cls?' · turma '+esc(ui.cls):'')+'</p></div></div>'+
- (R.length?'<div class="teacher-table-wrap"><table class="teacher-table"><thead><tr><th>ESTUDANTE</th><th>TURMA</th><th>NÍVEL</th><th>XP</th><th>MOEDAS</th><th>MISSÕES</th><th>ÚLTIMO ACESSO</th>'+(cloud?'<th>SENHA</th><th>AÇÕES</th>':'')+'</tr></thead><tbody>'+rows+'</tbody></table></div>':'<p class="muted-note">Nenhum estudante cadastrado ainda.</p>')+
+ (cloud&&curCls()&&curCls()!=='*'?'<section class="surface-card lx-pad lx-form" style="margin-bottom:16px"><h3>➕ Adicionar aluno à turma</h3><p class="lx-sub">Compartilhe o código da turma ou adicione pelo e-mail (ou ID) do aluno.</p><div class="lx-two" style="grid-template-columns:1fr auto"><input type="hidden" id="ad_cls" value="'+esc(curCls())+'"><input class="field-input" id="ad_email" autocomplete="off" placeholder="aluno@gmail.com"><button class="lx-btn" data-lx="addstu">Adicionar</button></div></section>':'')+'<section class="surface-card teacher-panel"><div class="card-heading"><div><h3>Lista de estudantes</h3><p class="panel-sub">'+R.length+' cadastrado(s) · '+esc(curLabel())+'</p></div></div>'+
+ (R.length?'<div class="teacher-table-wrap"><table class="teacher-table"><thead><tr><th>ESTUDANTE</th><th>TURMA</th><th>NÍVEL</th><th>XP</th><th>MOEDAS</th><th>MISSÕES</th><th>ÚLTIMO ACESSO</th>'+(cloud?'<th>SENHA</th><th>AÇÕES</th>':'')+'</tr></thead><tbody>'+rows+'</tbody></table></div>':'<p class="muted-note">Nenhum estudante nesta turma ainda. Passe o código da turma aos alunos ou adicione pelo e-mail em <a href="#" data-view="teacher-classes">Turmas</a>.</p>')+
  (cloud?'':'<p class="muted-note" style="margin-top:10px">As senhas só podem ser vistas com o banco de dados ligado.</p>')+'</section>'};
 
 V.accounts=function(){if(role()!=='teacher')return B().viewHeader('ACESSO','Área do professor','Esta página é exclusiva de professores.');
@@ -1635,7 +1676,7 @@ V.accounts=function(){if(role()!=='teacher')return B().viewHeader('ACESSO','Áre
 
 /* ================= MODAL ================= */
 function modal(html){closeM();var o=D.createElement('div');o.className='lx-ov';o.id='lx-ov';o.innerHTML='<div class="lx-md">'+html+'</div>';o.addEventListener('click',function(e){if(e.target===o)closeM()});D.body.appendChild(o);ui.modal=true;var f=o.querySelector('input:not([type=radio]),textarea');if(f)setTimeout(function(){f.focus()},60)}
-function closeM(){var o=D.getElementById('lx-ov');if(o)o.remove();ui.modal=false}
+function closeM(){var o=D.getElementById('lx-ov');if(o)o.remove();ui.modal=false;revId=null}
 ACT.closem=closeM;
 D.addEventListener('keydown',function(e){if(e.key==='Escape')closeM()});
 
@@ -1643,7 +1684,9 @@ D.addEventListener('keydown',function(e){if(e.key==='Escape')closeM()});
 function slidesPage(teacher){var cloud=!!CL(),mine=CL()&&CL().uid();
  var head=B().viewHeader(teacher?'PAINEL DO PROFESSOR':'MINHAS AULAS','Slides',teacher?'Publique os slides da aula. Os alunos veem aqui, no celular ou no computador.':'Slides das aulas, publicados pelo professor.');
  if(!cloud)return head+noCloud('Slides');
- var list=C.slides.filter(visible),cur=ui.slideOpen&&list.find(function(x){return x.id===ui.slideOpen}),form='',viewer='';
+ if(teacher&&!myClasses().length)return head+noClassBox();
+ if(!teacher&&C.mj!==''&&!myCode())return head+joinCard();
+ var list=C.slides.filter(teacher?tVis:visible),cur=ui.slideOpen&&list.find(function(x){return x.id===ui.slideOpen}),form='',viewer='';
  if(teacher)form='<section class="surface-card lx-pad lx-form"><h3>➕ Publicar slide</h3><label class="lx-lbl">Título</label><input class="field-input" id="sl_title" autocomplete="off" placeholder="Ex.: Aula 3 · A narrativa de Kafka">'+
   '<label class="lx-lbl">Link do slide</label><input class="field-input" id="sl_url" autocomplete="off" placeholder="Cole o link (Google Slides, Canva, PDF…)">'+
   '<label class="lx-lbl">…ou envie um arquivo (PDF, PowerPoint ou imagem, até 25 MB)</label><input class="field-input" id="sl_file" type="file" accept=".pdf,.ppt,.pptx,.pps,.ppsx,.png,.jpg,.jpeg,.webp,.gif">'+
@@ -1652,30 +1695,33 @@ function slidesPage(teacher){var cloud=!!CL(),mine=CL()&&CL().uid();
   '<p class="lx-tiny" style="margin-top:8px">No Google Slides: Compartilhar → “Qualquer pessoa com o link”. Se escolher link e arquivo, vale o arquivo.</p><button class="lx-btn big" id="sl_btn" data-lx="addslide">Publicar slide</button></section>';
  if(cur){var d=cur.data;viewer='<section class="surface-card lx-pad" style="margin-bottom:16px"><div class="lx-spread"><h3>'+esc(d.title)+'</h3><div class="lx-row"><button class="lx-btn ghost sm" data-lx="slidefull">⛶ Tela cheia</button><a class="lx-btn ghost sm" href="'+esc(safeUrl(d.url))+'" target="_blank" rel="noopener noreferrer">↗ Nova aba</a><button class="lx-btn ghost sm" data-lx="slideclose">✖ Fechar</button></div></div>'+viewerBody(d)+'</section>'}
  return head+form+viewer+'<div class="lx-grid wide" style="margin-top:16px">'+(list.map(function(r){var d=r.data;
-  return '<article class="surface-card lx-pad"><h3>'+esc(d.title)+'</h3>'+(d.desc?'<p class="lx-sub">'+esc(d.desc)+'</p>':'')+'<p class="lx-tiny" style="margin:6px 0 10px">'+(d.path?'📎 '+esc((d.ext||'').toUpperCase()):'🔗 Link')+' · '+dstr(d.date)+(d.cls?' · turma '+esc(d.cls):' · todas as turmas')+'</p><div class="lx-row"><button class="lx-btn sm" data-lx="openslide" data-id="'+esc(r.id)+'">▶ Abrir</button>'+(teacher&&r.owner===mine?'<button class="lx-btn ghost sm danger" data-lx="delslide" data-id="'+esc(r.id)+'">🗑 Excluir</button>':'')+'</div></article>'}).join('')||'<div class="lx-empty" style="grid-column:1/-1">Nenhum slide publicado ainda.</div>')+'</div>'}
+  return '<article class="surface-card lx-pad"><h3>'+esc(d.title)+'</h3>'+(d.desc?'<p class="lx-sub">'+esc(d.desc)+'</p>':'')+'<p class="lx-tiny" style="margin:6px 0 10px">'+(d.path?'📎 '+esc((d.ext||'').toUpperCase()):'🔗 Link')+' · '+dstr(d.date)+(d.cls?' · turma '+esc(clsName(d.cls)):'')+'</p><div class="lx-row"><button class="lx-btn sm" data-lx="openslide" data-id="'+esc(r.id)+'">▶ Abrir</button>'+(teacher&&r.owner===mine?'<button class="lx-btn ghost sm danger" data-lx="delslide" data-id="'+esc(r.id)+'">🗑 Excluir</button>':'')+'</div></article>'}).join('')||'<div class="lx-empty" style="grid-column:1/-1">Nenhum slide publicado ainda.</div>')+'</div>'}
 V.slides=function(){return slidesPage(false)};
 V['teacher-slides']=function(){return slidesPage(true)};
 ACT.openslide=function(t){ui.slideOpen=t.dataset.id;render();var f=D.getElementById('app-content');if(f)f.scrollIntoView({block:'start'})};
 ACT.slideclose=function(){ui.slideOpen=null;render()};
 ACT.slidefull=function(){var f=D.getElementById('lx_frame');if(f&&f.requestFullscreen)f.requestFullscreen()};
-ACT.addslide=function(t){var g=function(i){return D.getElementById(i).value.trim()},title=g('sl_title'),desc=g('sl_desc'),url=g('sl_url'),cls=g('sl_cls'),fe=D.getElementById('sl_file'),f=fe&&fe.files&&fe.files[0];
+ACT.addslide=function(t){var g=function(i){return D.getElementById(i).value.trim()},title=g('sl_title'),desc=g('sl_desc'),url=g('sl_url'),tg=targets(g('sl_cls')),fe=D.getElementById('sl_file'),f=fe&&fe.files&&fe.files[0];
+ if(!tg.length)return toast('Escolha a turma que vai receber o slide.','warning');
  if(title.length<2)return toast('Dê um título ao slide.','warning');
  if(!f&&!safeUrl(url))return toast('Cole um link https:// ou escolha um arquivo.','warning');
  t.disabled=true;t.textContent=f?'Enviando arquivo…':'Publicando…';
  var p=f?upload(f,'slide'):Promise.resolve({url:url});
- p.then(function(file){return put('slide',Object.assign({title:title,desc:desc,cls:cls,date:iso()},file))}).then(function(){toast('🖥️ Slide publicado!');return loadItems()}).then(render).catch(function(e){t.disabled=false;t.textContent='Publicar slide';toast('Não consegui publicar: '+(e.message||'erro'),'error')})};
+ p.then(function(file){return Promise.all(tg.map(function(c){return put('slide',Object.assign({title:title,desc:desc,cls:c,date:iso()},file))}))}).then(function(){toast('🖥️ Slide publicado'+(tg.length>1?' em '+tg.length+' turmas':' para '+clsName(tg[0]))+'!');return loadItems()}).then(render).catch(function(e){t.disabled=false;t.textContent='Publicar slide';toast('Não consegui publicar: '+(e.message||'erro'),'error')})};
 ACT.delslide=function(t){var r=C.slides.find(function(x){return x.id===t.dataset.id});if(!r||!confirm('Excluir este slide?'))return;
- del(r.id).then(function(){if(r.data.path)CL().removeFile('liga-slides',r.data.path).catch(function(){});if(ui.slideOpen===r.id)ui.slideOpen=null;toast('🗑️ Slide excluído.');return loadItems()}).then(render).catch(function(e){toast('Não consegui excluir ('+(e.message||'erro')+').','error')})};
+ del(r.id).then(function(){if(r.data.path&&!shared(r))CL().removeFile('liga-slides',r.data.path).catch(function(){});if(ui.slideOpen===r.id)ui.slideOpen=null;toast('🗑️ Slide excluído.');return loadItems()}).then(render).catch(function(e){toast('Não consegui excluir ('+(e.message||'erro')+').','error')})};
 
 /* ================= ATIVIDADES ================= */
+function shared(r){return [].concat(C.slides,C.activities).some(function(x){return x.id!==r.id&&x.data&&x.data.path===r.data.path})}
 function actById(id){return C.activities.find(function(a){return a.id===id})}
 function subsOf(actId){return C.subs.filter(function(s){return s.activity_id===actId})}
 function badge(st){return st==='ok'?'<span class="lx-b ok">Concluída ✓</span>':st==='pending'?'<span class="lx-b wait">Aguardando professor</span>':st==='wrong'?'<span class="lx-b bad">Resposta incorreta</span>':'<span class="lx-b">Para fazer</span>'}
 function attach(d){var u=safeUrl(d.url||d.link);return u?'<a class="lx-btn ghost sm" href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+(d.path?'📎 Abrir material':'🔗 Abrir link')+'</a>':''}
 V.activities=function(){var head=B().viewHeader('MINHAS TAREFAS','Atividades','Atividades enviadas pelo professor. Conclua para ganhar XP e moedas.');
  if(!CL())return head+noCloud('Atividades');
- var list=C.activities.filter(visible),m=mx(),log=m.log.slice(0,6),cls=ST().profile.classCode;
- return head+'<div class="lx-bar"><span class="lx-tiny">Turma: <b>'+esc(cls||'não informada')+'</b></span></div>'+
+ if(C.mj!==''&&!myCode())return head+joinCard();
+ var list=C.activities.filter(visible),m=mx(),log=m.log.slice(0,6);
+ return head+'<div class="lx-bar"><span class="lx-tiny">Turma: <b>'+esc(C.me.name||'—')+'</b> · código '+esc(myCode())+'</span></div>'+
  '<div class="lx-grid wide">'+(list.map(function(r){var a=r.data,st=actStatus(r),late=a.deadline&&a.deadline<iso()&&st==='open';
   return '<article class="surface-card lx-pad"><div class="lx-spread"><h3>'+esc(a.title)+'</h3>'+badge(st)+'</div><p class="lx-sub">'+esc(a.desc||'')+'</p>'+
   '<p class="lx-tiny" style="margin:8px 0">+'+(a.xp|0)+' XP · +'+(a.coins|0)+' 🪙 · '+(a.type==='multipla'?'Múltipla escolha':'Resposta escrita')+(a.deadline?' · prazo '+dstr(a.deadline):'')+(late?' · <b style="color:#b3261e">prazo vencido</b>':'')+'</p>'+
@@ -1702,6 +1748,7 @@ ACT.sendans=function(t){var r=actById(t.dataset.id);if(!r||mySubFor(r.id))return
 V['teacher-activities']=function(){var head=B().viewHeader('PAINEL DO PROFESSOR','Atividades','Envie atividades para os alunos e dê recompensas por atividades feitas em sala.');
  if(!CL())return head+noCloud('Atividades');
  var mine=CL().uid(),R=studsF();
+ if(!myClasses().length)return head+noClassBox();
  var form='<section class="surface-card lx-pad lx-form"><h3>➕ Enviar atividade</h3><label class="lx-lbl">Título</label><input class="field-input" id="at_title" autocomplete="off" placeholder="Ex.: Leitura do capítulo 1 de A Metamorfose">'+
   '<label class="lx-lbl">Instruções</label><textarea class="field-area lx-ta" id="at_desc" placeholder="Explique o que o aluno deve fazer…"></textarea>'+
   '<label class="lx-lbl">Link de apoio (opcional)</label><input class="field-input" id="at_link" autocomplete="off" placeholder="https://…">'+
@@ -1711,13 +1758,13 @@ V['teacher-activities']=function(){var head=B().viewHeader('PAINEL DO PROFESSOR'
   '<div class="lx-two"><div><label class="lx-lbl">XP</label><input class="field-input" id="at_xp" type="number" min="0" max="1000" value="50"></div><div><label class="lx-lbl">Moedas</label><input class="field-input" id="at_coins" type="number" min="0" max="1000" value="10"></div></div>'+
   '<div class="lx-two"><div><label class="lx-lbl">Prazo</label><input class="field-input" id="at_dead" type="date" value="'+iso()+'"></div><div><label class="lx-lbl">Enviar para</label><select class="field-select" id="at_cls">'+clsOpts()+'</select></div></div>'+
   '<button class="lx-btn big" id="at_btn" data-lx="addact">Enviar atividade</button></section>';
- var list=C.activities.map(function(r){var a=r.data,subs=subsOf(r.id),pend=subs.filter(function(s){return s.status==='pending'}).length;
-  return '<article class="surface-card lx-pad"><div class="lx-spread"><h3>'+esc(a.title)+'</h3>'+(pend?'<span class="lx-b wait">'+pend+' para revisar</span>':'')+'</div><p class="lx-tiny" style="margin:6px 0">+'+(a.xp|0)+' XP · +'+(a.coins|0)+' 🪙 · '+(a.type==='multipla'?'múltipla escolha':'resposta escrita')+' · '+(a.cls?'turma '+esc(a.cls):'todas as turmas')+' · prazo '+dstr(a.deadline)+' · '+subs.length+' resposta(s)</p>'+
+ var list=C.activities.filter(tVis).map(function(r){var a=r.data,subs=subsOf(r.id),pend=subs.filter(function(s){return s.status==='pending'}).length;
+  return '<article class="surface-card lx-pad"><div class="lx-spread"><h3>'+esc(a.title)+'</h3>'+(pend?'<span class="lx-b wait">'+pend+' para revisar</span>':'')+'</div><p class="lx-tiny" style="margin:6px 0">+'+(a.xp|0)+' XP · +'+(a.coins|0)+' 🪙 · '+(a.type==='multipla'?'múltipla escolha':'resposta escrita')+' · '+(a.cls?'turma '+esc(clsName(a.cls)):'sem turma')+' · prazo '+dstr(a.deadline)+' · '+subs.length+' resposta(s)</p>'+
   '<div class="lx-row"><button class="lx-btn sm" data-lx="review" data-id="'+esc(r.id)+'">Ver respostas</button>'+(r.owner===mine?'<button class="lx-btn ghost sm danger" data-lx="delact" data-id="'+esc(r.id)+'">🗑 Excluir</button>':'')+'</div></article>'}).join('');
  var reward='<section class="surface-card lx-pad lx-form"><h3>🏅 Atividade em sala</h3><p class="lx-sub">Passou uma atividade na sala? Dê XP e moedas a quem fez, mesmo sem usar o site.</p>'+
   '<label class="lx-lbl">Atividade</label><input class="field-input" id="gr_title" autocomplete="off" placeholder="Ex.: Resumo do capítulo 2">'+
   '<div class="lx-two"><div><label class="lx-lbl">XP</label><input class="field-input" id="gr_xp" type="number" min="0" max="1000" value="50"></div><div><label class="lx-lbl">Moedas</label><input class="field-input" id="gr_coins" type="number" min="0" max="1000" value="10"></div></div>'+
-  '<div class="lx-spread" style="margin-top:12px"><b class="lx-tiny">ALUNOS'+(ui.cls?' · turma '+esc(ui.cls):'')+'</b><button class="lx-btn ghost sm" data-lx="togall">marcar / desmarcar todos</button></div>'+
+  '<div class="lx-spread" style="margin-top:12px"><b class="lx-tiny">ALUNOS · '+esc(curLabel())+'</b><button class="lx-btn ghost sm" data-lx="togall">marcar / desmarcar todos</button></div>'+
   '<div class="lx-checks">'+(R.map(function(s){return '<label class="lx-chk"><input type="checkbox" class="gr_s" value="'+esc(s.id)+'"> '+esc(s.name)+'</label>'}).join('')||'<p class="lx-tiny">Nenhum aluno nesta turma.</p>')+'</div>'+
   '<button class="lx-btn big" data-lx="grant"'+(R.length?'':' disabled')+'>Dar recompensa</button></section>';
  return head+clsSel()+'<div class="lx-cols"><div>'+form+'</div><div>'+reward+'</div></div><h3 class="lx-h">Atividades enviadas</h3><div class="lx-grid wide">'+(list||'<div class="lx-empty" style="grid-column:1/-1">Nenhuma atividade enviada ainda.</div>')+'</div>'};
@@ -1727,19 +1774,23 @@ ACT.addact=function(t){var g=function(i){return D.getElementById(i).value.trim()
  var xp=Math.max(0,Math.min(1000,Math.floor(+g('at_xp')||0))),coins=Math.max(0,Math.min(1000,Math.floor(+g('at_coins')||0)));
  if(title.length<3)return toast('Dê um título à atividade.','warning');
  if(link&&!safeUrl(link))return toast('O link precisa começar com https://','warning');
- var data={title:title,desc:desc,link:link,type:type,xp:xp,coins:coins,deadline:g('at_dead'),cls:g('at_cls'),date:iso()};
+ var tg=targets(g('at_cls'));if(!tg.length)return toast('Escolha a turma que vai receber a atividade.','warning');
+ var data={title:title,desc:desc,link:link,type:type,xp:xp,coins:coins,deadline:g('at_dead'),date:iso()};
  if(type==='multipla'){data.opts=[0,1,2,3].map(function(i){return g('at_o'+i)});if(data.opts.some(function(o){return !o}))return toast('Preencha as 4 alternativas.','warning');data.correct=+g('at_ok')}
  t.disabled=true;t.textContent='Enviando…';
- (f?upload(f,'atividade'):Promise.resolve({})).then(function(file){return put('activity',Object.assign(data,file))}).then(function(){toast('📝 Atividade enviada para '+(data.cls?'a turma '+data.cls:'todos os alunos')+'!');return loadItems()}).then(render).catch(function(e){t.disabled=false;t.textContent='Enviar atividade';toast('Não consegui enviar: '+(e.message||'erro'),'error')})};
+ (f?upload(f,'atividade'):Promise.resolve({})).then(function(file){return Promise.all(tg.map(function(c){return put('activity',Object.assign({},data,file,{cls:c}))}))}).then(function(){toast('📝 Atividade enviada para '+(tg.length>1?tg.length+' turmas':'a turma '+clsName(tg[0]))+'!');return loadItems()}).then(render).catch(function(e){t.disabled=false;t.textContent='Enviar atividade';toast('Não consegui enviar: '+(e.message||'erro'),'error')})};
 ACT.delact=function(t){var r=actById(t.dataset.id);if(!r||!confirm('Excluir esta atividade? As respostas dos alunos também serão apagadas.'))return;
- del(r.id).then(function(){if(r.data.path)CL().removeFile('liga-slides',r.data.path).catch(function(){});toast('🗑️ Atividade excluída.');return Promise.all([loadItems(),loadSubs()])}).then(render).catch(function(e){toast('Não consegui excluir ('+(e.message||'erro')+').','error')})};
+ del(r.id).then(function(){if(r.data.path&&!shared(r))CL().removeFile('liga-slides',r.data.path).catch(function(){});toast('🗑️ Atividade excluída.');return Promise.all([loadItems(),loadSubs()])}).then(render).catch(function(e){toast('Não consegui excluir ('+(e.message||'erro')+').','error')})};
 ACT.grant=function(t){var title=D.getElementById('gr_title').value.trim(),xp=Math.max(0,Math.min(1000,Math.floor(+D.getElementById('gr_xp').value||0))),coins=Math.max(0,Math.min(1000,Math.floor(+D.getElementById('gr_coins').value||0))),
  ids=[].slice.call(D.querySelectorAll('.gr_s:checked')).map(function(x){return x.value});
  if(!title)return toast('Dê um nome à atividade.','warning');if(!xp&&!coins)return toast('Informe XP e/ou moedas.','warning');if(!ids.length)return toast('Marque pelo menos um aluno.','warning');
  t.disabled=true;var me=CL().uid();
  api('/rest/v1/liga_grants',{method:'POST',headers:{Prefer:'return=minimal'},body:ids.map(function(id){return{target:id,title:title,xp:xp,coins:coins,by:me}})}).then(function(){
   toast('✅ Recompensa dada a '+ids.length+' aluno(s): +'+xp+' XP, +'+coins+' 🪙. Eles recebem ao abrir a Liga.');render()}).catch(function(e){t.disabled=false;toast('Não consegui dar a recompensa ('+(e.message||'erro')+').','error')})};
-ACT.review=function(t){var r=actById(t.dataset.id);if(!r)return;var a=r.data,subs=subsOf(r.id),SS=W.__sbStudents||[];
+var revId=null,revJ='';
+ACT.review=function(t){showReview(t.dataset.id);var id=t.dataset.id;loadSubs().then(function(){if(ui.modal&&revId===id&&C.sj!==revJ)showReview(id)})};
+function showReview(id){if(!actById(id))return;buildReview(id);revId=id;revJ=C.sj}
+function buildReview(id){var r=actById(id);if(!r)return;var a=r.data,subs=subsOf(r.id),SS=W.__sbStudents||[];
  modal('<div class="lx-mh"><h2>Respostas · '+esc(a.title)+'</h2><button class="lx-x" data-lx="closem">×</button></div>'+
  (subs.length?subs.map(function(s){var p=SS.find(function(x){return x.id===s.student}),m=p&&p.state&&p.state.mx,tc=m?eqValOf(m,'textColor'):null,tf=m?eqValOf(m,'textEffect'):null,
   txt=a.type==='multipla'?('Alternativa '+(+s.answer+1)+': '+(a.opts&&a.opts[+s.answer]||'')):s.answer;
@@ -1755,21 +1806,21 @@ ACT.reject=function(t){var s=C.subs.find(function(x){return x.id===t.dataset.id}
  api('/rest/v1/liga_subs?id=eq.'+enc(s.id),{method:'DELETE',headers:{Prefer:'return=minimal'}}).then(loadSubs).then(function(){toast('Resposta liberada: o aluno pode refazer.');ACT.review({dataset:{id:s.activity_id}});render()}).catch(function(e){t.disabled=false;toast('Não consegui ('+(e.message||'erro')+').','error')})};
 
 /* ================= PROFESSOR: visão geral, ranking, gráficos, gestão ================= */
-V['teacher-dashboard']=function(){var t=ST(),R=studsF(),pend=pendingSubs().length,cloud=!!CL(),top=R.slice().sort(function(a,b){return b.xp-a.xp}).slice(0,5);
- var recent=C.activities.slice(0,4).map(function(r){var subs=subsOf(r.id),p=subs.filter(function(s){return s.status==='pending'}).length;
+V['teacher-dashboard']=function(){var t=ST(),R=studsF(),pend=pendingSubs().length,cloud=!!CL(),ACTS=C.activities.filter(tVis),SLS=C.slides.filter(tVis),top=R.slice().sort(function(a,b){return b.xp-a.xp}).slice(0,5);
+ var recent=ACTS.slice(0,4).map(function(r){var subs=subsOf(r.id),p=subs.filter(function(s){return s.status==='pending'}).length;
   return '<div class="lx-li lx-spread"><div><b>'+esc(r.data.title)+'</b><div class="lx-tiny">'+subs.length+' resposta(s) · prazo '+dstr(r.data.deadline)+'</div></div>'+(p?'<button class="lx-btn sm" data-lx="review" data-id="'+esc(r.id)+'">'+p+' para revisar</button>':'<span class="lx-tiny">em dia ✓</span>')+'</div>'}).join('');
- return B().viewHeader('PAINEL DO PROFESSOR','Olá, <em>'+esc((t.profile.name||'Professor(a)').split(' ')[0])+'</em> 👋','Organize slides e atividades, dê recompensas e acompanhe a turma.')+clsSel()+
- '<div class="teacher-kpis"><article class="surface-card teacher-kpi"><small>ESTUDANTES</small><strong>'+R.length+'</strong><span>'+(ui.cls?'Turma '+esc(ui.cls):'Contas na Liga')+'</span></article>'+
- '<article class="surface-card teacher-kpi"><small>ATIVIDADES ENVIADAS</small><strong>'+C.activities.length+'</strong><span>Para os alunos</span></article>'+
- '<article class="surface-card teacher-kpi"><small>SLIDES PUBLICADOS</small><strong>'+C.slides.length+'</strong><span>Aulas disponíveis</span></article>'+
+ return B().viewHeader('PAINEL DO PROFESSOR','Olá, <em>'+esc((t.profile.name||'Professor(a)').split(' ')[0])+'</em> 👋','Organize slides e atividades, dê recompensas e acompanhe a turma.')+clsSel()+(cloud&&!myClasses().length?noClassBox():'')+
+ '<div class="teacher-kpis"><article class="surface-card teacher-kpi"><small>ESTUDANTES</small><strong>'+R.length+'</strong><span>'+esc(curLabel())+'</span></article>'+
+ '<article class="surface-card teacher-kpi"><small>ATIVIDADES ENVIADAS</small><strong>'+ACTS.length+'</strong><span>Para os alunos</span></article>'+
+ '<article class="surface-card teacher-kpi"><small>SLIDES PUBLICADOS</small><strong>'+SLS.length+'</strong><span>Aulas disponíveis</span></article>'+
  '<article class="surface-card teacher-kpi"><small>RESPOSTAS PARA REVISAR</small><strong>'+pend+'</strong><span>'+(pend?'Aguardando você':'Tudo em dia')+'</span></article></div>'+
- '<div class="lx-quick"><button class="lx-btn" data-view="teacher-slides">🖥 Publicar slide</button><button class="lx-btn" data-view="teacher-activities">📝 Nova atividade</button><button class="lx-btn" data-view="teacher-activities">🏅 Dar recompensa</button><button class="lx-btn" data-view="teacher-students">🔑 Ver senhas</button><button class="lx-btn ghost" data-view="teacher-manage">🎁 Loja e conquistas</button></div>'+
+ '<div class="lx-quick"><button class="lx-btn" data-view="teacher-slides">🖥 Publicar slide</button><button class="lx-btn" data-view="teacher-activities">📝 Nova atividade</button><button class="lx-btn" data-view="teacher-activities">🏅 Dar recompensa</button><button class="lx-btn" data-view="teacher-classes">🏫 Turmas e códigos</button><button class="lx-btn" data-view="teacher-students">🔑 Ver senhas</button><button class="lx-btn ghost" data-view="teacher-manage">🎁 Loja e conquistas</button></div>'+
  '<div class="teacher-grid"><section class="surface-card teacher-panel"><h3>Atividades recentes</h3><p class="panel-sub">Revise as respostas escritas dos alunos</p>'+(cloud?(recent||'<p class="muted-note">Nenhuma atividade enviada ainda.</p>'):noCloud('Atividades'))+'</section>'+
  '<section class="surface-card teacher-panel"><h3>Top da turma</h3><p class="panel-sub">Mais XP acumulado</p>'+(top.length?top.map(function(s,i){return '<div class="lx-li lx-spread"><span>'+(i+1)+'º <span class="student-avatar" style="display:inline-grid;vertical-align:middle">'+s.avatar+'</span> '+dnOf(s)+'</span><b>'+fmt(s.xp)+' XP</b></div>'}).join(''):'<p class="muted-note">Sem estudantes ainda.</p>')+'</section></div>'};
 
 V['teacher-ranking']=function(){var R=studsF().slice().sort(function(a,b){return b.xp-a.xp||a.name.localeCompare(b.name)}),medals=['🥇','🥈','🥉'];
  return B().viewHeader('PAINEL DO PROFESSOR','Ranking','Estudantes ordenados pelo XP acumulado.')+clsSel()+
- '<section class="surface-card lx-pad">'+(R.length?R.map(function(s,i){return '<div class="lx-li lx-spread"><div class="lx-row"><span style="width:34px;text-align:center;font-size:18px">'+(medals[i]||(i+1)+'º')+'</span><span class="student-avatar">'+s.avatar+'</span><div><strong>'+dnOf(s)+'</strong><div class="lx-tiny">'+esc(s.cls||'sem turma')+' · '+esc(B().TRAIL[s.lv-1].n)+'</div></div></div><div style="text-align:right"><b>'+fmt(s.xp)+' XP</b><div class="lx-tiny">🪙 '+fmt(s.coins)+'</div></div></div>'}).join(''):'<p class="muted-note">Ranking vazio.</p>')+'</section>'};
+ '<section class="surface-card lx-pad">'+(R.length?R.map(function(s,i){return '<div class="lx-li lx-spread"><div class="lx-row"><span style="width:34px;text-align:center;font-size:18px">'+(medals[i]||(i+1)+'º')+'</span><span class="student-avatar">'+s.avatar+'</span><div><strong>'+dnOf(s)+'</strong><div class="lx-tiny">'+esc(s.clsName||'sem turma')+' · '+esc(B().TRAIL[s.lv-1].n)+'</div></div></div><div style="text-align:right"><b>'+fmt(s.xp)+' XP</b><div class="lx-tiny">🪙 '+fmt(s.coins)+'</div></div></div>'}).join(''):'<p class="muted-note">Ranking vazio.</p>')+'</section>'};
 
 function bars(rows,k,color){var max=Math.max(1,Math.max.apply(null,rows.map(function(r){return r[k]})));
  return rows.length?rows.map(function(r){return '<div style="margin-top:10px"><div class="lx-spread"><span>'+dnOf(r)+'</span><b>'+r[k]+'</b></div><div class="lx-bar2"><i style="width:'+(r[k]/max*100)+'%;background:'+color+'"></i></div></div>'}).join(''):'<p class="muted-note">Ainda sem dados.</p>'}
@@ -1813,21 +1864,72 @@ ACT.givach=function(t){var aid=D.getElementById('gv_a').value,sid=D.getElementBy
  t.disabled=true;api('/rest/v1/liga_grants',{method:'POST',headers:{Prefer:'return=minimal'},body:{target:sid,title:'Conquista: '+a.name,xp:0,coins:a.coins|0,ach:a.id,by:CL().uid()}}).then(function(){toast('🎖️ Conquista enviada! O aluno recebe ao abrir a Liga.');render()}).catch(function(e){t.disabled=false;toast('Não consegui ('+(e.message||'erro')+').','error')})};
 
 /* ================= ALUNO: turma no perfil ================= */
-V.profile=function(){var h=B().renderProfile();if(role()!=='student'||!CL())return h;
- return h+'<section class="surface-card lx-pad lx-form" style="margin-top:16px"><h3>Minha turma</h3><p class="lx-sub">Informe sua turma para receber os slides e atividades do seu professor.</p><div class="lx-two"><input class="field-input" id="lx_myclass" maxlength="40" placeholder="Ex.: 8º ano B" value="'+esc(ST().profile.classCode||'')+'"><button class="lx-btn" data-lx="saveclass">Salvar turma</button></div></section>'};
-ACT.saveclass=function(t){var v=(D.getElementById('lx_myclass').value||'').trim().slice(0,40);t.disabled=true;
- api('/rest/v1/liga_profiles?id=eq.'+CL().uid(),{method:'PATCH',headers:{Prefer:'return=minimal'},body:{class_name:v}}).then(function(){ST().profile.classCode=v;B().persist();toast('Turma salva!');t.disabled=false;navBadges();refresh()}).catch(function(e){t.disabled=false;toast('Não consegui salvar ('+(e.message||'erro')+').','error')})};
+V.profile=function(){var h=B().renderProfile();if(role()!=='student'||!CL()||C.mj==='')return h;
+ if(!myCode())return h+'<div style="margin-top:16px">'+joinCard()+'</div>';
+ return h+'<section class="surface-card lx-pad lx-form" style="margin-top:16px"><h3>Minha turma</h3><p class="lx-sub"><b>'+esc(C.me.name)+'</b> · código <span class="lx-codebox">'+esc(myCode())+'</span></p><button class="lx-btn ghost sm danger" data-lx="leaveclass">Sair da turma</button></section>'};
+V.ranking=function(){if(role()==='student'&&CL()&&C.mj!==''&&!myCode())return B().viewHeader('RANKING','Ranking da turma','Vincule-se a uma turma para ver o ranking.')+joinCard();return B().renderRanking()};
+V.dashboard=function(){var h=B().renderDashboard();if(role()!=='student'||!CL()||C.mj===''||myCode())return h;return joinCard()+h};
+
+/* ================= PROFESSOR: turmas ================= */
+V['teacher-classes']=function(){var head=B().viewHeader('PAINEL DO PROFESSOR','Turmas','Crie uma turma para cada sala (ex.: 8º ano A, 9º ano A). O aluno entra na turma com o código, ou você adiciona pelo e-mail.');
+ if(!CL())return head+noCloud('Turmas');
+ var cs=myClasses(),all=studs(),yr=new Date().getFullYear();
+ var form='<section class="surface-card lx-pad lx-form"><h3>➕ Nova turma</h3><label class="lx-lbl">Nome da turma</label><input class="field-input" id="cl_name" maxlength="60" autocomplete="off" placeholder="Ex.: 8º ano A">'+
+  '<div class="lx-two"><div><label class="lx-lbl">Ano</label><input class="field-input" id="cl_year" type="number" min="2000" max="2100" value="'+yr+'"></div><div><label class="lx-lbl">Disciplina (opcional)</label><input class="field-input" id="cl_subj" maxlength="60" autocomplete="off" placeholder="Ex.: Língua Portuguesa"></div></div>'+
+  '<button class="lx-btn big" data-lx="newclass">Criar turma</button><p class="lx-tiny" style="margin-top:8px">Cada turma recebe um código (ex.: LIG-A1B2). Você pode criar quantas turmas quiser.</p></section>';
+ var add=cs.length?'<section class="surface-card lx-pad lx-form" style="margin-top:16px"><h3>👤 Adicionar aluno pelo e-mail</h3><p class="lx-sub">O aluno precisa já ter criado a conta na Liga.</p><label class="lx-lbl">Turma</label><select class="field-select" id="ad_cls">'+cs.map(function(c){return '<option value="'+esc(c.code)+'"'+(c.code===curCls()?' selected':'')+'>'+esc(c.name)+'</option>'}).join('')+'</select><label class="lx-lbl">E-mail do aluno</label><input class="field-input" id="ad_email" type="email" autocomplete="off" placeholder="aluno@gmail.com"><button class="lx-btn big" data-lx="addstu">Adicionar à turma</button></section>':'';
+ var cards=cs.map(function(c){var st=all.filter(function(p){return p.cls===c.code});
+  return '<article class="surface-card lx-pad" style="margin-bottom:16px"><div class="lx-spread"><h3>'+esc(c.name)+'</h3><span class="lx-codebox big" title="Código da turma">'+esc(c.code)+'</span></div><p class="lx-tiny" style="margin:6px 0 10px">'+(c.year?c.year+' · ':'')+(c.subject?esc(c.subject)+' · ':'')+st.length+' aluno(s)</p>'+
+  '<div class="lx-row"><button class="lx-btn sm" data-lx="copycode" data-code="'+esc(c.code)+'">📋 Copiar código</button><button class="lx-btn ghost sm" data-lx="renameclass" data-code="'+esc(c.code)+'">✏ Renomear</button><button class="lx-btn ghost sm danger" data-lx="delclass" data-code="'+esc(c.code)+'">🗑 Excluir</button></div>'+
+  (st.length?'<div class="lx-stus">'+st.map(function(p){return '<span class="lx-stu">'+esc(p.name)+' <button class="lx-x2" title="Tirar da turma" data-lx="rmstu" data-id="'+esc(p.id)+'">×</button></span>'}).join('')+'</div>':'<p class="lx-tiny" style="margin-top:10px">Nenhum aluno ainda. Passe o código aos alunos: eles digitam ao criar a conta ou na tela inicial.</p>')+'</article>'}).join('');
+ return head+'<div class="lx-cols"><div>'+form+add+mkAccounts()+'</div><div>'+(cards||noClassBox().replace('<button class="lx-btn" style="margin-top:12px" data-view="teacher-classes">➕ Criar turma</button>',''))+'</div></div>'};
+ACT.opennew=function(){modal('<div class="lx-mh"><h2>Nova turma</h2><button class="lx-x" data-lx="closem">×</button></div><label class="lx-lbl">Nome da turma</label><input class="field-input" id="nc_name" maxlength="60" autocomplete="off" placeholder="Ex.: 9º ano A"><div class="lx-two" style="grid-template-columns:1fr 1fr"><div><label class="lx-lbl">Ano</label><input class="field-input" id="nc_year" type="number" min="2000" max="2100" value="'+new Date().getFullYear()+'"></div><div><label class="lx-lbl">Disciplina (opcional)</label><input class="field-input" id="nc_subj" maxlength="60" autocomplete="off" placeholder="Ex.: Português"></div></div><button class="lx-btn big" data-lx="createclass">Criar turma</button>')};
+ACT.createclass=function(t){var g=function(i){return D.getElementById(i).value.trim()},name=g('nc_name');if(name.length<2)return toast('Informe o nome da turma.','warning');
+ t.disabled=true;api('/rest/v1/rpc/liga_create_class',{method:'POST',body:{p_name:name,p_year:+g('nc_year')||null,p_subject:g('nc_subj')}}).then(function(code){ui.cls=code;closeM();toast('🏫 Turma criada! Código: '+code);return loadClasses()}).then(function(){chips();render()}).catch(function(e){t.disabled=false;toast(emsg(e),'error')})};
+function mkAccounts(){var cs=myClasses();if(!cs.length)return '';var L=ui.ctLog||[],okL=L.filter(function(x){return x.ok});
+ return '<section class="surface-card lx-pad lx-form" style="margin-top:16px"><h3>🔑 Criar conta de estudante</h3><p class="lx-sub">Para quem esqueceu o celular ou não tem e-mail à mão: você cria o login e o aluno já aparece na turma. A senha fica visível para você passar ao aluno.</p>'+
+ '<label class="lx-lbl">Turma</label><select class="field-select" id="ct_cls">'+cs.map(function(c){return '<option value="'+esc(c.code)+'"'+(c.code===curCls()?' selected':'')+'>'+esc(c.name)+'</option>'}).join('')+'</select>'+
+ '<label class="lx-lbl">Nome</label><input class="field-input" id="ct_name" autocomplete="off"><label class="lx-lbl">E-mail (Gmail)</label><input class="field-input" id="ct_email" type="email" autocomplete="off"><label class="lx-lbl">Senha (mínimo 6 caracteres)</label><div class="lx-two" style="grid-template-columns:1fr auto"><input class="field-input" id="ct_pass" autocomplete="off"><button class="lx-btn ghost" data-lx="ctgen">Sugerir</button></div>'+
+ '<button class="lx-btn big" data-lx="mkone">Criar conta de estudante</button>'+
+ '<details style="margin-top:14px"><summary style="cursor:pointer;font-weight:700">Criar vários alunos de uma vez</summary><label class="lx-lbl">Um aluno por linha: <b>Nome; e-mail; senha</b></label><textarea class="field-area lx-ta" id="ct_lines" rows="5" placeholder="Ana Souza; ana.souza@gmail.com; leitor2026&#10;Bruno Lima; bruno.lima@gmail.com; livro2026"></textarea><button class="lx-btn big" data-lx="mkbulk">Criar contas</button></details>'+
+ (L.length?'<h4 class="lx-h2">Resultado</h4>'+L.map(function(x){return x.ok?'<p class="lx-li">✅ <b>'+esc(x.name)+'</b> · '+esc(x.email)+' · senha: <code class="lx-code">'+esc(x.pass)+'</code></p>':'<p class="lx-li">❌ '+esc(x.line)+' — '+esc(x.msg)+'</p>'}).join('')+(okL.length?'<button class="lx-btn ghost sm" data-lx="copylist">📋 Copiar lista</button>':''):'')+'</section>'}
+ACT.ctgen=function(){var i=D.getElementById('ct_pass');if(i)i.value=genPass()};
+function createStudents(items,btn){var code=D.getElementById('ct_cls').value;if(!items.length)return toast('Escreva pelo menos um aluno.','warning');if(items.length>60)return toast('Crie no máximo 60 contas por vez.','warning');
+ btn.disabled=true;var log=[],i=0;
+ function next(){if(i>=items.length)return Promise.resolve();var it=items[i++];if(it.err){log.push({ok:false,line:it.raw,msg:it.err});return next()}
+  return api('/rest/v1/rpc/liga_create_student',{method:'POST',body:{p_email:it.email,p_name:it.name,p_pass:it.pass,p_code:code}}).then(function(){log.push({ok:true,name:it.name,email:it.email,pass:it.pass})},function(e){log.push({ok:false,line:it.name+' ('+it.email+')',msg:emsg(e)})}).then(next)}
+ next().then(function(){ui.ctLog=log;var n=log.filter(function(x){return x.ok}).length;toast('✅ '+n+' de '+items.length+' conta(s) criada(s).');return Promise.all([loadStudents(),loadCreds()])}).then(function(){btn.disabled=false;render()}).catch(function(){btn.disabled=false})}
+function chkItem(name,email,pass){var it={raw:name+'; '+email+'; '+pass,name:name,email:email.toLowerCase(),pass:pass};
+ if(name.length<2)it.err='escreva o nome do aluno';else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))it.err='e-mail inválido';else if(pass.length<6)it.err='a senha precisa de pelo menos 6 caracteres';return it}
+ACT.mkone=function(t){var g=function(i){return D.getElementById(i).value.trim()};createStudents([chkItem(g('ct_name'),g('ct_email'),g('ct_pass'))],t)};
+ACT.mkbulk=function(t){var raw=D.getElementById('ct_lines').value.split(/\r?\n/).map(function(l){return l.trim()}).filter(Boolean);
+ createStudents(raw.map(function(line){var sep=line.indexOf(';')>=0?';':line.indexOf('\t')>=0?'\t':',',p=line.split(sep).map(function(x){return x.trim()});return p.length<3||!p[0]||!p[1]||!p[2]?{raw:line,err:'use o formato: Nome; e-mail; senha'}:chkItem(p[0],p[1],p.slice(2).join(sep).trim())}),t)};
+ACT.copylist=function(){var t=(ui.ctLog||[]).filter(function(x){return x.ok}).map(function(x){return x.name+' — '+x.email+' — senha: '+x.pass}).join('\n');try{navigator.clipboard.writeText(t).then(function(){toast('📋 Lista copiada!')},function(){toast('Não consegui copiar.','warning')})}catch(e){toast('Não consegui copiar.','warning')}};
+ACT.newclass=function(t){var g=function(i){return D.getElementById(i).value.trim()},name=g('cl_name');if(name.length<2)return toast('Dê um nome à turma (mínimo 2 letras).','warning');
+ t.disabled=true;api('/rest/v1/rpc/liga_create_class',{method:'POST',body:{p_name:name,p_year:+g('cl_year')||null,p_subject:g('cl_subj')}}).then(function(code){ui.cls=code;toast('🏫 Turma criada! Código: '+code);return loadClasses()}).then(function(){chips();render()}).catch(function(e){t.disabled=false;toast(emsg(e),'error')})};
+ACT.copycode=function(t){var c=t.dataset.code;try{navigator.clipboard.writeText(c).then(function(){toast('📋 Código '+c+' copiado!')},function(){toast('Código: '+c)})}catch(e){toast('Código: '+c)}};
+ACT.renameclass=function(t){var c=t.dataset.code,n=prompt('Novo nome da turma:',clsName(c));if(n==null)return;n=n.trim();if(n.length<2)return toast('Nome muito curto.','warning');
+ api('/rest/v1/rpc/liga_rename_class',{method:'POST',body:{p_code:c,p_name:n}}).then(function(){toast('Turma renomeada.');return Promise.all([loadClasses(),loadStudents(),loadItems()])}).then(function(){chips();render()}).catch(function(e){toast(emsg(e),'error')})};
+ACT.delclass=function(t){var c=t.dataset.code;if(myClasses().length<=1)return toast('Você precisa manter pelo menos uma turma.','warning');if(!confirm('Excluir a turma "'+clsName(c)+'"? Os slides e atividades dela também serão apagados.'))return;
+ api('/rest/v1/rpc/liga_delete_class',{method:'POST',body:{p_code:c}}).then(function(){if(ui.cls===c)ui.cls='';toast('🗑️ Turma excluída.');return Promise.all([loadClasses(),loadItems()])}).then(function(){chips();render()}).catch(function(e){toast(emsg(e),'error')})};
+ACT.addstu=function(t){var c=D.getElementById('ad_cls').value,em=D.getElementById('ad_email').value.trim();if(em.length<3)return toast('Digite o e-mail ou ID do aluno.','warning');
+ t.disabled=true;api('/rest/v1/rpc/liga_add_student',{method:'POST',body:{p_email:em,p_code:c}}).then(function(name){toast('✅ '+(name||'Aluno')+' entrou na turma '+clsName(c)+'.');return loadStudents()}).then(render).catch(function(e){t.disabled=false;toast(emsg(e),'error')})};
+ACT.rmstu=function(t){var p=(W.__sbStudents||[]).find(function(x){return x.id===t.dataset.id});if(!confirm('Tirar '+(p?p.name:'o aluno')+' da turma?'))return;
+ api('/rest/v1/rpc/liga_remove_student',{method:'POST',body:{p_student:t.dataset.id}}).then(function(){toast('Aluno removido da turma.');return loadStudents()}).then(render).catch(function(e){toast(emsg(e),'error')})};
 
 /* ================= TOPO, GANCHOS E EVENTOS ================= */
-function chips(){var el=D.getElementById('mx-chips');if(!el)return;if(!inApp()||role()!=='student'){el.innerHTML='';return}var s=ST(),L=B().levelInfo();
+function chips(){var el=D.getElementById('mx-chips');if(!el)return;
+ if(inApp()&&role()==='teacher'&&CL()){var cs=myClasses(),cur=curCls();
+  el.innerHTML=cs.length?'<select class="field-select lx-top-sel" data-lxc="cls" title="Turma selecionada">'+cs.map(function(c){return '<option value="'+esc(c.code)+'"'+(c.code===cur?' selected':'')+'>'+esc(c.name)+'</option>'}).join('')+'</select><button class="lx-chip lx-plus" data-lx="opennew" title="Criar nova turma">＋</button>':'<button class="lx-chip lx-plus" data-lx="opennew" title="Criar turma">＋ Criar turma</button>';return}
+ if(!inApp()||role()!=='student'){el.innerHTML='';return}var s=ST(),L=B().levelInfo();
  el.innerHTML='<span class="lx-chip" title="Moedas">🪙 '+fmt(s.coins)+'</span><span class="lx-chip" title="Experiência">✦ '+fmt(s.xp)+' XP</span><span class="lx-chip" title="Nível">♜ Nv. '+L.level+'</span>'}
-var TITLES={slides:'Slides',activities:'Atividades','teacher-slides':'Slides','teacher-activities':'Atividades','teacher-ranking':'Ranking','teacher-charts':'Gráficos','teacher-manage':'Loja e conquistas','teacher-students':'Estudantes','teacher-dashboard':'Visão geral',accounts:'Contas e senhas'};
+var TITLES={slides:'Slides',activities:'Atividades','teacher-slides':'Slides','teacher-activities':'Atividades','teacher-ranking':'Ranking','teacher-charts':'Gráficos','teacher-manage':'Loja e conquistas','teacher-students':'Estudantes','teacher-dashboard':'Visão geral','teacher-classes':'Turmas',accounts:'Contas e senhas'};
 W.__LX={views:V,titles:TITLES,esc:esc,nameHTML:nameHTML,deco:deco,emoji:emoji,formDirty:formDirty,
  afterPersist:function(){if(!inApp())return;if(role()==='student'){checkAch();chips()}},
  after:function(view){if(V[view]&&CL()&&Date.now()-lastRef>8000)refresh();chips();if(role()==='student')navBadges()},
  topbar:function(){chips()},
- onEnter:function(){applyTheme();chips();ui.cls='';ui.slideOpen=null;if(CL()){refresh();startPoll()}},
- onLeave:function(){stopPoll();closeM();applyTheme();C.slides=[];C.activities=[];C.shop=[];C.achv=[];C.subs=[];C.creds={};C.ij=C.sj=C.cj='';var r=D.documentElement.style;r.removeProperty('--violet');r.removeProperty('--violet-2');r.removeProperty('--violet-pale')}};
+ onEnter:function(){applyTheme();chips();ui.cls='';C.classes=[];C.me={code:'',name:''};C.kj=C.mj='';ui.slideOpen=null;if(CL()){refresh();startPoll()}},
+ onLeave:function(){stopPoll();closeM();applyTheme();C.slides=[];C.activities=[];C.shop=[];C.achv=[];C.subs=[];C.creds={};C.classes=[];C.me={code:'',name:''};C.ij=C.sj=C.cj=C.kj=C.mj='';var r=D.documentElement.style;r.removeProperty('--violet');r.removeProperty('--violet-2');r.removeProperty('--violet-pale')}};
 D.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-lx]');if(!t)return;var h=ACT[t.dataset.lx];if(h){e.preventDefault();h(t,e)}});
 D.addEventListener('change',function(e){var t=e.target.closest&&e.target.closest('[data-lxc]');if(!t)return;var h=CHG[t.dataset.lxc];if(h)h(t,e)});
 })();
@@ -1841,7 +1943,7 @@ function draw(){const logo=$('#mx-logo-src').innerHTML;$('#mx-card').innerHTML=`
 <div class="mx-tabs"><button data-t="login" class="${tab==='login'?'on':''}">Entrar</button><button data-t="reg" class="${tab==='reg'?'on':''}">Criar conta</button></div>
 ${tab==='login'?`<form id="mx-f"><label>E-mail</label><input id="l_email" type="email" required><label>Senha</label><input id="l_pass" type="password" required><div style="margin-top:14px"><button class="mx-btn">Entrar</button></div></form><button type="button" class="mx-tiny" data-forgot>Esqueceu a senha?</button>`:`<form id="mx-f"><label>Nome</label><input id="f_name" maxlength="24"><label>E-mail (Gmail)</label><input id="f_email" type="email"><label>Senha</label><input id="f_pass" type="password"><p class="mx-tiny">Use pelo menos 8 caracteres. Não use a senha do seu Gmail.</p>
 <label>Código do professor (opcional)</label><input id="f_tcode" type="password" autocomplete="off" placeholder="Código secreto da coordenação"><div id="codeHint" class="mx-tiny"></div>
-<div id="teacherExtra"><label id="clsLbl">Sua turma (opcional)</label><input id="f_classname" maxlength="40" placeholder="Ex.: 8º ano B"></div>
+
 <div style="margin-top:14px"><button class="mx-btn">Criar conta de <span id="roleLbl">estudante</span></button></div></form><p class="mx-tiny" style="margin-top:12px">Sem o código do professor, a conta será criada como <b>estudante</b>.<br>Professores: solicite o código à coordenação.</p>`}
 ${err?`<div class="mx-err">${err}</div>`:''}<button type="button" class="mx-tiny" data-back>← Voltar ao início</button>
 <p class="mx-tiny" style="margin-top:14px;text-align:center">Projeto de pesquisa <b>Liga dos Leitores</b> · leitura e gamificação</p><p class="mx-tiny" style="margin-top:6px;text-align:center">${window.__sb&&window.__sb.on?'☁ Contas e progresso salvos na nuvem':'Modo local: contas e progresso só neste navegador'}</p>`}
@@ -1853,10 +1955,10 @@ document.addEventListener('click',e=>{const o=e.target.closest('[data-open-login
 const t=e.target.closest('#mx-card [data-t]');if(t){tab=t.dataset.t;err='';draw();return}
 if(e.target.closest('[data-forgot]')){err='Peça à coordenação para redefinir sua senha.';draw();return}
 if(e.target.closest('[data-back]'))$('#mx-auth').classList.remove('open')},true);
-document.addEventListener('input',e=>{if(e.target.id!=='f_tcode')return;const v=e.target.value.trim(),cl=window.__sb&&window.__sb.on;if(cl){$('#codeHint').innerHTML=v?'<span class="mx-ok">O código será verificado ao criar a conta.</span>':'';$('#clsLbl').textContent=v?'Nome da turma':'Sua turma (opcional)';return}const ok=v===CODE;$('#codeHint').innerHTML=!v?'':ok?'<span class="mx-ok">✓ Código válido: a conta será de professor.</span>':'<span class="mx-bad">Código inválido.</span>';$('#roleLbl').textContent=ok?'professor':'estudante';$('#clsLbl').textContent=ok?'Nome da turma':'Sua turma (opcional)'});
+document.addEventListener('input',e=>{if(e.target.id!=='f_tcode')return;const v=e.target.value.trim().toUpperCase(),cl=window.__sb&&window.__sb.on;if(cl){$('#codeHint').innerHTML=v?'<span class="mx-ok">O código será verificado ao criar a conta.</span>':'';return}const ok=v===CODE;$('#codeHint').innerHTML=!v?'':ok?'<span class="mx-ok">✓ Código válido: a conta será de professor.</span>':'<span class="mx-bad">Código inválido.</span>';$('#roleLbl').textContent=ok?'professor':'estudante'});
 document.addEventListener('submit',async e=>{if(e.target.id!=='mx-f')return;e.preventDefault();if(window.__sb){try{await window.__sb.ready}catch(x){}if(window.__sb.on)return cloudSubmit()}const L=users();
 if(tab==='login'){const em=$('#l_email').value.trim().toLowerCase(),p=await hs($('#l_pass').value),u=L.find(x=>x.email===em&&x.pass===p);if(!u){err='E-mail ou senha incorretos.';return draw()}return enter(u)}
-const name=$('#f_name').value.trim(),em=$('#f_email').value.trim().toLowerCase(),pw=$('#f_pass').value,code=$('#f_tcode').value.trim();
+const name=$('#f_name').value.trim(),em=$('#f_email').value.trim().toLowerCase(),pw=$('#f_pass').value,code=$('#f_tcode').value.trim().toUpperCase();
 if(name.length<2)err='Digite seu nome (mínimo 2 letras).';else if(!/^\S+@\S+\.\S+$/.test(em))err='Digite um e-mail válido.';else if(pw.length<8)err='A senha precisa ter pelo menos 8 caracteres.';else if(code&&code!==CODE)err='Código do professor inválido.';else if(L.some(x=>x.email===em))err='Já existe uma conta com este e-mail.';else err='';
 if(err)return draw();const u={name,email:em,pass:await hs(pw),role:code===CODE?'teacher':'student',cls:($('#f_classname')?.value||'').trim()};L.push(u);save(L);enter(u)});
 
@@ -1871,7 +1973,7 @@ async function cloudSubmit(){const sb=window.__sb,btn=document.querySelector('#m
     if(tab==='login'){const em=$('#l_email').value.trim().toLowerCase(),pw=$('#l_pass').value;await sb.signIn(em,pw);sb.savePass(pw).catch(()=>{});let prof=await sb.profile();
       if(!prof){const pd=pend(),mine=pd&&pd.email===em;await sb.register(mine?pd.name:em.split('@')[0],mine?pd.code:'',mine?pd.cls:'');try{localStorage.removeItem('liga-sb-pending')}catch(x){}prof=await sb.profile()}
       if(!prof)throw new Error('perfil');return cloudEnter(prof)}
-    const name=$('#f_name').value.trim(),em=$('#f_email').value.trim().toLowerCase(),pw=$('#f_pass').value,code=$('#f_tcode').value.trim(),cls=($('#f_classname')?.value||'').trim();
+    const name=$('#f_name').value.trim(),em=$('#f_email').value.trim().toLowerCase(),pw=$('#f_pass').value,code=$('#f_tcode').value.trim().toUpperCase(),cls=($('#f_classname')?.value||'').trim();
     if(name.length<2)err='Digite seu nome (mínimo 2 letras).';else if(!/^\S+@\S+\.\S+$/.test(em))err='Digite um e-mail válido.';else if(pw.length<8)err='A senha precisa ter pelo menos 8 caracteres.';else err='';
     if(err)return draw();
     if(code&&!(await sb.checkCode(code))){err='Código do professor inválido.';return draw()}
