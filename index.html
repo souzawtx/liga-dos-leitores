@@ -576,6 +576,61 @@ html[data-theme=dark] .ac-tbl tr:hover td{background:var(--violet-pale)}
 @media(max-width:900px){.avx{grid-template-columns:1fr}.avx-stage{position:static}.avx-cv{width:160px;height:260px}.avx-floor{width:150px;bottom:8px}}
 html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
 </style>
+<style>/* ===== Módulo MathXP: loja, conquistas, slides, atividades, painel do professor ===== */
+.demo-badge{display:none!important}
+#mx-chips{display:flex;gap:6px;align-items:center}
+.lx-chip{display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:99px;background:var(--white);border:1px solid var(--line);font-weight:700;font-size:12px;color:var(--ink);white-space:nowrap}
+@media(max-width:700px){#mx-chips .lx-chip:nth-child(n+2){display:none}}
+.lx-pill{margin-left:auto;background:var(--coral);color:#fff;font-style:normal;font-size:10px;font-weight:800;border-radius:99px;padding:2px 7px}
+.lx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-top:6px}
+.lx-grid.wide{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.lx-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+@media(max-width:900px){.lx-cols{grid-template-columns:1fr}}
+.lx-card{position:relative;display:flex;flex-direction:column;gap:6px;padding:12px 12px 14px;border-radius:18px;background:var(--white);border:2px solid var(--line);transition:transform .15s,box-shadow .15s}
+.lx-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-soft)}
+.lx-item.r1{border-color:#86d9a3}.lx-item.r2{border-color:#8fb4f3}.lx-item.r3{border-color:#c08bf0;box-shadow:0 0 14px rgba(168,85,247,.2)}.lx-item.r4{border-color:#f2b53f;box-shadow:0 0 18px rgba(245,158,11,.3)}
+.lx-item strong{font-size:14px;color:var(--ink)}.lx-item p{margin:0;font-size:12px;color:var(--muted);min-height:32px;line-height:1.35}
+.lx-pv{display:grid;place-items:center;height:96px;border-radius:14px;background:var(--violet-pale);overflow:hidden}
+.lx-big{font-size:46px;line-height:1}.lx-pvt{font-size:16px}.lx-swatch{display:block;width:54px;height:54px;border-radius:50%;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+.lx-rar{position:absolute;top:8px;left:8px;z-index:1;font-size:10px;font-weight:900;color:#fff;padding:3px 8px;border-radius:99px}
+.lx-own{position:absolute;top:8px;right:8px;z-index:1;font-size:10px;font-weight:900;background:#16a34a;color:#fff;padding:3px 8px;border-radius:99px}
+.lx-f{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:auto}.lx-f b{font-size:14px;color:var(--ink)}
+.lx-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:11px;padding:9px 14px;background:var(--violet);color:#fff;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:none;min-height:36px}
+.lx-btn:hover{filter:brightness(1.08)}.lx-btn:disabled{opacity:.45;cursor:not-allowed}
+.lx-btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}.lx-btn.sm{padding:6px 11px;font-size:12px;min-height:32px}
+.lx-btn.big{width:100%;margin-top:14px;min-height:44px;font-size:14px}.lx-btn.danger{color:#e11d48;border-color:#e11d48}
+.lx-pad{padding:18px 20px}.lx-form label.lx-lbl,.lx-lbl{display:block;font-size:12px;font-weight:700;margin:12px 0 5px;color:var(--ink-2)}
+.lx-form h3,.lx-pad h3{margin:0 0 4px;font-size:17px}.lx-h{margin:26px 0 10px;font-size:18px}.lx-h2{margin:18px 0 6px;font-size:14px}
+.lx-sub{font-size:13px;color:var(--muted);margin:2px 0 0;line-height:1.5}.lx-tiny{font-size:11.5px;color:var(--muted)}
+.lx-form .field-input,.lx-form .field-select,.lx-form .field-area,.lx-md .field-input,.lx-md .field-area,.lx-sel{font-size:14px}
+.lx-ta{min-height:110px;resize:vertical}
+.lx-two{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end}.lx-md .lx-two{grid-template-columns:1fr auto}
+.lx-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.lx-spread{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.lx-bar{display:flex;align-items:center;gap:10px;margin:0 0 16px}.lx-sel{max-width:260px;width:auto}
+.lx-quick{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 16px}
+.lx-li{padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}.lx-li:last-child{border-bottom:0}
+.lx-empty{border:1px dashed var(--line);border-radius:16px;padding:28px;text-align:center;color:var(--muted);font-size:13px;line-height:1.6}
+.lx-b{display:inline-block;font-size:11px;font-weight:800;padding:4px 10px;border-radius:99px;background:var(--paper-2);color:var(--muted)}
+.lx-b.ok{background:#d9f3e8;color:#0f766e}.lx-b.wait{background:#fdf3d7;color:#92600a}.lx-b.bad{background:#fde5e6;color:#b3261e}
+.lx-code{background:var(--paper-2);padding:3px 8px;border-radius:8px;font-size:13px;font-weight:700;user-select:all}.lx-dots{letter-spacing:2px;color:var(--muted)}
+.lx-frame{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;margin-top:12px;background:#000}.lx-img{width:100%;border-radius:12px;margin-top:12px}
+.lx-ov{position:fixed;inset:0;background:rgba(25,21,38,.68);backdrop-filter:blur(6px);display:grid;place-items:center;padding:16px;z-index:400}
+.lx-md{background:var(--white);color:var(--ink);border-radius:18px;max-width:620px;width:100%;max-height:88vh;overflow:auto;padding:22px;border:1px solid var(--line)}
+.lx-mh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}.lx-mh h2{margin:0;font-size:20px}
+.lx-x{border:0;background:var(--paper-2);width:34px;height:34px;border-radius:50%;font-size:20px;color:var(--ink);cursor:pointer}
+.lx-opt,.lx-chk{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:8px;cursor:pointer;font-size:14px}
+.lx-opt input,.lx-chk input{width:auto}.lx-checks{max-height:240px;overflow:auto;margin-top:6px}
+.lx-sub-card{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:12px}.lx-ans{margin:8px 0;font-size:14px;line-height:1.5;white-space:pre-wrap}
+.lx-bar2{height:8px;background:var(--paper-2);border-radius:99px;overflow:hidden;margin-top:4px}.lx-bar2 i{display:block;height:100%;border-radius:99px}
+.mx-sym-anim{display:inline-block;animation:mxhue 4s linear infinite}@keyframes mxhue{0%{filter:hue-rotate(0) drop-shadow(0 0 5px #7c3aed)}100%{filter:hue-rotate(360deg) drop-shadow(0 0 5px #7c3aed)}}
+.mx-em{font-size:1.15em;line-height:1;display:inline-block}
+.fx-negrito{font-weight:800}.fx-italico{font-style:italic}.fx-neon{text-shadow:0 0 6px currentColor,0 0 14px currentColor}
+.fx-rainbow{background:linear-gradient(90deg,#f43f5e,#f59e0b,#10b981,#3b82f6,#8b5cf6,#f43f5e);-webkit-background-clip:text;background-clip:text;color:transparent!important;animation:mxrbw 3s linear infinite;background-size:200% 100%}
+@keyframes mxrbw{to{background-position:200% 0}}
+html[data-theme=dark] .lx-b.ok{background:#12352c;color:#5eead4}html[data-theme=dark] .lx-b.wait{background:#3a2f12;color:#fbbf24}html[data-theme=dark] .lx-b.bad{background:#3d1d20;color:#fca5a5}
+html[data-theme=dark] .lx-pv{background:#2b2552}
+.mx-auth select{width:100%}
+</style>
 <meta name="color-scheme" content="light dark"><meta name="theme-color" id="theme-color" content="#f6f2eb"><script>try{var t=localStorage.getItem("liga-tema");if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t);var m=document.getElementById("theme-color");if(m)m.setAttribute("content",t==="dark"?"#120f1d":"#f6f2eb")}catch(e){}</script></head>
 <body>
   <a class="skip-link" href="#main">Pular para o conteúdo</a>
@@ -707,6 +762,8 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
         <button data-view="trail" class="side-link"><span class="side-icon">⛰</span> Trilha de níveis</button>
         <button data-view="plaza" class="side-link"><span class="side-icon">✧</span> Praça da Liga <span class="new-dot"></span></button>
         <button data-view="library" class="side-link"><span class="side-icon">▤</span> Mundos literários</button>
+        <button data-view="slides" class="side-link"><span class="side-icon">▣</span> Slides</button>
+        <button data-view="activities" class="side-link"><span class="side-icon">✎</span> Atividades</button>
         <button data-view="ranking" class="side-link"><span class="side-icon">♛</span> Ranking</button>
         <button data-view="achievements" class="side-link"><span class="side-icon">✦</span> Conquistas</button>
         <button data-view="market" class="side-link"><span class="side-icon">◈</span> Loja</button>
@@ -714,20 +771,25 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
         <button data-view="profile" class="side-link"><span class="side-icon">◉</span> Meu personagem</button>
         <button data-view="project-research" class="side-link"><span class="side-icon">▧</span> Pesquisa do projeto</button>
       </nav>
-      <nav id="teacher-nav" class="sidebar-nav hidden" aria-label="Área da professora">
-        <div class="sidebar-section-label">GESTÃO PEDAGÓGICA</div>
+      <nav id="teacher-nav" class="sidebar-nav hidden" aria-label="Área do professor">
+        <div class="sidebar-section-label">PAINEL DO PROFESSOR</div>
         <button data-view="teacher-dashboard" class="side-link active"><span class="side-icon">▦</span> Visão geral</button>
         <button data-view="teacher-students" class="side-link"><span class="side-icon">♙</span> Estudantes</button>
-        <button data-view="teacher-missions" class="side-link"><span class="side-icon">◇</span> Missões</button>
-        <button data-view="accounts" class="side-link"><span class="side-icon">🔑</span> Contas de usuários</button>
+        <button data-view="teacher-slides" class="side-link"><span class="side-icon">▣</span> Slides</button>
+        <button data-view="teacher-activities" class="side-link"><span class="side-icon">✎</span> Atividades</button>
+        <button data-view="teacher-ranking" class="side-link"><span class="side-icon">♛</span> Ranking</button>
+        <button data-view="teacher-charts" class="side-link"><span class="side-icon">◔</span> Gráficos</button>
         <button data-view="teacher-reports" class="side-link"><span class="side-icon">◫</span> Relatórios</button>
-        <button data-view="teacher-settings" class="side-link"><span class="side-icon">⚙</span> Configurações</button>
+        <button data-view="teacher-manage" class="side-link"><span class="side-icon">◈</span> Loja e conquistas</button>
+        <button data-view="accounts" class="side-link"><span class="side-icon">🔑</span> Contas e senhas</button>
+        <button data-view="changepw" class="side-link"><span class="side-icon">🔒</span> Alterar minha senha</button>
+        <button data-view="teacher-settings" class="side-link"><span class="side-icon">⚙</span> Perfil</button>
         <button data-view="project-research" class="side-link"><span class="side-icon">▧</span> Pesquisa do projeto</button>
       </nav>
-      <div class="sidebar-bottom"><div class="sidebar-quote"><span>“</span><p>A leitura do mundo precede a leitura da palavra.</p><small>PAULO FREIRE</small></div><button class="side-link side-exit" data-action="logout"><span class="side-icon">↪</span> Sair da Liga</button><div class="sidebar-disclaimer">PROTÓTIPO LOCAL · DADOS DE DEMONSTRAÇÃO</div></div>
+      <div class="sidebar-bottom"><div class="sidebar-quote"><span>“</span><p>A leitura do mundo precede a leitura da palavra.</p><small>PAULO FREIRE</small></div><button class="side-link side-exit" data-action="logout"><span class="side-icon">↪</span> Sair da Liga</button><div class="sidebar-disclaimer">LIGA DOS LEITORES · 2026</div></div>
     </aside>
     <div class="app-main-column">
-      <header class="app-topbar"><button class="icon-button mobile-sidebar-toggle" id="sidebar-toggle" aria-label="Abrir navegação">☰</button><div class="topbar-context"><span class="topbar-overline" id="topbar-overline">SUA JORNADA</span><strong id="topbar-title">Visão geral</strong></div><div class="topbar-right"><span class="demo-badge">MODO DEMONSTRATIVO</span><button class="icon-button theme-toggle" data-theme-toggle aria-label="Alternar tema claro ou escuro" title="Tema claro/escuro"></button><button class="icon-button" id="accessibility-button" aria-label="Configurações de acessibilidade">Aa</button><button class="top-profile" id="top-profile"><span class="mini-avatar" id="top-avatar">L</span><span><strong id="top-name">Leitor</strong><small id="top-role">ESTUDANTE</small></span><span class="chevron">⌄</span></button></div></header>
+      <header class="app-topbar"><button class="icon-button mobile-sidebar-toggle" id="sidebar-toggle" aria-label="Abrir navegação">☰</button><div class="topbar-context"><span class="topbar-overline" id="topbar-overline">SUA JORNADA</span><strong id="topbar-title">Visão geral</strong></div><div class="topbar-right"><span id="mx-chips"></span><span class="demo-badge">MODO DEMONSTRATIVO</span><button class="icon-button theme-toggle" data-theme-toggle aria-label="Alternar tema claro ou escuro" title="Tema claro/escuro"></button><button class="icon-button" id="accessibility-button" aria-label="Configurações de acessibilidade">Aa</button><button class="top-profile" id="top-profile"><span class="mini-avatar" id="top-avatar">L</span><span><strong id="top-name">Leitor</strong><small id="top-role">ESTUDANTE</small></span><span class="chevron">⌄</span></button></div></header>
       <main class="app-content" id="app-content" tabindex="-1"></main>
       <footer class="app-footer"><span>LIGA DOS LEITORES <i>✦</i> PROTÓTIPO EDUCACIONAL</span><span>Não utilize dados reais de estudantes neste ambiente.</span></footer>
     </div>
@@ -754,7 +816,7 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
     role:'student', profile:{name:'Lara',classCode:'8B',avatar:{kind:'female',skin:'#c98268',hair:'#3b2633',outfit:'#7864c8',accessory:'star'}},
     xp:0, coins:0, hearts:3, maxHearts:3, completed:[], hints:[], customMissions:[], inventory:['base'], equippedItem:'base', classes:['8º B'],
     settings:{xpDefault:50,recovery:20,fontScale:1,reduceMotion:false}, assessment:{initial:null,post:null},
-    avatarDone:false, welcomed:false, attempts:{}, lastSeen:0, updatedAt:0, activeView:'dashboard', activeBook:'metamorphosis', activeMission:null, activeAssessment:null
+    mx:{inv:[],eq:{},ach:[],acts:[],log:[]}, avatarDone:false, welcomed:false, attempts:{}, lastSeen:0, updatedAt:0, activeView:'dashboard', activeBook:'metamorphosis', activeMission:null, activeAssessment:null
   };
   const state = loadState();
   let missionAttempt = {selected:[], hintUsed:false, correct:false, feedback:null};
@@ -810,7 +872,7 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
     copy.settings={...base.settings,...(saved.settings||{})}; copy.assessment={...base.assessment,...(saved.assessment||{})};
     return copy;
   }
-  function persist(){ state.updatedAt=Date.now();if(window.__sb&&window.__sb.on)window.__sb.push(state); try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){console.warn('Não foi possível salvar a demonstração.',e);} }
+  function persist(){ state.updatedAt=Date.now();if(window.__sb&&window.__sb.on)window.__sb.push(state); try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){console.warn('Não foi possível salvar a demonstração.',e);} if(window.__LX&&window.__LX.afterPersist)window.__LX.afterPersist(); }
   const TRAIL=[{xp:0,i:'🌱',n:'Aprendiz da Praça',r:'Ponto de Partida na Praça da Liga'},{xp:100,i:'🧭',n:'Explorador de Pistas',r:'Insígnia de Bronze'},{xp:250,i:'✨',n:'Decifrador de Enigmas',r:'Aura Mística no Avatar'},{xp:450,i:'🛡️',n:'Guardião dos Clássicos',r:'Capa Dourada no Avatar'},{xp:700,i:'👑',n:'Mestre da Interpretação',r:'Coroa Literária no Avatar'},{xp:1000,i:'🏆',n:'Lenda da Liga dos Leitores',r:'Trono do Saber Literário'}];
   let lvlUp=false;
   function levelInfo(){const n=Math.max(0,state.xp);let k=0;TRAIL.forEach((t,j)=>{if(n>=t.xp)k=j});const c=TRAIL[k],x=TRAIL[k+1],into=x?n-c.xp:1,need=x?x.xp-c.xp:1;return{level:k+1,name:c.n,into,need,next:x||null,left:x?x.xp-n:0,percent:x?Math.min(100,into/need*100):100};}
@@ -821,17 +883,17 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
   function openModal(id){const m=document.getElementById(id);if(!m)return;m.classList.add('open');m.setAttribute('aria-hidden','false');const first=$('input,button',m);if(first)setTimeout(()=>first.focus(),50);}
   function closeModal(id){const m=document.getElementById(id);if(!m)return;m.classList.remove('open');m.setAttribute('aria-hidden','true');}
   function toast(message,type='success'){const region=$('#toast-region');if(!region)return;const node=document.createElement('div');node.className='toast '+type;node.textContent=message;region.appendChild(node);setTimeout(()=>node.remove(),3300);}
-  function showLanding(){ $('#landing').classList.remove('hidden');$('#app-shell').classList.add('hidden');closeModal('login-modal');window.scrollTo({top:0,behavior:'smooth'}); }
+  function showLanding(){ if(window.__LX)window.__LX.onLeave();$('#landing').classList.remove('hidden');$('#app-shell').classList.add('hidden');closeModal('login-modal');window.scrollTo({top:0,behavior:'smooth'}); }
   function enterApp(role,name,classCode=''){state.lastSeen=Date.now();avxSanitizeSaved();
     state.role=role;state.profile.name=(role==='student'&&state.avatarDone&&state.profile.name)?state.profile.name:(name.trim()|| (role==='teacher'?'Professora':'Leitor(a)'));state.profile.classCode=classCode.trim();
     state.activeView=role==='teacher'?'teacher-dashboard':'dashboard';persist();
     $('#landing').classList.add('hidden');$('#app-shell').classList.remove('hidden');closeModal('login-modal');
     $('#student-nav').classList.toggle('hidden',role!=='student');$('#teacher-nav').classList.toggle('hidden',role!=='teacher');
     $('#topbar-title').textContent=role==='teacher'?'Visão geral da turma':'Visão geral';$('#topbar-overline').textContent=role==='teacher'?'GESTÃO PEDAGÓGICA':'SUA JORNADA';
-    updateTopbar();renderView(state.activeView);window.scrollTo({top:0,behavior:'instant'});if(role==='student'&&!state.avatarDone){showView('creator');}if(role==='student'&&!state.welcomed)showWelcome();
+    if(window.__LX)window.__LX.onEnter();updateTopbar();renderView(state.activeView);window.scrollTo({top:0,behavior:'instant'});if(role==='student'&&!state.avatarDone){showView('creator');}if(role==='student'&&!state.welcomed)showWelcome();
     if(role==='student'&&state.avatarDone&&!state.assessment.initial)toast('Seu ponto de partida está pronto na visão geral.','warning');
   }
-  function updateTopbar(){
+  function updateTopbar(){if(window.__LX)window.__LX.topbar();
     $('#top-name').textContent=state.profile.name;$('#top-role').textContent=state.role==='teacher'?'PROFESSORA':'ESTUDANTE';
     $('#top-avatar').innerHTML=photoUrl()?'<img class="ph" src="'+photoUrl()+'" alt="">':(state.role==='teacher'?initials(state.profile.name):avatarEmoji());
     $('#top-avatar').style.background=photoUrl()?'#fff':state.role==='teacher'?'linear-gradient(145deg,#b87a5f,#7d4f46)':'linear-gradient(145deg,#aa9be5,#6e5bb9)';
@@ -842,10 +904,10 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
     if(state.role==='teacher'&&!view.startsWith('teacher-')&&!sharedView)return;
     if(state.role==='student'&&view.startsWith('teacher-'))return;
     state.activeView=view;persist();setActiveNav(view);renderView(view);$('#sidebar').classList.remove('mobile-open');$('#app-content').focus({preventScroll:true});
-    const T={dashboard:'Visão geral',plaza:'Praça da Liga',library:'Mundos literários',market:'Loja',ranking:'Ranking',accounts:'Contas de usuários',changepw:'Alterar senha','teacher-accounts':'Contas de usuários',trail:'Trilha do Aventureiro',creator:'Crie seu avatar',mission:'Missão','book-detail':'Mundo literário','teacher-dashboard':'Painel docente','teacher-students':'Estudantes','teacher-missions':'Missões','teacher-reports':'Relatórios','teacher-settings':'Configurações',achievements:'Conquistas',profile:'Meu personagem','project-research':'Pesquisa do projeto'};const title=T[view]||view.replace('teacher-','').replace('-', ' ');
+    const T={dashboard:'Visão geral',plaza:'Praça da Liga',library:'Mundos literários',market:'Loja',ranking:'Ranking',accounts:'Contas e senhas',changepw:'Alterar senha','teacher-accounts':'Contas de usuários',trail:'Trilha do Aventureiro',creator:'Crie seu avatar',mission:'Missão','book-detail':'Mundo literário','teacher-dashboard':'Painel docente','teacher-students':'Estudantes','teacher-missions':'Missões','teacher-reports':'Relatórios','teacher-settings':'Configurações',achievements:'Conquistas',profile:'Meu personagem','project-research':'Pesquisa do projeto'};const title=T[view]||(window.__LX&&window.__LX.titles[view])||view.replace('teacher-','').replace('-', ' ');
     if($('#topbar-title'))$('#topbar-title').textContent=title==='dashboard'?'Visão geral':title==='students'?'Estudantes':title==='missions'?'Missões':title==='reports'?'Relatórios':title==='settings'?'Configurações':title;
   }
-  function renderView(view){const root=$('#app-content');if(!root)return;setActiveNav(view);const renderers={dashboard:renderDashboard,plaza:renderPlaza,library:renderLibrary,market:renderMarket,ranking:renderRanking,accounts:renderAccounts,changepw:renderChangePassword,trail:renderTrail,creator:renderCreator,'book-detail':renderBookDetail,mission:renderMission,achievements:renderAchievements,profile:renderProfile,'project-research':renderProjectResearch,'teacher-dashboard':renderTeacherDashboard,'teacher-students':renderTeacherStudents,'teacher-missions':renderTeacherMissions,'teacher-reports':renderTeacherReports,'teacher-settings':renderTeacherSettings};root.innerHTML=(renderers[view]||renderDashboard)();setTimeout(bindViewSpecific,0);}
+  function renderView(view){const root=$('#app-content');if(!root)return;setActiveNav(view);const renderers={dashboard:renderDashboard,plaza:renderPlaza,library:renderLibrary,market:renderMarket,ranking:renderRanking,accounts:renderAccounts,changepw:renderChangePassword,trail:renderTrail,creator:renderCreator,'book-detail':renderBookDetail,mission:renderMission,achievements:renderAchievements,profile:renderProfile,'project-research':renderProjectResearch,'teacher-dashboard':renderTeacherDashboard,'teacher-students':renderTeacherStudents,'teacher-missions':renderTeacherMissions,'teacher-reports':renderTeacherReports,'teacher-settings':renderTeacherSettings};const ex=window.__LX&&window.__LX.views[view];root.innerHTML=(ex||renderers[view]||renderDashboard)();setTimeout(()=>{bindViewSpecific();if(window.__LX)window.__LX.after(view)},0);}
   function viewHeader(eyebrow,title,sub='',action=''){return `<div class="view-header"><div><div class="view-eyebrow">${eyebrow}</div><h1 class="view-title">${title}</h1>${sub?`<p class="view-subtitle">${sub}</p>`:''}</div>${action}</div>`;}
   function renderDashboard(){
     const level=levelInfo(),next=nextMission(),done=state.completed.length,progress=Math.round(done/3*100);
@@ -865,7 +927,7 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
         <section class="surface-card mission-card"><div><div class="card-topline"><span class="label-dot">PRÓXIMO PASSO</span><span class="xp-reward">+${m.xp} XP</span></div><h3>${next?'Missão '+m.order+' — '+esc(m.title):'Jornada concluída!'}</h3><p>${next?esc(m.brief):'Você já percorreu as três missões de A Metamorfose. Revise suas conquistas e prepare-se para o próximo mundo.'}</p></div><div class="mission-card-footer"><span class="skill-chip">${next?esc(m.skill):'3/3 concluídas'}</span><button class="btn-mini" data-action="${next?'start-mission':'open-view'}" ${next?`data-mission="${m.id}"`:'data-view="achievements"'}>${next?'Iniciar missão':'Ver conquistas'} →</button></div></section>
       </div>
       <div class="dashboard-bottom-grid"><section class="surface-card map-card"><div class="card-heading"><div><h3>Praça da Liga</h3><p>Seu ponto de encontro com as histórias.</p></div><button class="heading-link" data-view="plaza">Explorar praça ↗</button></div><div class="mini-map"><div class="mini-map-path"></div><span class="mini-map-point point-library">▤</span><span class="mini-map-point point-portal">✦</span><span class="mini-map-point point-tower">♜</span><span class="mini-map-point point-market">◈</span><span class="map-caption">PORTAIS, PISTAS E DESCOBERTAS</span></div></section>
-        <section class="surface-card ranking-card"><div class="card-heading"><div><h3>Ranking da turma</h3><p>Inspiração para avançar junto.</p></div></div><div class="ranking-list">${rank.map((r,i)=>`<div class="rank-row ${r.isMe?'me':''}"><span class="rank-position">${i+1}</span><span class="rank-avatar">${r.avatar}</span><span class="rank-name">${esc(r.name)}${r.isMe?' (você)':''}<small>${r.isMe?'seu progresso':'leitor(a) da turma'}</small></span><strong class="rank-xp">${fmt(r.xp)} XP</strong></div>`).join('')}</div>${rank.length<2?'<div class="rank-disclaimer">Você é o primeiro da Liga neste navegador. Convide colegas para criarem conta e entrarem no ranking.</div>':''}</section></div>
+        <section class="surface-card ranking-card"><div class="card-heading"><div><h3>Ranking da turma</h3><p>Inspiração para avançar junto.</p></div></div><div class="ranking-list">${rank.map((r,i)=>`<div class="rank-row ${r.isMe?'me':''}"><span class="rank-position">${i+1}</span><span class="rank-avatar">${r.avatar}</span><span class="rank-name">${nm(r)}${r.isMe?' (você)':''}<small>${r.isMe?'seu progresso':'leitor(a) da turma'}</small></span><strong class="rank-xp">${fmt(r.xp)} XP</strong></div>`).join('')}</div>${rank.length<2?'<div class="rank-disclaimer">Você é o primeiro da Liga neste navegador. Convide colegas para criarem conta e entrarem no ranking.</div>':''}</section></div>
       <div class="achievement-strip">${badgeList.slice(0,3).map(b=>`<div class="achievement-mini"><span class="achievement-icon">${b.icon}</span><div><strong>${b.name}</strong><small>${b.test(state)?'Conquista desbloqueada':'Conquista a caminho'}</small></div></div>`).join('')}</div>
       <section class="surface-card level-path-card" data-view="trail" style="cursor:pointer" title="Ver a trilha completa"><div><div class="view-eyebrow">TRILHA DE EVOLUÇÃO</div><h3>${levelInfo().name} <span>→ próximo nível</span></h3><p>Continue lendo, justificando suas respostas e descobrindo novas camadas das histórias.</p></div><div class="level-path-track"><div class="level-path-top"><span>NÍVEL ${levelInfo().level}</span><strong>${levelInfo().into} / ${levelInfo().need} XP</strong><span>NÍVEL ${levelInfo().level+1}</span></div><div class="progress-track"><i style="width:${levelInfo().percent}%"></i></div></div></section>`;
   }
@@ -1095,7 +1157,7 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
   const AVC={};
   function avatarURL(o,x){x=x||{};const cr=x.crop||FULL,k=JSON.stringify([o,cr,x.view||'f',x.frame||0]);if(AVC[k])return AVC[k];const c=document.createElement('canvas');c.width=cr[2];c.height=cr[3];const g=c.getContext('2d');g.translate(-cr[0],-cr[1]);avxDraw(g,o,x.view||'f',x.frame||0);if(Object.keys(AVC).length>700)for(const q in AVC)delete AVC[q];return AVC[k]=c.toDataURL()}
   function avatarSheet(o,view){const k='S'+JSON.stringify([o,view]);if(AVC[k])return AVC[k];const c=document.createElement('canvas');c.width=128;c.height=52;const g=c.getContext('2d');for(let i=0;i<4;i++){g.save();g.translate(i*32,0);avxDraw(g,o,view,i);g.restore()}return AVC[k]=c.toDataURL()}
-  function avatarEmoji(){return `<img class="pxav" alt="" src="${avatarURL(avxNorm(state.profile.avatar),{crop:CROPB})}">`}
+  function avatarEmoji(){const em=window.__LX&&window.__LX.emoji();if(em)return '<span class="mx-em">'+window.__LX.esc(em)+'</span>';return `<img class="pxav" alt="" src="${avatarURL(avxNorm(state.profile.avatar),{crop:CROPB})}">`}
   function miniAv(){return avatarEmoji()}
   function playerSprite(){const a=avxNorm(state.profile.avatar);return `<div class="pxs" data-f="f" style="--sf:url('${avatarSheet(a,'f')}');--sb:url('${avatarSheet(a,'b')}')"></div><span class="pn">${esc(state.profile.name)}</span>`}
   function avxMarker(m,dir){const s=m.querySelector('.pxs');if(!s)return;s.dataset.f=dir==='up'?'b':'f';s.classList.add('walk');clearTimeout(m._t);m._t=setTimeout(()=>s.classList.remove('walk'),260)}
@@ -1159,14 +1221,14 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
   function renderRanking(){const list=rankEntries(),me=list.find(s=>s.isMe),pos=list.indexOf(me)+1,above=list[pos-2],pod=[list[1],list[0],list[2]].filter(Boolean),medals=['🥇','🥈','🥉'];
     return `${viewHeader('RANKING DA TURMA','Quem está avançando junto.','Posição por XP acumulado entre os estudantes que têm conta neste navegador.')}
     <div class="rk-banner"><div><strong>Você está em ${pos}º lugar</strong><br><small>${above?`Faltam ${fmt(Math.max(1,above.xp-state.xp+1))} XP para ultrapassar ${esc(above.name)}.`:list.length>1?'Você lidera a turma. Continue assim!':'Você é o primeiro da Liga. Convide colegas para criarem conta e entrarem no ranking.'}</small></div><strong>${fmt(state.xp)} XP</strong></div>
-    ${list.length>1?`<div class="rk-podium">${pod.map(s=>{const i=list.indexOf(s);return `<div class="rk-pod p${i+1} ${s.isMe?'me':''}"><div class="rk-medal">${medals[i]}</div><div class="rk-av">${s.avatar}</div><strong>${esc(s.name)}${s.isMe?' (você)':''}</strong><small>${lvName(s.xp)}</small><b>${fmt(s.xp)} XP</b></div>`}).join('')}</div>`:''}
-    <div class="rk-list">${list.map((s,i)=>`<div class="rk-row ${s.isMe?'me':''}"><span class="rk-pos">${i+1}º</span><span class="rk-av">${s.avatar}</span><div><strong>${esc(s.name)}${s.isMe?' (você)':''}</strong><small>${lvName(s.xp)}</small></div><span class="rk-xp">${fmt(s.xp)} XP</span></div>`).join('')}</div>`;
+    ${list.length>1?`<div class="rk-podium">${pod.map(s=>{const i=list.indexOf(s);return `<div class="rk-pod p${i+1} ${s.isMe?'me':''}"><div class="rk-medal">${medals[i]}</div><div class="rk-av">${s.avatar}</div><strong>${nm(s)}${s.isMe?' (você)':''}</strong><small>${lvName(s.xp)}</small><b>${fmt(s.xp)} XP</b></div>`}).join('')}</div>`:''}
+    <div class="rk-list">${list.map((s,i)=>`<div class="rk-row ${s.isMe?'me':''}"><span class="rk-pos">${i+1}º</span><span class="rk-av">${s.avatar}</span><div><strong>${nm(s)}${s.isMe?' (você)':''}</strong><small>${lvName(s.xp)}</small></div><span class="rk-xp">${fmt(s.xp)} XP</span></div>`).join('')}</div>`;
   }
   function studentsTableHTML(R){const pr=s=>Math.round(s.done/missions.length*100);
     return R.length?`<div class="teacher-table-wrap"><table class="teacher-table"><thead><tr><th>ESTUDANTE</th><th>NÍVEL</th><th>PROGRESSO</th><th>MISSÕES</th><th>ÚLTIMO ACESSO</th><th>STATUS</th></tr></thead><tbody>${R.map(s=>{const on=s.last&&Date.now()-s.last<6048e5;return `<tr><td><div class="student-cell"><span class="student-avatar">${s.avatar}</span><strong>${esc(s.name)}</strong></div></td><td><span class="status-tag demo">${s.started?'NV.'+s.lv+' '+esc(TRAIL[s.lv-1].n.toUpperCase()):'NV.0 NÃO INICIADO'}</span></td><td><div class="table-progress"><i style="--progress:${pr(s)}%"></i><span>${pr(s)}%</span></div></td><td>${s.done}</td><td>${ago(s.last)}</td><td><span class="status-tag ${on?'':'attention'}">${on?'ATIVO':'INATIVO'}</span></td></tr>`}).join('')}</tbody></table></div>`:'<p class="muted-note">Nenhum estudante cadastrado ainda. As contas criadas em "Criar conta" aparecem aqui.</p>'}
   function renderTeacherStudents(){const R=realStudents();return `${viewHeader('GESTÃO PEDAGÓGICA','Estudantes','Acompanhe nível, progresso, missões e último acesso das contas criadas neste navegador.')}<div class="surface-card teacher-panel"><div class="card-heading"><div><h3>Lista de estudantes</h3><p class="panel-sub">${R.length} cadastrado(s)</p></div></div>${studentsTableHTML(R)}</div>`;}
   const SBX=()=>window.__sb&&window.__sb.on?window.__sb:null,sbAt={r:0,s:0};
-  function ligaRerender(){if(['ranking','dashboard','teacher-dashboard','teacher-students','teacher-reports','accounts'].includes(state.activeView)){try{renderView(state.activeView)}catch(e){}}}
+  function ligaRerender(){if(window.__LX&&window.__LX.formDirty())return;if(window.__LX&&window.__LX.views[state.activeView]||['ranking','dashboard','teacher-dashboard','teacher-students','teacher-reports','accounts'].includes(state.activeView)){try{renderView(state.activeView)}catch(e){}}}
   function mkStudent(email,accName,s,last,avJson){const pf=s&&s.profile||{},xp=s?s.xp||0:0,comp=s?s.completed||[]:[],per=s?s.attempts||{}:{};let k=0,ok=0,bad=0;TRAIL.forEach((t,j)=>{if(xp>=t.xp)k=j});Object.values(per).forEach(a=>{ok+=a.ok||0;bad+=a.bad||0});
     const av=avJson||pf.avatar,photo=/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/.test(pf.photo||'')?pf.photo:'';
     return{email,name:pf.name||accName,avatar:photo?'<img class="ph" src="'+photo+'" alt="">':(av?'<img class="pxav" alt="" src="'+avatarURL(avxNorm(av),{crop:CROPB})+'">':'👩🏽‍🚀'),started:!!s,lv:k+1,xp,comp,done:comp.length,per,ok,bad,last}}
@@ -1174,9 +1236,10 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
   function realStudents(){if(SBX()){sbStudentsLoad();return (window.__sbStudents||[]).filter(p=>p.role==='student').map(p=>mkStudent(p.email,p.name,p.state&&Object.keys(p.state).length?p.state:null,p.last_seen?Date.parse(p.last_seen):0,p.avatar))}
     let L=[];try{L=JSON.parse(localStorage.getItem('liga-contas-v1')||'[]')}catch(e){}
     return L.filter(u=>u.role==='student').map(u=>{let s=null;try{s=JSON.parse(localStorage.getItem('liga-leitores-nova-demo-v1:'+u.email)||'null')}catch(e){}return mkStudent(u.email,u.name,s,s?s.lastSeen||0:0,null)})}
-  function rankEntries(){const sb=SBX(),me={name:state.profile.name,avatar:avatarHTML(),xp:state.xp,isMe:true};
+  const nm=s=>window.__LX?window.__LX.nameHTML(s.name,s.deco):esc(s.name);
+  function rankEntries(){const sb=SBX(),me={name:state.profile.name,avatar:avatarHTML(),xp:state.xp,isMe:true,deco:window.__LX?window.__LX.deco():null};
     if(sb){const now=Date.now();if(now-sbAt.r>4000){sbAt.r=now;sb.ranking().then(r=>{const j=JSON.stringify(r);if(j!==window.__sbRankJ){window.__sbRankJ=j;window.__sbRank=r;ligaRerender()}}).catch(()=>{})}
-      const myId=sb.uid();return [...(window.__sbRank||[]).filter(r=>r.id!==myId).map(r=>({name:r.char_name||'Leitor(a)',avatar:r.avatar?'<img class="pxav" alt="" src="'+avatarURL(avxNorm(r.avatar),{crop:CROPB})+'">':'📖',xp:r.xp|0})),me].sort((a,b)=>b.xp-a.xp)}
+      const myId=sb.uid();return [...(window.__sbRank||[]).filter(r=>r.id!==myId).map(r=>({name:r.char_name||'Leitor(a)',avatar:(r.deco&&r.deco.av)?'<span class="mx-em">'+esc(r.deco.av)+'</span>':(r.avatar?'<img class="pxav" alt="" src="'+avatarURL(avxNorm(r.avatar),{crop:CROPB})+'">':'📖'),xp:r.xp|0,deco:r.deco||null})),me].sort((a,b)=>b.xp-a.xp)}
     const uid=(localStorage.getItem('liga-uid')||'').slice(1);return [...realStudents().filter(s=>s.email!==uid).map(s=>({name:s.name,avatar:s.avatar,xp:s.xp})),me].sort((a,b)=>b.xp-a.xp)}
   function accList(){if(SBX()){sbStudentsLoad();return (window.__sbStudents||[]).map(p=>{const st=p.state||{},pf=st.profile||{};return{id:p.id,email:p.email,name:p.name,role:p.role,char:pf.name||p.char_name,photo:/^data:image\//.test(pf.photo||'')?pf.photo:'',av:p.avatar||pf.avatar,last:p.last_seen?Date.parse(p.last_seen):0}})}
     let L=[];try{L=JSON.parse(localStorage.getItem('liga-contas-v1')||'[]')}catch(e){}
@@ -1255,6 +1318,7 @@ html[data-theme=dark] .btn-mini[disabled]{color:#b4abd9;opacity:.75}
   document.addEventListener('click',e=>{if(e.target.id==='accessibility-button')return;const p=$('#accessibility-panel');if(p&&!p.contains(e.target))p.classList.remove('open');});
   if(state.settings.fontScale!==1)document.documentElement.style.fontSize=(16*state.settings.fontScale)+'px';if(state.settings.reduceMotion)document.body.classList.add('reduce-motion');
   // O protótipo sempre começa na página pública; as preferências e o progresso continuam salvos.
+  window.__L={get state(){return state},persist,renderView,showView,toast,esc,fmt,viewHeader,levelInfo,TRAIL,missions,mkStudent,realStudents,ago,lvName,renderMarket,renderProfile,updateTopbar};
   persist();
 })();
 
@@ -1282,10 +1346,14 @@ S.register=function(name,code,cls){return api('/rest/v1/rpc/liga_register',{meth
 S.profile=async function(){var r=await api('/rest/v1/liga_profiles?select=*&id=eq.'+S.uid());return r&&r[0]||null};
 S.ranking=function(){return api('/rest/v1/rpc/liga_ranking',{method:'POST',body:{}})};
 S.students=function(){return api('/rest/v1/liga_profiles?select=id,email,name,char_name,role,class_name,xp,coins,completed,avatar,state,last_seen,created_at&order=created_at.asc')};
+S.rest=api;
+S.upload=async function(bucket,path,file,ct){if(S.sess.expires_at*1000-Date.now()<60000)await S.refresh();var r=await fetch(URL+'/storage/v1/object/'+bucket+'/'+path,{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+S.sess.access_token,'Content-Type':ct||'application/octet-stream','x-upsert':'false','cache-control':'3600'},body:file});var t=await r.text(),j=null;try{j=JSON.parse(t)}catch(e){}if(!r.ok){throw new Error((j&&(j.message||j.error))||('HTTP '+r.status))}return URL+'/storage/v1/object/public/'+bucket+'/'+path};
+S.removeFile=function(bucket,path){return api('/storage/v1/object/'+bucket+'/'+path,{method:'DELETE'})};
+S.savePass=function(p){return api('/rest/v1/rpc/liga_save_my_pass',{method:'POST',body:{p:p}})};
 S.setPassword=function(id,pw){return api('/rest/v1/rpc/liga_set_password',{method:'POST',body:{p_target:id,p_password:pw}})};
-S.changePassword=async function(oldp,newp){await S.signIn(S.email(),oldp);return api('/auth/v1/user',{method:'PUT',body:{password:newp}})};
+S.changePassword=async function(oldp,newp){await S.signIn(S.email(),oldp);var r=await api('/auth/v1/user',{method:'PUT',body:{password:newp}});try{await S.savePass(newp)}catch(e){}return r};
 function flush(ka){if(!P||!S.sess)return Promise.resolve();var st=P;P=null,av=st.profile&&st.profile.avatar;
-  return api('/rest/v1/liga_profiles?id=eq.'+S.uid(),{method:'PATCH',headers:{Prefer:'return=minimal'},keepalive:ka,body:{state:st,xp:st.xp|0,coins:st.coins|0,completed:(st.completed||[]).length,avatar:av||null,char_name:(st.profile&&st.profile.name||'').slice(0,24)||null,last_seen:new Date().toISOString()}}).catch(function(){P=P||st})}
+  return api('/rest/v1/liga_profiles?id=eq.'+S.uid(),{method:'PATCH',headers:{Prefer:'return=minimal'},keepalive:ka,body:{state:st,xp:st.xp|0,coins:st.coins|0,completed:(st.completed||[]).length,avatar:av||null,char_name:(st.profile&&st.profile.name||'').slice(0,24)||null,deco:(window.__LX&&window.__LX.deco())||null,last_seen:new Date().toISOString()}}).catch(function(){P=P||st})}
 var av;
 S.push=function(st){if(!S.on||!S.sess)return;if(S.email()!==(localStorage.getItem('liga-uid')||'').slice(1))return;P=st;clearTimeout(T);T=setTimeout(function(){flush(false)},1500)};
 S.signOut=async function(){clearTimeout(T);try{await flush(false)}catch(e){}try{if(S.sess)await api('/auth/v1/logout',{method:'POST',noRefresh:true})}catch(e){}S.sess=null;ls(SK,null)};
@@ -1304,6 +1372,468 @@ window.__sb=S;
 })();
 </script>
 <script>
+/* ===== Liga dos Leitores · módulo MathXP (loja, conquistas, moedas, slides, atividades, painel do professor, senhas) =====
+   Usa window.__L (ponte com o app principal) e window.__sb (Supabase). */
+(function(){
+'use strict';
+var W=window,D=document;
+function B(){return W.__L}
+function ST(){return W.__L.state}
+function CL(){return W.__sb&&W.__sb.on&&W.__sb.sess?W.__sb:null}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function fmt(n){return new Intl.NumberFormat('pt-BR').format(n||0)}
+function norm(s){return String(s||'').trim().toLowerCase()}
+function enc(s){return encodeURIComponent(s)}
+function iso(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function dstr(v){if(!v)return '—';var d=new Date(/^\d{4}-\d{2}-\d{2}$/.test(v)?v+'T12:00':v);return isNaN(d)?'—':d.toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'})}
+function rid(p){return p+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function safeUrl(u){u=String(u||'').trim();return /^https:\/\/\S+$/i.test(u)?u:''}
+function toast(m,t){B().toast(m,t||'success')}
+function inApp(){var a=D.getElementById('app-shell');return !!a&&!a.classList.contains('hidden')}
+function role(){return ST().role}
+var ui={cls:'',reveal:{},shop:'itens',cat:'all',slideOpen:null,modal:false,busy:{}};
+var C={slides:[],activities:[],shop:[],achv:[],subs:[],creds:{},ij:'',sj:'',cj:''};
+var V={},ACT={},CHG={};
+
+/* ================= CATÁLOGO DA LOJA (vindo do MathXP) ================= */
+var CATS={avatar:'Avatar',symbol:'Símbolo',nameColor:'Cor do nome',textColor:'Cor da escrita',textEffect:'Efeito de escrita',theme:'Tema'};
+var SHOP=[
+ {id:'av_coruja',name:'Avatar Coruja',price:60,desc:'Sábia e atenta: acompanha você nas leituras difíceis.',icon:'🦉',effect:{type:'avatar',value:'🦉'}},
+ {id:'av_dragao',name:'Avatar Dragão dos Contos',price:90,desc:'Guardião das histórias épicas.',icon:'🐉',effect:{type:'avatar',value:'🐉'}},
+ {id:'av_mago',name:'Avatar Mago das Palavras',price:90,desc:'Transforma palavras em magia.',icon:'🧙',effect:{type:'avatar',value:'🧙'}},
+ {id:'av_raposa',name:'Avatar Raposa Esperta',price:70,desc:'Astuta para decifrar qualquer enigma.',icon:'🦊',effect:{type:'avatar',value:'🦊'}},
+ {id:'av_gato',name:'Avatar Gato Preto',price:80,desc:'Misterioso, como um bom conto de suspense.',icon:'🐈‍⬛',effect:{type:'avatar',value:'🐈‍⬛'}},
+ {id:'av_fada',name:'Avatar Fada das Fábulas',price:80,desc:'Conta histórias por onde passa.',icon:'🧚',effect:{type:'avatar',value:'🧚'}},
+ {id:'sy_chama',name:'Símbolo Chama Mística',price:150,desc:'Chama que muda de cor ao lado do seu nome.',icon:'🔥',effect:{type:'symbol',value:{e:'🔥',anim:true}}},
+ {id:'sy_estrela',name:'Símbolo Estrela da Liga',price:100,desc:'Brilhe no ranking.',icon:'⭐',effect:{type:'symbol',value:{e:'⭐'}}},
+ {id:'sy_escudo',name:'Símbolo Escudo da Liga',price:110,desc:'Honra de quem domina as histórias.',icon:'🛡️',effect:{type:'symbol',value:{e:'🛡️'}}},
+ {id:'sy_livro',name:'Símbolo Livro Aberto',price:100,desc:'Um livro sempre ao lado do seu nome.',icon:'📖',effect:{type:'symbol',value:{e:'📖'}}},
+ {id:'sy_pena',name:'Símbolo Pena de Escritor',price:100,desc:'Para quem escreve a própria história.',icon:'🪶',effect:{type:'symbol',value:{e:'🪶'}}},
+ {id:'sy_pergaminho',name:'Símbolo Pergaminho',price:110,desc:'Sabedoria dos clássicos.',icon:'📜',effect:{type:'symbol',value:{e:'📜'}}},
+ {id:'nc_rubi',name:'Nome Rubi',price:60,desc:'Seu nome em vermelho vibrante.',icon:'🔴',effect:{type:'nameColor',value:'#e11d48'}},
+ {id:'nc_esmeralda',name:'Nome Esmeralda',price:60,desc:'Seu nome em verde precioso.',icon:'🟢',effect:{type:'nameColor',value:'#059669'}},
+ {id:'nc_oceano',name:'Nome Oceano',price:60,desc:'Seu nome em azul profundo.',icon:'🔵',effect:{type:'nameColor',value:'#0284c7'}},
+ {id:'nc_dourado',name:'Nome Dourado',price:70,desc:'Seu nome com brilho de ouro.',icon:'🟡',effect:{type:'nameColor',value:'#b45309'}},
+ {id:'tc_violeta',name:'Escrita Violeta',price:50,desc:'Suas respostas em violeta.',icon:'✒️',effect:{type:'textColor',value:'#7c3aed'}},
+ {id:'tc_turquesa',name:'Escrita Turquesa',price:50,desc:'Suas respostas em turquesa.',icon:'🖊️',effect:{type:'textColor',value:'#0d9488'}},
+ {id:'tc_carmim',name:'Escrita Carmim',price:50,desc:'Suas respostas em carmim.',icon:'🖋️',effect:{type:'textColor',value:'#be123c'}},
+ {id:'fx_negrito',name:'Efeito Negrito Real',price:40,desc:'Respostas em negrito marcante.',icon:'🅱️',effect:{type:'textEffect',value:'negrito'}},
+ {id:'fx_italico',name:'Efeito Itálico Clássico',price:40,desc:'Respostas com estilo elegante.',icon:'✍️',effect:{type:'textEffect',value:'italico'}},
+ {id:'fx_neon',name:'Efeito Neon Noturno',price:80,desc:'Respostas que brilham no escuro.',icon:'💡',effect:{type:'textEffect',value:'neon'}},
+ {id:'fx_rainbow',name:'Efeito Arco-íris Mágico',price:120,desc:'Respostas com cores em movimento.',icon:'🌈',effect:{type:'textEffect',value:'rainbow'}},
+ {id:'th_roxo',name:'Tema Roxo Estelar',price:120,desc:'O visual roxo clássico, com brilho extra.',icon:'💜',effect:{type:'theme',value:{acc:'#7c3aed',soft:'#f3e8ff'}}},
+ {id:'th_floresta',name:'Tema Floresta Encantada',price:120,desc:'Verde das florestas dos contos de fadas.',icon:'🌲',effect:{type:'theme',value:{acc:'#059669',soft:'#d9f3e8'}}},
+ {id:'th_oceano',name:'Tema Oceano Profundo',price:120,desc:'Azul das aventuras em alto-mar.',icon:'🌊',effect:{type:'theme',value:{acc:'#0284c7',soft:'#dbeafe'}}},
+ {id:'th_brasas',name:'Tema Brasas do Dragão',price:120,desc:'Vermelho de quem lê em chamas.',icon:'🐲',effect:{type:'theme',value:{acc:'#dc2626',soft:'#fee2e2'}}}
+];
+function allItems(){return SHOP.concat(C.shop.map(function(r){var d=r.data||{};return{id:r.id,name:d.name||'Item',price:+d.price||0,desc:d.desc||'',icon:d.icon||'🎁',effect:d.effect||{type:'avatar',value:'🎁'},custom:true,owner:r.owner}}))}
+function itemById(id){return allItems().find(function(i){return i.id===id})}
+function rar(p){return p<=60?{k:1,n:'COMUM',c:'#16a34a'}:p<=90?{k:2,n:'RARO',c:'#2563eb'}:p<=119?{k:3,n:'ÉPICO',c:'#9333ea'}:{k:4,n:'LENDÁRIO',c:'#d97706'}}
+
+/* ================= ESTADO DO ALUNO (moedas, itens, conquistas) ================= */
+function mxOf(s){var m=s.mx=s.mx||{};m.inv=m.inv||[];m.eq=m.eq||{};m.ach=m.ach||[];m.acts=m.acts||[];m.log=m.log||[];return m}
+function mx(){return mxOf(ST())}
+function eqValOf(m,type){var id=m&&m.eq&&m.eq[type];if(!id)return null;if(!m.inv||m.inv.indexOf(id)<0)return null;var it=itemById(id);return it&&it.effect&&it.effect.type===type?it.effect.value:null}
+function eqVal(type){return eqValOf(mx(),type)}
+function emoji(){return role()==='student'?eqVal('avatar'):null}
+function deco(){if(role()!=='student')return null;var sy=eqVal('symbol'),nc=eqVal('nameColor'),av=eqVal('avatar');return(sy||nc||av)?{sy:sy||null,nc:nc||null,av:av||null}:null}
+function nameHTML(name,d){d=d||{};var sy=d.sy&&d.sy.e?d.sy:null,nc=d.nc&&/^#[0-9a-fA-F]{3,8}$/.test(d.nc)?d.nc:null;
+ return(sy?'<span class="'+(sy.anim?'mx-sym-anim':'')+'" style="margin-right:4px">'+esc(sy.e)+'</span>':'')+'<span'+(nc?' style="color:'+nc+'"':'')+'>'+esc(name)+'</span>'}
+function applyTheme(){var r=D.documentElement.style,th=role()==='student'?eqVal('theme'):null;
+ if(th&&th.acc&&/^#[0-9a-fA-F]{3,8}$/.test(th.acc)){r.setProperty('--violet',th.acc);r.setProperty('--violet-2',th.acc);r.setProperty('--violet-pale',/^#[0-9a-fA-F]{3,8}$/.test(th.soft||'')?th.soft:th.acc+'22')}
+ else{r.removeProperty('--violet');r.removeProperty('--violet-2');r.removeProperty('--violet-pale')}}
+
+var DEF_ACH=[
+ {id:'m1',icon:'📖',name:'Primeira página',desc:'Conclua sua primeira missão.',coins:10,test:function(s){return s.completed.length>=1}},
+ {id:'lit',icon:'🔎',name:'Olho atento',desc:'Conclua a missão de compreensão literal.',coins:10,test:function(s){return s.completed.indexOf('mission_1')>=0}},
+ {id:'inf',icon:'🧩',name:'Leitor de pistas',desc:'Conclua a missão de inferência.',coins:15,test:function(s){return s.completed.indexOf('mission_2')>=0}},
+ {id:'int',icon:'✦',name:'Além das palavras',desc:'Conclua a missão de interpretação.',coins:20,test:function(s){return s.completed.indexOf('mission_3')>=0}},
+ {id:'all',icon:'🏛️',name:'Guardião do mundo',desc:'Conclua as três missões de Kafka.',coins:40,test:function(s){return B().missions.every(function(m){return s.completed.indexOf(m.id)>=0})}},
+ {id:'lv2',icon:'🧭',name:'Explorador de Pistas',desc:'Chegue ao nível 2 da trilha.',coins:25,test:function(){return B().levelInfo().level>=2}},
+ {id:'lv3',icon:'✨',name:'Decifrador de Enigmas',desc:'Chegue ao nível 3 da trilha.',coins:30,test:function(){return B().levelInfo().level>=3}},
+ {id:'lv4',icon:'🛡️',name:'Guardião dos Clássicos',desc:'Chegue ao nível 4 da trilha.',coins:40,test:function(){return B().levelInfo().level>=4}},
+ {id:'lv5',icon:'👑',name:'Mestre da Interpretação',desc:'Chegue ao nível 5 da trilha.',coins:60,test:function(){return B().levelInfo().level>=5}},
+ {id:'lv6',icon:'🏆',name:'Lenda da Liga',desc:'Chegue ao nível máximo da trilha.',coins:100,test:function(){return B().levelInfo().level>=6}},
+ {id:'rich',icon:'🪙',name:'Cofre cheio',desc:'Junte 100 moedas.',coins:10,test:function(s){return s.coins>=100}},
+ {id:'aval',icon:'📝',name:'Leitor reflexivo',desc:'Realize uma avaliação formativa.',coins:15,test:function(s){return !!(s.assessment&&s.assessment.initial)}},
+ {id:'a1',icon:'✏️',name:'Primeira atividade',desc:'Conclua uma atividade enviada pelo professor.',coins:15,test:function(s){return mxOf(s).acts.length>=1}},
+ {id:'a5',icon:'📚',name:'Aluno dedicado',desc:'Conclua 5 atividades.',coins:30,test:function(s){return mxOf(s).acts.length>=5}},
+ {id:'a10',icon:'🏅',name:'Mestre das atividades',desc:'Conclua 10 atividades.',coins:50,test:function(s){return mxOf(s).acts.length>=10}},
+ {id:'b1',icon:'🛒',name:'Primeira compra',desc:'Compre um item na loja.',coins:10,test:function(s){return mxOf(s).inv.length>=1}},
+ {id:'b5',icon:'🎒',name:'Colecionador',desc:'Tenha 5 itens da loja.',coins:30,test:function(s){return mxOf(s).inv.length>=5}}
+];
+function allAch(){return DEF_ACH.concat(C.achv.map(function(r){var d=r.data||{},c=d.cond||{};
+ return{id:r.id,icon:d.icon||'🎖️',name:d.name||'Conquista',desc:d.desc||'Conquista especial da Liga.',coins:+d.coins||0,custom:true,owner:r.owner,cond:c,
+  test:function(s){var n=+c.n||1;if(c.type==='missoes')return s.completed.length>=n;if(c.type==='xp')return s.xp>=n;if(c.type==='atividades')return mxOf(s).acts.length>=n;return false}}}))}
+var chk=false;
+function checkAch(){if(chk)return;chk=true;try{var s=ST(),m=mx(),n=0,guard=0,again=true;
+ while(again&&guard++<4){again=false;allAch().forEach(function(a){if(m.ach.indexOf(a.id)<0&&a.test(s)){m.ach.push(a.id);s.coins+=a.coins;n++;again=true;
+  (function(a){setTimeout(function(){toast('🎖️ Conquista: '+a.name+' (+'+a.coins+' 🪙)')},250)})(a)}})}
+ if(n)B().persist()}finally{chk=false}}
+
+/* ================= AÇÕES DO ALUNO NA LOJA ================= */
+ACT.buy=function(t){var it=itemById(t.dataset.id),s=ST(),m=mx();if(!it)return;
+ if(m.inv.indexOf(it.id)>=0)return toast('Você já tem este item.','warning');
+ if(s.coins<it.price)return toast('Moedas insuficientes.','warning');
+ s.coins-=it.price;m.inv.push(it.id);B().persist();toast('🛒 '+it.name+' adquirido! Toque em “Equipar” para usar.');render()};
+ACT.equip=function(t){var it=itemById(t.dataset.id),m=mx();if(!it||m.inv.indexOf(it.id)<0)return;m.eq[it.effect.type]=it.id;B().persist();applyTheme();B().updateTopbar();toast('✨ '+it.name+' equipado!');render()};
+ACT.unequip=function(t){var m=mx();m.eq[t.dataset.type]=null;B().persist();applyTheme();B().updateTopbar();render()};
+CHG.shopcat=function(t){ui.cat=t.value;render()};
+ACT.shopcat=function(t){ui.cat=t.dataset.cat;render()};
+ACT.shoptab=function(t){ui.shop=t.dataset.tab;render()};
+
+function preview(it){var v=it.effect&&it.effect.value,ty=it.effect&&it.effect.type;
+ if(ty==='avatar')return '<span class="lx-big">'+esc(v)+'</span>';
+ if(ty==='symbol')return '<span class="lx-big '+(v&&v.anim?'mx-sym-anim':'')+'">'+esc(v&&v.e)+'</span>';
+ if(ty==='nameColor')return '<b class="lx-pvt" style="color:'+(/^#[0-9a-fA-F]{3,8}$/.test(v)?v:'inherit')+'">Seu nome</b>';
+ if(ty==='textColor')return '<span class="lx-pvt" style="color:'+(/^#[0-9a-fA-F]{3,8}$/.test(v)?v:'inherit')+'">Minha resposta</span>';
+ if(ty==='textEffect')return '<span class="lx-pvt fx-'+esc(v)+'">Minha resposta</span>';
+ if(ty==='theme'){var a=v&&/^#[0-9a-fA-F]{3,8}$/.test(v.acc)?v.acc:'#7864c8';return '<span class="lx-swatch" style="background:'+a+'"></span>'}
+ return '<span class="lx-big">'+esc(it.icon)+'</span>'}
+function itemCard(it){var m=mx(),own=m.inv.indexOf(it.id)>=0,ty=it.effect.type,eq=own&&m.eq[ty]===it.id,r=rar(it.price),btn;
+ if(own)btn=eq?'<button class="lx-btn ghost" data-lx="unequip" data-type="'+ty+'">Remover</button>':'<button class="lx-btn" data-lx="equip" data-id="'+esc(it.id)+'">Equipar</button>';
+ else btn='<button class="lx-btn" data-lx="buy" data-id="'+esc(it.id)+'"'+(ST().coins<it.price?' disabled':'')+'>Comprar</button>';
+ return '<article class="lx-card lx-item r'+r.k+'"><span class="lx-rar" style="background:'+r.c+'">'+r.n+'</span>'+(own?'<span class="lx-own">'+(eq?'EQUIPADO':'SEU')+'</span>':'')+
+  '<div class="lx-pv">'+preview(it)+'</div><strong>'+esc(it.name)+'</strong><p>'+esc(it.desc)+'</p><div class="lx-f"><b>🪙 '+fmt(it.price)+'</b>'+btn+'</div></article>'}
+
+V.market=function(){var s=ST(),items=allItems().filter(function(i){return ui.cat==='all'||i.effect.type===ui.cat});
+ var tabs='<div class="shop-chips"><button class="'+(ui.shop==='itens'?'on':'')+'" data-lx="shoptab" data-tab="itens">Itens da Liga</button><button class="'+(ui.shop==='visuais'?'on':'')+'" data-lx="shoptab" data-tab="visuais">Roupas do personagem</button></div>';
+ if(ui.shop==='visuais')return tabs+B().renderMarket();
+ var chips='<div class="shop-chips">'+[['all','Todos']].concat(Object.keys(CATS).map(function(k){return [k,CATS[k]]})).map(function(c){return '<button class="'+(ui.cat===c[0]?'on':'')+'" data-lx="shopcat" data-cat="'+c[0]+'">'+c[1]+'</button>'}).join('')+'</div>';
+ return B().viewHeader('LOJA DA LIGA','Pequenos itens. Grandes jornadas.','Use suas moedas em avatares, símbolos, cores, efeitos e temas. Tudo que você compra fica na sua conta.')+tabs+
+  '<div class="market-top-card"><div><span class="view-eyebrow" style="color:#e7c17b">SEU SALDO</span><h2>🪙 '+fmt(s.coins)+' <small>moedas</small></h2><p>Ganhe moedas com missões, atividades e conquistas.</p></div><div class="market-inventory"><span>🎒</span><div><strong>'+mx().inv.length+'/'+allItems().length+'</strong><small>itens comprados</small></div></div></div>'+
+  chips+'<div class="lx-grid">'+items.map(itemCard).join('')+'</div>'};
+
+V.achievements=function(){var s=ST(),m=mx(),A=allAch(),got=A.filter(function(a){return m.ach.indexOf(a.id)>=0}).length,L=B().levelInfo();
+ var owned=m.inv.map(itemById).filter(Boolean);
+ return B().viewHeader('CONQUISTAS','Cada conquista conta uma história.','Medalhas dão moedas. Use as moedas na loja e equipe o que você comprou.')+
+ '<div class="stat-grid" style="grid-template-columns:repeat(4,1fr)"><article class="surface-card stat-card xp"><div class="stat-top">XP TOTAL <span class="stat-icon">✦</span></div><div class="stat-value">'+fmt(s.xp)+'</div><div class="stat-foot">Experiência acumulada</div></article>'+
+ '<article class="surface-card stat-card level"><div class="stat-top">NÍVEL <span class="stat-icon">♜</span></div><div class="stat-value">'+L.level+'º</div><div class="stat-foot">'+esc(L.name)+'</div></article>'+
+ '<article class="surface-card stat-card coins"><div class="stat-top">MOEDAS <span class="stat-icon">◈</span></div><div class="stat-value">'+fmt(s.coins)+'</div><div class="stat-foot"><a href="#" data-view="market" style="color:inherit">Abrir loja ↗</a></div></article>'+
+ '<article class="surface-card stat-card hearts"><div class="stat-top">MEDALHAS <span class="stat-icon">✧</span></div><div class="stat-value">'+got+'/'+A.length+'</div><div class="stat-foot">'+Math.round(got/Math.max(1,A.length)*100)+'% desbloqueadas</div></article></div>'+
+ '<h3 class="lx-h">🎖️ Medalhas</h3><div class="badge-grid">'+A.map(function(a){var ok=m.ach.indexOf(a.id)>=0;return '<article class="surface-card badge-card '+(ok?'':'locked')+'"><div class="badge-medal">'+esc(a.icon)+'</div><strong>'+esc(a.name)+'</strong><small>'+esc(a.desc)+'</small><span class="badge-status">'+(ok?'✓ DESBLOQUEADA':'+'+a.coins+' 🪙 AO CONQUISTAR')+'</span></article>'}).join('')+'</div>'+
+ '<h3 class="lx-h">✨ Personalização</h3><p class="lx-sub">Equipe avatares, símbolos, cores, efeitos e temas que você comprou.</p>'+
+ (owned.length?'<div class="lx-grid">'+owned.map(itemCard).join('')+'</div>':'<div class="lx-empty">Você ainda não comprou nada. <a href="#" data-view="market">Visite a loja ↗</a></div>')+
+ '<h3 class="lx-h">🎒 Inventário</h3>'+(owned.length?'<div class="surface-card lx-pad">'+owned.map(function(i){return '<p class="lx-li">'+esc(i.icon)+' <b>'+esc(i.name)+'</b> <span class="lx-tiny">'+CATS[i.effect.type]+'</span></p>'}).join('')+'</div>':'<div class="lx-empty">Inventário vazio.</div>')};
+
+/* ================= NUVEM ================= */
+function api(path,o){var c=CL();if(!c||!c.rest)return Promise.reject(new Error('offline'));return c.rest(path,o)}
+function put(kind,data,id){return api('/rest/v1/liga_items',{method:'POST',headers:{Prefer:'return=minimal'},body:{id:id||rid(kind[0]),kind:kind,owner:CL().uid(),data:data}})}
+function del(id){return api('/rest/v1/liga_items?id=eq.'+enc(id),{method:'DELETE',headers:{Prefer:'return=minimal'}})}
+function loadItems(){return api('/rest/v1/liga_items?select=id,kind,owner,data,created_at&order=created_at.desc&limit=1000').then(function(rows){
+ var n={slide:[],activity:[],shop:[],achv:[]};rows.forEach(function(r){if(n[r.kind])n[r.kind].push(r)});
+ var j=JSON.stringify(n),ch=j!==C.ij;C.ij=j;C.slides=n.slide;C.activities=n.activity;C.shop=n.shop;C.achv=n.achv;return ch}).catch(function(){return false})}
+function loadSubs(){return api('/rest/v1/liga_subs?select=*&order=created_at.desc&limit=3000').then(function(rows){var j=JSON.stringify(rows),ch=j!==C.sj;C.sj=j;C.subs=rows;return ch}).catch(function(){return false})}
+function loadCreds(){return api('/rest/v1/liga_credentials?select=uid,pass').then(function(rows){var m={};rows.forEach(function(r){m[r.uid]=r.pass});var j=JSON.stringify(m),ch=j!==C.cj;C.cj=j;C.creds=m;return ch}).catch(function(){return false})}
+function loadStudents(){return CL().students().then(function(r){var j=JSON.stringify(r),ch=j!==W.__sbStuJ;if(ch){W.__sbStuJ=j;W.__sbStudents=r}return ch}).catch(function(){return false})}
+function applyGrants(){var c=CL(),uid=c.uid();
+ return api('/rest/v1/liga_grants?select=id,title,xp,coins,ach,act&target=eq.'+uid+'&applied=eq.false&order=id.asc').then(function(rows){
+  if(!rows||!rows.length)return false;
+  return api('/rest/v1/liga_grants?target=eq.'+uid+'&applied=eq.false&id=in.('+rows.map(function(r){return r.id}).join(',')+')',{method:'PATCH',headers:{Prefer:'return=representation'},body:{applied:true}}).then(function(done){
+   if(!done||!done.length)return false;
+   var s=ST(),m=mx(),before=B().levelInfo().level,xp=0,co=0;
+   done.forEach(function(g){xp+=g.xp|0;co+=g.coins|0;if(g.ach&&m.ach.indexOf(g.ach)<0)m.ach.push(g.ach);if(g.act&&m.acts.indexOf(g.act)<0)m.acts.push(g.act);
+    m.log.unshift({t:Date.now(),title:g.title,xp:g.xp|0,coins:g.coins|0})});
+   m.log=m.log.slice(0,30);s.xp+=xp;s.coins+=co;B().persist();
+   toast('🎁 '+done.length+' recompensa(s) do professor: +'+xp+' XP, +'+co+' 🪙');
+   var nl=B().levelInfo();if(nl.level>before)setTimeout(function(){toast('🎉 Nível '+nl.level+': '+nl.name+'!')},600);
+   return true})}).catch(function(){return false})}
+
+var lastRef=0,pollT=null;
+function formDirty(){var a=D.activeElement;if(a&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)&&a.closest&&a.closest('#app-content'))return true;
+ if(D.querySelector('#app-content iframe'))return true;
+ return [].some.call(D.querySelectorAll('#app-content input,#app-content textarea'),function(el){var t=el.type;if(t==='file')return !!(el.files&&el.files.length);if(t==='hidden'||t==='button'||t==='submit'||t==='checkbox'||t==='radio')return false;return el.value!==el.defaultValue})}
+function render(){if(inApp())B().renderView(ST().activeView)}
+function refresh(){var c=CL();if(!c||!inApp()||ui.busy.refresh)return Promise.resolve();ui.busy.refresh=1;lastRef=Date.now();
+ var teacher=role()==='teacher',p=[loadItems(),loadSubs()];
+ if(teacher){p.push(loadCreds());p.push(loadStudents())}else p.push(applyGrants());
+ return Promise.all(p).then(function(r){ui.busy.refresh=0;navBadges();var ch=r.some(Boolean);if(ch&&V[ST().activeView]&&!formDirty()&&!ui.modal)render()},function(){ui.busy.refresh=0})}
+function startPoll(){stopPoll();pollT=setInterval(function(){if(!D.hidden)refresh()},25000)}
+function stopPoll(){if(pollT){clearInterval(pollT);pollT=null}}
+D.addEventListener('visibilitychange',function(){if(!D.hidden&&inApp())refresh()});
+
+/* ================= ALUNO: visibilidade por turma ================= */
+function myCls(){return norm(ST().profile&&ST().profile.classCode)}
+function visible(r){var c=norm(r.data&&r.data.cls);if(role()==='teacher')return true;return !c||c===myCls()}
+function mySubFor(actId){var uid=CL()&&CL().uid();return C.subs.find(function(s){return s.activity_id===actId&&s.student===uid})}
+function actStatus(a){var s=mySubFor(a.id);return s?s.status:'open'}
+function navBadges(){if(!inApp()||role()!=='student')return;var n=C.activities.filter(function(a){return visible(a)&&actStatus(a)==='open'}).length;
+ var b=D.querySelector('#student-nav [data-view="activities"]');if(b){var i=b.querySelector('.lx-pill');if(n){if(!i){i=D.createElement('i');i.className='lx-pill';b.appendChild(i)}i.textContent=n}else if(i)i.remove()}}
+
+/* ================= ARQUIVO / SLIDE ================= */
+var SL_EXT=['pdf','ppt','pptx','pps','ppsx','png','jpg','jpeg','webp','gif'],SL_IMG=['png','jpg','jpeg','webp','gif'];
+var SL_MIME={pdf:'application/pdf',ppt:'application/vnd.ms-powerpoint',pps:'application/vnd.ms-powerpoint',pptx:'application/vnd.openxmlformats-officedocument.presentationml.presentation',ppsx:'application/vnd.openxmlformats-officedocument.presentationml.slideshow',png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',webp:'image/webp',gif:'image/gif'};
+function slideEmbed(u){u=String(u||'').trim();var m;
+ if(m=u.match(/docs\.google\.com\/presentation\/d\/(e\/)?([\w-]+)/))return 'https://docs.google.com/presentation/d/'+(m[1]||'')+m[2]+'/embed?start=false&loop=false&delayms=3000';
+ if(m=u.match(/drive\.google\.com\/file\/d\/([\w-]+)/))return 'https://drive.google.com/file/d/'+m[1]+'/preview';
+ if(m=u.match(/canva\.com\/design\/([\w-]+)\/([\w-]+)\/(?:view|edit)/))return 'https://www.canva.com/design/'+m[1]+'/'+m[2]+'/view?embed';
+ if(m=u.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=)([\w-]{6,})/))return 'https://www.youtube.com/embed/'+m[1];
+ if(/^https:\/\/\S+\.pdf(\?\S*)?$/i.test(u))return u;return null}
+function viewerBody(d){var ext=(d.ext||'').toLowerCase(),url=safeUrl(d.url);if(!url)return '<p class="lx-sub">Link inválido.</p>';
+ function fr(src,box){return '<iframe id="lx_frame" src="'+esc(src)+'" allowfullscreen '+(box?'sandbox="allow-scripts allow-same-origin allow-popups allow-presentation" ':'')+'class="lx-frame"></iframe>'}
+ if(d.path){if(SL_IMG.indexOf(ext)>=0)return '<img src="'+esc(url)+'" alt="'+esc(d.title)+'" class="lx-img">';
+  if(ext==='pdf')return fr(url,false)+'<p class="lx-tiny" style="margin-top:8px">Se o PDF não aparecer no celular, use “Baixar” ou “Nova aba”.</p>';
+  return fr('https://view.officeapps.live.com/op/embed.aspx?src='+enc(url),true)}
+ var e=slideEmbed(url);return e?fr(e,true):'<p class="lx-sub" style="margin-top:12px">Este link não pode ser mostrado aqui dentro. Use o botão “Nova aba”.</p>'}
+function upload(file,folder){var c=CL(),ext=(file.name.split('.').pop()||'').toLowerCase();
+ if(SL_EXT.indexOf(ext)<0)return Promise.reject(new Error('Formato não aceito. Use PDF, PowerPoint (.pptx) ou imagem.'));
+ if(file.size>25*1024*1024)return Promise.reject(new Error('Arquivo muito grande (máximo 25 MB). Dica: salve o PowerPoint como PDF.'));
+ var path=c.uid()+'/'+folder+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,8)+'.'+ext;
+ return c.upload('liga-slides',path,file,SL_MIME[ext]).then(function(url){return{path:path,ext:ext,fname:file.name,url:url}})}
+
+/* ================= CLASSES / ESTUDANTES (visão do professor) ================= */
+function studs(){var raw=W.__sbStudents||[];
+ if(CL()||raw.length)return raw.filter(function(p){return p.role==='student'}).map(function(p){var st=p.state&&Object.keys(p.state).length?p.state:null,
+   ms=B().mkStudent(p.email,p.name,st,p.last_seen?Date.parse(p.last_seen):0,p.avatar);
+   ms.id=p.id;ms.cls=(p.class_name||'').trim();ms.coins=p.coins|0;ms.mx=st&&st.mx||null;ms.xp=p.xp|0;return ms});
+ return B().realStudents().map(function(ms){ms.id=null;ms.cls='';ms.coins=0;ms.mx=null;return ms})}
+function studsF(){return studs().filter(function(p){return !ui.cls||norm(p.cls)===norm(ui.cls)})}
+function classes(){var seen={},out=[];studs().forEach(function(p){if(p.cls&&!seen[norm(p.cls)]){seen[norm(p.cls)]=1;out.push(p.cls)}});return out.sort()}
+function clsSel(){var cs=classes();return '<div class="lx-bar"><label class="lx-tiny">Turma</label><select class="field-select lx-sel" data-lxc="cls"><option value="">Todas as turmas</option>'+cs.map(function(c){return '<option value="'+esc(c)+'"'+(norm(c)===norm(ui.cls)?' selected':'')+'>'+esc(c)+'</option>'}).join('')+'</select></div>'}
+CHG.cls=function(t){ui.cls=t.value;render()};
+function clsOpts(){return '<option value="">Todas as turmas</option>'+classes().map(function(c){return '<option value="'+esc(c)+'">'+esc(c)+'</option>'}).join('')}
+function noCloud(what){return '<div class="lx-empty"><b>'+what+'</b><br>Este recurso usa o banco de dados (Supabase). Entre com uma conta na nuvem para usar.</div>'}
+function dnOf(ms){return nameHTML(ms.name,ms.mx?{sy:eqValOf(ms.mx,'symbol'),nc:eqValOf(ms.mx,'nameColor')}:null)}
+function pendingSubs(){var ids={};C.activities.forEach(function(a){ids[a.id]=1});return C.subs.filter(function(s){return s.status==='pending'&&ids[s.activity_id]})}
+
+/* ================= SENHAS ================= */
+function pwCell(id){if(!id)return '<span class="lx-tiny">—</span>';
+ if(!ui.reveal[id])return '<span class="lx-dots">••••••••</span>';
+ var p=C.creds[id];return p?'<code class="lx-code">'+esc(p)+'</code>':'<span class="lx-tiny">ainda não disponível · aparece no próximo login · ou use “Redefinir”</span>'}
+ACT.reveal=function(t){var id=t.dataset.id;ui.reveal[id]=!ui.reveal[id];if(ui.reveal[id]&&!(id in C.creds))loadCreds();render()};
+ACT.revealall=function(){var ids=studsF().map(function(s){return s.id}).filter(Boolean),all=ids.every(function(i){return ui.reveal[i]});ids.forEach(function(i){ui.reveal[i]=!all});loadCreds().then(render);render()};
+function genPass(){var w=['Leitor','Livro','Conto','Fabula','Pagina','Poema','Heroi','Saga'],n=Math.floor(1000+Math.random()*9000);return w[Math.floor(Math.random()*w.length)]+n+Math.floor(10+Math.random()*90)}
+ACT.pwmodal=function(t){var id=t.dataset.id,self=id===(CL()&&CL().uid()),p=(W.__sbStudents||[]).find(function(x){return x.id===id});if(!p)return;
+ modal('<div class="lx-mh"><h2>'+(self?'Alterar minha senha':'Redefinir senha')+'</h2><button class="lx-x" data-lx="closem">×</button></div>'+
+ '<p class="lx-sub">'+esc(p.name)+' · '+esc(p.email)+'</p>'+
+ '<label class="lx-lbl">Nova senha (mínimo 8 caracteres)</label><div class="lx-two"><input class="field-input" id="lx_pw1" type="text" autocomplete="off" value=""><button class="lx-btn ghost" data-lx="genpw">Sugerir</button></div>'+
+ '<p class="lx-tiny" style="margin-top:8px">A senha aparece em texto para você poder passar ao aluno. Ele entra com o e-mail dele e esta senha.</p>'+
+ '<button class="lx-btn big" data-lx="setpw" data-id="'+esc(id)+'">Salvar nova senha</button>')};
+ACT.genpw=function(){var i=D.getElementById('lx_pw1');if(i)i.value=genPass()};
+ACT.setpw=function(t){var id=t.dataset.id,i=D.getElementById('lx_pw1'),v=i?i.value.trim():'';if(v.length<8)return toast('A senha precisa de pelo menos 8 caracteres.','warning');
+ t.disabled=true;CL().setPassword(id,v).then(function(){C.creds[id]=v;ui.reveal[id]=true;closeM();toast('🔑 Senha redefinida. Já pode entrar com ela.');render()}).catch(function(e){t.disabled=false;toast('Não foi possível redefinir a senha ('+(e.message||'erro')+').','error')})};
+
+V['teacher-students']=function(){var R=studsF(),cloud=!!CL();
+ var rows=R.map(function(s){var lv=s.lv?B().TRAIL[s.lv-1].n:'—';
+  return '<tr><td><div class="student-cell"><span class="student-avatar">'+s.avatar+'</span><div><strong>'+dnOf(s)+'</strong><div class="lx-tiny">'+esc(s.email)+'</div></div></div></td><td>'+esc(s.cls||'—')+'</td><td><span class="status-tag demo">NV.'+s.lv+'</span> <span class="lx-tiny">'+esc(lv)+'</span></td><td>'+fmt(s.xp)+'</td><td>🪙 '+fmt(s.coins)+'</td><td>'+s.done+'/'+B().missions.length+'</td><td class="lx-tiny">'+B().ago(s.last)+'</td>'+
+  (cloud?'<td>'+pwCell(s.id)+'</td><td><div class="lx-row"><button class="lx-btn ghost sm" data-lx="reveal" data-id="'+esc(s.id)+'">'+(ui.reveal[s.id]?'ocultar':'ver senha')+'</button><button class="lx-btn sm" data-lx="pwmodal" data-id="'+esc(s.id)+'">redefinir</button></div></td>':'')+'</tr>'}).join('');
+ return B().viewHeader('PAINEL DO PROFESSOR','Estudantes','Acompanhe nível, moedas e progresso. Você pode ver e redefinir a senha de cada aluno.','<button class="btn btn-dark" data-lx="revealall">👁 Mostrar / ocultar todas as senhas</button>')+clsSel()+
+ '<section class="surface-card teacher-panel"><div class="card-heading"><div><h3>Lista de estudantes</h3><p class="panel-sub">'+R.length+' cadastrado(s)'+(ui.cls?' · turma '+esc(ui.cls):'')+'</p></div></div>'+
+ (R.length?'<div class="teacher-table-wrap"><table class="teacher-table"><thead><tr><th>ESTUDANTE</th><th>TURMA</th><th>NÍVEL</th><th>XP</th><th>MOEDAS</th><th>MISSÕES</th><th>ÚLTIMO ACESSO</th>'+(cloud?'<th>SENHA</th><th>AÇÕES</th>':'')+'</tr></thead><tbody>'+rows+'</tbody></table></div>':'<p class="muted-note">Nenhum estudante cadastrado ainda.</p>')+
+ (cloud?'':'<p class="muted-note" style="margin-top:10px">As senhas só podem ser vistas com o banco de dados ligado.</p>')+'</section>'};
+
+V.accounts=function(){if(role()!=='teacher')return B().viewHeader('ACESSO','Área do professor','Esta página é exclusiva de professores.');
+ var cloud=!!CL(),me=cloud&&CL().uid(),L=(W.__sbStudents||[]);
+ if(!cloud)return B().viewHeader('GESTÃO PEDAGÓGICA','Contas e senhas','Veja e redefina as senhas de todas as contas.')+noCloud('Contas e senhas');
+ var rows=L.map(function(p){var isMe=p.id===me,teach=p.role==='teacher',can=!teach||isMe;
+  return '<tr><td><strong>'+esc(p.name)+(isMe?' <span class="lx-tiny">(você)</span>':'')+'</strong><div class="lx-tiny">'+esc(p.email)+'</div></td><td><span class="ac-role">'+(teach?'PROFESSOR(A)':'ESTUDANTE')+'</span></td><td>'+esc(p.class_name||'—')+'</td><td class="lx-tiny">'+B().ago(p.last_seen?Date.parse(p.last_seen):0)+'</td><td>'+(can?pwCell(p.id):'<span class="lx-tiny">—</span>')+'</td>'+
+  '<td>'+(can?'<div class="lx-row"><button class="lx-btn ghost sm" data-lx="reveal" data-id="'+esc(p.id)+'">'+(ui.reveal[p.id]?'ocultar':'ver senha')+'</button><button class="lx-btn sm" data-lx="pwmodal" data-id="'+esc(p.id)+'">'+(isMe?'alterar minha senha':'redefinir')+'</button></div>':'<span class="lx-tiny">outro professor</span>')+'</td></tr>'}).join('');
+ return B().viewHeader('GESTÃO PEDAGÓGICA','Contas e senhas','Veja a senha dos alunos, redefina a senha de qualquer aluno ou altere a sua própria.')+
+ '<section class="surface-card teacher-panel"><div class="card-heading"><div><h3>Todas as contas</h3><p class="panel-sub">'+L.length+' conta(s) na nuvem</p></div></div>'+
+ (L.length?'<div class="teacher-table-wrap"><table class="teacher-table"><thead><tr><th>PESSOA</th><th>FUNÇÃO</th><th>TURMA</th><th>ÚLTIMO ACESSO</th><th>SENHA</th><th>AÇÕES</th></tr></thead><tbody>'+rows+'</tbody></table></div>':'<p class="muted-note">Carregando contas…</p>')+
+ '<p class="lx-tiny" style="margin-top:12px">As senhas dos alunos aparecem depois do primeiro login feito com esta versão. Para quem ainda não entrou, use “redefinir”.</p></section>'};
+
+/* ================= MODAL ================= */
+function modal(html){closeM();var o=D.createElement('div');o.className='lx-ov';o.id='lx-ov';o.innerHTML='<div class="lx-md">'+html+'</div>';o.addEventListener('click',function(e){if(e.target===o)closeM()});D.body.appendChild(o);ui.modal=true;var f=o.querySelector('input:not([type=radio]),textarea');if(f)setTimeout(function(){f.focus()},60)}
+function closeM(){var o=D.getElementById('lx-ov');if(o)o.remove();ui.modal=false}
+ACT.closem=closeM;
+D.addEventListener('keydown',function(e){if(e.key==='Escape')closeM()});
+
+/* ================= SLIDES ================= */
+function slidesPage(teacher){var cloud=!!CL(),mine=CL()&&CL().uid();
+ var head=B().viewHeader(teacher?'PAINEL DO PROFESSOR':'MINHAS AULAS','Slides',teacher?'Publique os slides da aula. Os alunos veem aqui, no celular ou no computador.':'Slides das aulas, publicados pelo professor.');
+ if(!cloud)return head+noCloud('Slides');
+ var list=C.slides.filter(visible),cur=ui.slideOpen&&list.find(function(x){return x.id===ui.slideOpen}),form='',viewer='';
+ if(teacher)form='<section class="surface-card lx-pad lx-form"><h3>➕ Publicar slide</h3><label class="lx-lbl">Título</label><input class="field-input" id="sl_title" autocomplete="off" placeholder="Ex.: Aula 3 · A narrativa de Kafka">'+
+  '<label class="lx-lbl">Link do slide</label><input class="field-input" id="sl_url" autocomplete="off" placeholder="Cole o link (Google Slides, Canva, PDF…)">'+
+  '<label class="lx-lbl">…ou envie um arquivo (PDF, PowerPoint ou imagem, até 25 MB)</label><input class="field-input" id="sl_file" type="file" accept=".pdf,.ppt,.pptx,.pps,.ppsx,.png,.jpg,.jpeg,.webp,.gif">'+
+  '<label class="lx-lbl">Descrição (opcional)</label><input class="field-input" id="sl_desc" autocomplete="off" placeholder="Ex.: Estudar antes da atividade">'+
+  '<label class="lx-lbl">Enviar para</label><select class="field-select" id="sl_cls">'+clsOpts()+'</select>'+
+  '<p class="lx-tiny" style="margin-top:8px">No Google Slides: Compartilhar → “Qualquer pessoa com o link”. Se escolher link e arquivo, vale o arquivo.</p><button class="lx-btn big" id="sl_btn" data-lx="addslide">Publicar slide</button></section>';
+ if(cur){var d=cur.data;viewer='<section class="surface-card lx-pad" style="margin-bottom:16px"><div class="lx-spread"><h3>'+esc(d.title)+'</h3><div class="lx-row"><button class="lx-btn ghost sm" data-lx="slidefull">⛶ Tela cheia</button><a class="lx-btn ghost sm" href="'+esc(safeUrl(d.url))+'" target="_blank" rel="noopener noreferrer">↗ Nova aba</a><button class="lx-btn ghost sm" data-lx="slideclose">✖ Fechar</button></div></div>'+viewerBody(d)+'</section>'}
+ return head+form+viewer+'<div class="lx-grid wide" style="margin-top:16px">'+(list.map(function(r){var d=r.data;
+  return '<article class="surface-card lx-pad"><h3>'+esc(d.title)+'</h3>'+(d.desc?'<p class="lx-sub">'+esc(d.desc)+'</p>':'')+'<p class="lx-tiny" style="margin:6px 0 10px">'+(d.path?'📎 '+esc((d.ext||'').toUpperCase()):'🔗 Link')+' · '+dstr(d.date)+(d.cls?' · turma '+esc(d.cls):' · todas as turmas')+'</p><div class="lx-row"><button class="lx-btn sm" data-lx="openslide" data-id="'+esc(r.id)+'">▶ Abrir</button>'+(teacher&&r.owner===mine?'<button class="lx-btn ghost sm danger" data-lx="delslide" data-id="'+esc(r.id)+'">🗑 Excluir</button>':'')+'</div></article>'}).join('')||'<div class="lx-empty" style="grid-column:1/-1">Nenhum slide publicado ainda.</div>')+'</div>'}
+V.slides=function(){return slidesPage(false)};
+V['teacher-slides']=function(){return slidesPage(true)};
+ACT.openslide=function(t){ui.slideOpen=t.dataset.id;render();var f=D.getElementById('app-content');if(f)f.scrollIntoView({block:'start'})};
+ACT.slideclose=function(){ui.slideOpen=null;render()};
+ACT.slidefull=function(){var f=D.getElementById('lx_frame');if(f&&f.requestFullscreen)f.requestFullscreen()};
+ACT.addslide=function(t){var g=function(i){return D.getElementById(i).value.trim()},title=g('sl_title'),desc=g('sl_desc'),url=g('sl_url'),cls=g('sl_cls'),fe=D.getElementById('sl_file'),f=fe&&fe.files&&fe.files[0];
+ if(title.length<2)return toast('Dê um título ao slide.','warning');
+ if(!f&&!safeUrl(url))return toast('Cole um link https:// ou escolha um arquivo.','warning');
+ t.disabled=true;t.textContent=f?'Enviando arquivo…':'Publicando…';
+ var p=f?upload(f,'slide'):Promise.resolve({url:url});
+ p.then(function(file){return put('slide',Object.assign({title:title,desc:desc,cls:cls,date:iso()},file))}).then(function(){toast('🖥️ Slide publicado!');return loadItems()}).then(render).catch(function(e){t.disabled=false;t.textContent='Publicar slide';toast('Não consegui publicar: '+(e.message||'erro'),'error')})};
+ACT.delslide=function(t){var r=C.slides.find(function(x){return x.id===t.dataset.id});if(!r||!confirm('Excluir este slide?'))return;
+ del(r.id).then(function(){if(r.data.path)CL().removeFile('liga-slides',r.data.path).catch(function(){});if(ui.slideOpen===r.id)ui.slideOpen=null;toast('🗑️ Slide excluído.');return loadItems()}).then(render).catch(function(e){toast('Não consegui excluir ('+(e.message||'erro')+').','error')})};
+
+/* ================= ATIVIDADES ================= */
+function actById(id){return C.activities.find(function(a){return a.id===id})}
+function subsOf(actId){return C.subs.filter(function(s){return s.activity_id===actId})}
+function badge(st){return st==='ok'?'<span class="lx-b ok">Concluída ✓</span>':st==='pending'?'<span class="lx-b wait">Aguardando professor</span>':st==='wrong'?'<span class="lx-b bad">Resposta incorreta</span>':'<span class="lx-b">Para fazer</span>'}
+function attach(d){var u=safeUrl(d.url||d.link);return u?'<a class="lx-btn ghost sm" href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+(d.path?'📎 Abrir material':'🔗 Abrir link')+'</a>':''}
+V.activities=function(){var head=B().viewHeader('MINHAS TAREFAS','Atividades','Atividades enviadas pelo professor. Conclua para ganhar XP e moedas.');
+ if(!CL())return head+noCloud('Atividades');
+ var list=C.activities.filter(visible),m=mx(),log=m.log.slice(0,6),cls=ST().profile.classCode;
+ return head+'<div class="lx-bar"><span class="lx-tiny">Turma: <b>'+esc(cls||'não informada')+'</b></span></div>'+
+ '<div class="lx-grid wide">'+(list.map(function(r){var a=r.data,st=actStatus(r),late=a.deadline&&a.deadline<iso()&&st==='open';
+  return '<article class="surface-card lx-pad"><div class="lx-spread"><h3>'+esc(a.title)+'</h3>'+badge(st)+'</div><p class="lx-sub">'+esc(a.desc||'')+'</p>'+
+  '<p class="lx-tiny" style="margin:8px 0">+'+(a.xp|0)+' XP · +'+(a.coins|0)+' 🪙 · '+(a.type==='multipla'?'Múltipla escolha':'Resposta escrita')+(a.deadline?' · prazo '+dstr(a.deadline):'')+(late?' · <b style="color:#b3261e">prazo vencido</b>':'')+'</p>'+
+  '<div class="lx-row">'+attach(a)+(st==='open'?'<button class="lx-btn sm" data-lx="answer" data-id="'+esc(r.id)+'">'+(a.type==='multipla'?'Responder':'Escrever resposta')+'</button>':'')+'</div></article>'}).join('')||'<div class="lx-empty" style="grid-column:1/-1">Nenhuma atividade enviada ainda.</div>')+'</div>'+
+ (log.length?'<h3 class="lx-h">🎁 Recompensas recebidas</h3><section class="surface-card lx-pad">'+log.map(function(l){return '<p class="lx-li"><b>'+esc(l.title)+'</b> <span class="lx-tiny">+'+l.xp+' XP · +'+l.coins+' 🪙 · '+new Date(l.t).toLocaleDateString('pt-BR')+'</span></p>'}).join('')+'</section>':'')};
+ACT.answer=function(t){var r=actById(t.dataset.id);if(!r)return;var a=r.data;
+ modal('<div class="lx-mh"><h2>'+esc(a.title)+'</h2><button class="lx-x" data-lx="closem">×</button></div><p class="lx-sub">'+esc(a.desc||'')+'</p><div style="margin:8px 0">'+attach(a)+'</div>'+
+ (a.type==='multipla'?'<div class="lx-opts">'+(a.opts||[]).map(function(o,i){return '<label class="lx-opt"><input type="radio" name="lx_opt" value="'+i+'"> '+esc(o)+'</label>'}).join('')+'</div><p class="lx-tiny">Atenção: você só tem uma tentativa.</p>':
+  '<label class="lx-lbl">Sua resposta (mínimo 10 caracteres)</label><textarea class="field-area lx-ta" id="lx_ans" maxlength="4000" placeholder="Escreva aqui…"></textarea>')+
+ '<button class="lx-btn big" data-lx="sendans" data-id="'+esc(r.id)+'">Enviar resposta</button>')};
+ACT.sendans=function(t){var r=actById(t.dataset.id);if(!r||mySubFor(r.id))return;var a=r.data,ans,status='pending',right=false;
+ if(a.type==='multipla'){var sel=D.querySelector('input[name=lx_opt]:checked');if(!sel)return toast('Escolha uma alternativa.','warning');ans=sel.value;right=+sel.value===+a.correct;status=right?'ok':'wrong'}
+ else{ans=(D.getElementById('lx_ans').value||'').trim();if(ans.length<10)return toast('Escreva uma resposta com pelo menos 10 caracteres.','warning')}
+ t.disabled=true;
+ api('/rest/v1/liga_subs',{method:'POST',headers:{Prefer:'return=minimal'},body:{id:rid('r'),activity_id:r.id,student:CL().uid(),answer:ans,status:status}}).then(function(){
+  closeM();
+  if(a.type==='multipla'){if(right){var s=ST(),m=mx(),before=B().levelInfo().level;if(m.acts.indexOf(r.id)<0){s.xp+=a.xp|0;s.coins+=a.coins|0;m.acts.push(r.id);m.log.unshift({t:Date.now(),title:'Atividade: '+a.title,xp:a.xp|0,coins:a.coins|0});m.log=m.log.slice(0,30);B().persist()}
+    toast('✅ Correto! +'+(a.xp|0)+' XP e +'+(a.coins|0)+' 🪙');var nl=B().levelInfo();if(nl.level>before)setTimeout(function(){toast('🎉 Nível '+nl.level+': '+nl.name+'!')},600)}
+   else toast('❌ Resposta incorreta. Esta atividade foi encerrada.','warning')}
+  else toast('📨 Enviado! Aguarde a confirmação do professor.');
+  return loadSubs()}).then(function(){navBadges();render()}).catch(function(e){t.disabled=false;toast(/duplicate|unique|23505/i.test(e.message||'')?'Você já respondeu esta atividade.':'Não consegui enviar ('+(e.message||'erro')+').','error')})};
+
+/* --- professor: atividades --- */
+V['teacher-activities']=function(){var head=B().viewHeader('PAINEL DO PROFESSOR','Atividades','Envie atividades para os alunos e dê recompensas por atividades feitas em sala.');
+ if(!CL())return head+noCloud('Atividades');
+ var mine=CL().uid(),R=studsF();
+ var form='<section class="surface-card lx-pad lx-form"><h3>➕ Enviar atividade</h3><label class="lx-lbl">Título</label><input class="field-input" id="at_title" autocomplete="off" placeholder="Ex.: Leitura do capítulo 1 de A Metamorfose">'+
+  '<label class="lx-lbl">Instruções</label><textarea class="field-area lx-ta" id="at_desc" placeholder="Explique o que o aluno deve fazer…"></textarea>'+
+  '<label class="lx-lbl">Link de apoio (opcional)</label><input class="field-input" id="at_link" autocomplete="off" placeholder="https://…">'+
+  '<label class="lx-lbl">…ou anexe um material (PDF, PowerPoint ou imagem)</label><input class="field-input" id="at_file" type="file" accept=".pdf,.ppt,.pptx,.pps,.ppsx,.png,.jpg,.jpeg,.webp,.gif">'+
+  '<label class="lx-lbl">Tipo de resposta</label><select class="field-select" id="at_type" data-lxc="attype"><option value="escrita">Resposta escrita (você confirma)</option><option value="multipla">Múltipla escolha (correção automática)</option></select>'+
+  '<div id="at_opts" style="display:none"><label class="lx-lbl">Alternativas</label>'+[0,1,2,3].map(function(i){return '<input class="field-input" style="margin-top:6px" id="at_o'+i+'" placeholder="Alternativa '+(i+1)+'">'}).join('')+'<label class="lx-lbl">Alternativa correta</label><select class="field-select" id="at_ok"><option value="0">1</option><option value="1">2</option><option value="2">3</option><option value="3">4</option></select></div>'+
+  '<div class="lx-two"><div><label class="lx-lbl">XP</label><input class="field-input" id="at_xp" type="number" min="0" max="1000" value="50"></div><div><label class="lx-lbl">Moedas</label><input class="field-input" id="at_coins" type="number" min="0" max="1000" value="10"></div></div>'+
+  '<div class="lx-two"><div><label class="lx-lbl">Prazo</label><input class="field-input" id="at_dead" type="date" value="'+iso()+'"></div><div><label class="lx-lbl">Enviar para</label><select class="field-select" id="at_cls">'+clsOpts()+'</select></div></div>'+
+  '<button class="lx-btn big" id="at_btn" data-lx="addact">Enviar atividade</button></section>';
+ var list=C.activities.map(function(r){var a=r.data,subs=subsOf(r.id),pend=subs.filter(function(s){return s.status==='pending'}).length;
+  return '<article class="surface-card lx-pad"><div class="lx-spread"><h3>'+esc(a.title)+'</h3>'+(pend?'<span class="lx-b wait">'+pend+' para revisar</span>':'')+'</div><p class="lx-tiny" style="margin:6px 0">+'+(a.xp|0)+' XP · +'+(a.coins|0)+' 🪙 · '+(a.type==='multipla'?'múltipla escolha':'resposta escrita')+' · '+(a.cls?'turma '+esc(a.cls):'todas as turmas')+' · prazo '+dstr(a.deadline)+' · '+subs.length+' resposta(s)</p>'+
+  '<div class="lx-row"><button class="lx-btn sm" data-lx="review" data-id="'+esc(r.id)+'">Ver respostas</button>'+(r.owner===mine?'<button class="lx-btn ghost sm danger" data-lx="delact" data-id="'+esc(r.id)+'">🗑 Excluir</button>':'')+'</div></article>'}).join('');
+ var reward='<section class="surface-card lx-pad lx-form"><h3>🏅 Atividade em sala</h3><p class="lx-sub">Passou uma atividade na sala? Dê XP e moedas a quem fez, mesmo sem usar o site.</p>'+
+  '<label class="lx-lbl">Atividade</label><input class="field-input" id="gr_title" autocomplete="off" placeholder="Ex.: Resumo do capítulo 2">'+
+  '<div class="lx-two"><div><label class="lx-lbl">XP</label><input class="field-input" id="gr_xp" type="number" min="0" max="1000" value="50"></div><div><label class="lx-lbl">Moedas</label><input class="field-input" id="gr_coins" type="number" min="0" max="1000" value="10"></div></div>'+
+  '<div class="lx-spread" style="margin-top:12px"><b class="lx-tiny">ALUNOS'+(ui.cls?' · turma '+esc(ui.cls):'')+'</b><button class="lx-btn ghost sm" data-lx="togall">marcar / desmarcar todos</button></div>'+
+  '<div class="lx-checks">'+(R.map(function(s){return '<label class="lx-chk"><input type="checkbox" class="gr_s" value="'+esc(s.id)+'"> '+esc(s.name)+'</label>'}).join('')||'<p class="lx-tiny">Nenhum aluno nesta turma.</p>')+'</div>'+
+  '<button class="lx-btn big" data-lx="grant"'+(R.length?'':' disabled')+'>Dar recompensa</button></section>';
+ return head+clsSel()+'<div class="lx-cols"><div>'+form+'</div><div>'+reward+'</div></div><h3 class="lx-h">Atividades enviadas</h3><div class="lx-grid wide">'+(list||'<div class="lx-empty" style="grid-column:1/-1">Nenhuma atividade enviada ainda.</div>')+'</div>'};
+CHG.attype=function(t){var b=D.getElementById('at_opts');if(b)b.style.display=t.value==='multipla'?'block':'none'};
+ACT.togall=function(){var b=[].slice.call(D.querySelectorAll('.gr_s')),all=b.every(function(x){return x.checked});b.forEach(function(x){x.checked=!all})};
+ACT.addact=function(t){var g=function(i){return D.getElementById(i).value.trim()},title=g('at_title'),desc=g('at_desc'),link=g('at_link'),type=g('at_type'),fe=D.getElementById('at_file'),f=fe&&fe.files&&fe.files[0];
+ var xp=Math.max(0,Math.min(1000,Math.floor(+g('at_xp')||0))),coins=Math.max(0,Math.min(1000,Math.floor(+g('at_coins')||0)));
+ if(title.length<3)return toast('Dê um título à atividade.','warning');
+ if(link&&!safeUrl(link))return toast('O link precisa começar com https://','warning');
+ var data={title:title,desc:desc,link:link,type:type,xp:xp,coins:coins,deadline:g('at_dead'),cls:g('at_cls'),date:iso()};
+ if(type==='multipla'){data.opts=[0,1,2,3].map(function(i){return g('at_o'+i)});if(data.opts.some(function(o){return !o}))return toast('Preencha as 4 alternativas.','warning');data.correct=+g('at_ok')}
+ t.disabled=true;t.textContent='Enviando…';
+ (f?upload(f,'atividade'):Promise.resolve({})).then(function(file){return put('activity',Object.assign(data,file))}).then(function(){toast('📝 Atividade enviada para '+(data.cls?'a turma '+data.cls:'todos os alunos')+'!');return loadItems()}).then(render).catch(function(e){t.disabled=false;t.textContent='Enviar atividade';toast('Não consegui enviar: '+(e.message||'erro'),'error')})};
+ACT.delact=function(t){var r=actById(t.dataset.id);if(!r||!confirm('Excluir esta atividade? As respostas dos alunos também serão apagadas.'))return;
+ del(r.id).then(function(){if(r.data.path)CL().removeFile('liga-slides',r.data.path).catch(function(){});toast('🗑️ Atividade excluída.');return Promise.all([loadItems(),loadSubs()])}).then(render).catch(function(e){toast('Não consegui excluir ('+(e.message||'erro')+').','error')})};
+ACT.grant=function(t){var title=D.getElementById('gr_title').value.trim(),xp=Math.max(0,Math.min(1000,Math.floor(+D.getElementById('gr_xp').value||0))),coins=Math.max(0,Math.min(1000,Math.floor(+D.getElementById('gr_coins').value||0))),
+ ids=[].slice.call(D.querySelectorAll('.gr_s:checked')).map(function(x){return x.value});
+ if(!title)return toast('Dê um nome à atividade.','warning');if(!xp&&!coins)return toast('Informe XP e/ou moedas.','warning');if(!ids.length)return toast('Marque pelo menos um aluno.','warning');
+ t.disabled=true;var me=CL().uid();
+ api('/rest/v1/liga_grants',{method:'POST',headers:{Prefer:'return=minimal'},body:ids.map(function(id){return{target:id,title:title,xp:xp,coins:coins,by:me}})}).then(function(){
+  toast('✅ Recompensa dada a '+ids.length+' aluno(s): +'+xp+' XP, +'+coins+' 🪙. Eles recebem ao abrir a Liga.');render()}).catch(function(e){t.disabled=false;toast('Não consegui dar a recompensa ('+(e.message||'erro')+').','error')})};
+ACT.review=function(t){var r=actById(t.dataset.id);if(!r)return;var a=r.data,subs=subsOf(r.id),SS=W.__sbStudents||[];
+ modal('<div class="lx-mh"><h2>Respostas · '+esc(a.title)+'</h2><button class="lx-x" data-lx="closem">×</button></div>'+
+ (subs.length?subs.map(function(s){var p=SS.find(function(x){return x.id===s.student}),m=p&&p.state&&p.state.mx,tc=m?eqValOf(m,'textColor'):null,tf=m?eqValOf(m,'textEffect'):null,
+  txt=a.type==='multipla'?('Alternativa '+(+s.answer+1)+': '+(a.opts&&a.opts[+s.answer]||'')):s.answer;
+  return '<div class="lx-sub-card"><div class="lx-spread"><b>'+(p?nameHTML(p.name,m?{sy:eqValOf(m,'symbol'),nc:eqValOf(m,'nameColor')}:null):'Aluno')+'</b>'+badge(s.status==='ok'?'ok':s.status)+'</div>'+
+  '<p class="lx-ans '+(tf?'fx-'+esc(tf):'')+'" style="'+(tc&&/^#[0-9a-fA-F]{3,8}$/.test(tc)?'color:'+tc:'')+'">'+esc(txt)+'</p>'+
+  (s.status==='pending'?'<div class="lx-row"><button class="lx-btn sm" data-lx="confirm" data-id="'+esc(s.id)+'">Confirmar (+'+(a.xp|0)+' XP, +'+(a.coins|0)+' 🪙)</button><button class="lx-btn ghost sm" data-lx="reject" data-id="'+esc(s.id)+'">Recusar</button></div>':
+   s.status==='wrong'?'<div class="lx-row"><button class="lx-btn ghost sm" data-lx="reject" data-id="'+esc(s.id)+'">Liberar nova tentativa</button></div>':'')+'</div>'}).join(''):'<p class="lx-sub">Nenhuma resposta ainda.</p>'))};
+ACT.confirm=function(t){var s=C.subs.find(function(x){return x.id===t.dataset.id});if(!s||s.status!=='pending')return;var r=actById(s.activity_id);if(!r)return;t.disabled=true;
+ api('/rest/v1/liga_subs?id=eq.'+enc(s.id)+'&status=eq.pending',{method:'PATCH',headers:{Prefer:'return=representation'},body:{status:'ok',reviewed_at:new Date().toISOString()}}).then(function(rows){
+  if(!rows||!rows.length)return;
+  return api('/rest/v1/liga_grants',{method:'POST',headers:{Prefer:'return=minimal'},body:{target:s.student,title:'Atividade: '+r.data.title,xp:r.data.xp|0,coins:r.data.coins|0,act:r.id,by:CL().uid()}}).then(function(){toast('✅ Conclusão confirmada.')})}).then(loadSubs).then(function(){ACT.review({dataset:{id:s.activity_id}});render()}).catch(function(e){t.disabled=false;toast('Não consegui confirmar ('+(e.message||'erro')+').','error')})};
+ACT.reject=function(t){var s=C.subs.find(function(x){return x.id===t.dataset.id});if(!s)return;t.disabled=true;
+ api('/rest/v1/liga_subs?id=eq.'+enc(s.id),{method:'DELETE',headers:{Prefer:'return=minimal'}}).then(loadSubs).then(function(){toast('Resposta liberada: o aluno pode refazer.');ACT.review({dataset:{id:s.activity_id}});render()}).catch(function(e){t.disabled=false;toast('Não consegui ('+(e.message||'erro')+').','error')})};
+
+/* ================= PROFESSOR: visão geral, ranking, gráficos, gestão ================= */
+V['teacher-dashboard']=function(){var t=ST(),R=studsF(),pend=pendingSubs().length,cloud=!!CL(),top=R.slice().sort(function(a,b){return b.xp-a.xp}).slice(0,5);
+ var recent=C.activities.slice(0,4).map(function(r){var subs=subsOf(r.id),p=subs.filter(function(s){return s.status==='pending'}).length;
+  return '<div class="lx-li lx-spread"><div><b>'+esc(r.data.title)+'</b><div class="lx-tiny">'+subs.length+' resposta(s) · prazo '+dstr(r.data.deadline)+'</div></div>'+(p?'<button class="lx-btn sm" data-lx="review" data-id="'+esc(r.id)+'">'+p+' para revisar</button>':'<span class="lx-tiny">em dia ✓</span>')+'</div>'}).join('');
+ return B().viewHeader('PAINEL DO PROFESSOR','Olá, <em>'+esc((t.profile.name||'Professor(a)').split(' ')[0])+'</em> 👋','Organize slides e atividades, dê recompensas e acompanhe a turma.')+clsSel()+
+ '<div class="teacher-kpis"><article class="surface-card teacher-kpi"><small>ESTUDANTES</small><strong>'+R.length+'</strong><span>'+(ui.cls?'Turma '+esc(ui.cls):'Contas na Liga')+'</span></article>'+
+ '<article class="surface-card teacher-kpi"><small>ATIVIDADES ENVIADAS</small><strong>'+C.activities.length+'</strong><span>Para os alunos</span></article>'+
+ '<article class="surface-card teacher-kpi"><small>SLIDES PUBLICADOS</small><strong>'+C.slides.length+'</strong><span>Aulas disponíveis</span></article>'+
+ '<article class="surface-card teacher-kpi"><small>RESPOSTAS PARA REVISAR</small><strong>'+pend+'</strong><span>'+(pend?'Aguardando você':'Tudo em dia')+'</span></article></div>'+
+ '<div class="lx-quick"><button class="lx-btn" data-view="teacher-slides">🖥 Publicar slide</button><button class="lx-btn" data-view="teacher-activities">📝 Nova atividade</button><button class="lx-btn" data-view="teacher-activities">🏅 Dar recompensa</button><button class="lx-btn" data-view="teacher-students">🔑 Ver senhas</button><button class="lx-btn ghost" data-view="teacher-manage">🎁 Loja e conquistas</button></div>'+
+ '<div class="teacher-grid"><section class="surface-card teacher-panel"><h3>Atividades recentes</h3><p class="panel-sub">Revise as respostas escritas dos alunos</p>'+(cloud?(recent||'<p class="muted-note">Nenhuma atividade enviada ainda.</p>'):noCloud('Atividades'))+'</section>'+
+ '<section class="surface-card teacher-panel"><h3>Top da turma</h3><p class="panel-sub">Mais XP acumulado</p>'+(top.length?top.map(function(s,i){return '<div class="lx-li lx-spread"><span>'+(i+1)+'º <span class="student-avatar" style="display:inline-grid;vertical-align:middle">'+s.avatar+'</span> '+dnOf(s)+'</span><b>'+fmt(s.xp)+' XP</b></div>'}).join(''):'<p class="muted-note">Sem estudantes ainda.</p>')+'</section></div>'};
+
+V['teacher-ranking']=function(){var R=studsF().slice().sort(function(a,b){return b.xp-a.xp||a.name.localeCompare(b.name)}),medals=['🥇','🥈','🥉'];
+ return B().viewHeader('PAINEL DO PROFESSOR','Ranking','Estudantes ordenados pelo XP acumulado.')+clsSel()+
+ '<section class="surface-card lx-pad">'+(R.length?R.map(function(s,i){return '<div class="lx-li lx-spread"><div class="lx-row"><span style="width:34px;text-align:center;font-size:18px">'+(medals[i]||(i+1)+'º')+'</span><span class="student-avatar">'+s.avatar+'</span><div><strong>'+dnOf(s)+'</strong><div class="lx-tiny">'+esc(s.cls||'sem turma')+' · '+esc(B().TRAIL[s.lv-1].n)+'</div></div></div><div style="text-align:right"><b>'+fmt(s.xp)+' XP</b><div class="lx-tiny">🪙 '+fmt(s.coins)+'</div></div></div>'}).join(''):'<p class="muted-note">Ranking vazio.</p>')+'</section>'};
+
+function bars(rows,k,color){var max=Math.max(1,Math.max.apply(null,rows.map(function(r){return r[k]})));
+ return rows.length?rows.map(function(r){return '<div style="margin-top:10px"><div class="lx-spread"><span>'+dnOf(r)+'</span><b>'+r[k]+'</b></div><div class="lx-bar2"><i style="width:'+(r[k]/max*100)+'%;background:'+color+'"></i></div></div>'}).join(''):'<p class="muted-note">Ainda sem dados.</p>'}
+V['teacher-charts']=function(){var R=studsF(),by=function(k){return R.filter(function(r){return r[k]>0}).sort(function(a,b){return b[k]-a[k]})},tok=R.reduce(function(n,r){return n+r.ok},0),twr=R.reduce(function(n,r){return n+r.bad},0),pc=tok+twr?Math.round(tok/(tok+twr)*100):0;
+ return B().viewHeader('PAINEL DO PROFESSOR','Gráficos','Quem mais acertou e quem mais errou nas missões. Turma: ✅ '+tok+' acertos · ❌ '+twr+' erros · '+pc+'% de aproveitamento.')+clsSel()+
+ '<div class="teacher-grid" style="grid-template-columns:1fr 1fr"><section class="surface-card teacher-panel"><h3>✅ Quem mais acertou</h3>'+bars(by('ok'),'ok','#059669')+'</section><section class="surface-card teacher-panel"><h3>❌ Quem mais errou</h3>'+bars(by('bad'),'bad','#e11d48')+'</section></div>'};
+
+var CATOPT=Object.keys(CATS).map(function(k){return '<option value="'+k+'">'+CATS[k]+'</option>'}).join('');
+V['teacher-manage']=function(){var head=B().viewHeader('PAINEL DO PROFESSOR','Loja e conquistas','Crie conquistas e itens da loja para motivar a turma.');
+ if(!CL())return head+noCloud('Gestão da loja e conquistas');
+ var mine=CL().uid(),R=studsF(),A=allAch();
+ return head+clsSel()+'<div class="lx-cols"><div><section class="surface-card lx-pad lx-form"><h3>🎖️ Nova conquista</h3><label class="lx-lbl">Nome</label><input class="field-input" id="g_name" placeholder="Ex.: Leitor da Semana">'+
+ '<label class="lx-lbl">Descrição</label><input class="field-input" id="g_desc" placeholder="Ex.: Leu todos os capítulos combinados">'+
+ '<div class="lx-two"><div><label class="lx-lbl">Moedas</label><input class="field-input" id="g_coins" type="number" min="0" max="1000" value="15"></div><div><label class="lx-lbl">Ícone</label><input class="field-input" id="g_icon" placeholder="🎖️" maxlength="4"></div></div>'+
+ '<div class="lx-two"><div><label class="lx-lbl">Condição</label><select class="field-select" id="g_type"><option value="manual">Dada por mim (manual)</option><option value="missoes">Missões concluídas</option><option value="xp">XP acumulado</option><option value="atividades">Atividades concluídas</option></select></div><div><label class="lx-lbl">Quantidade</label><input class="field-input" id="g_n" type="number" min="1" value="1"></div></div>'+
+ '<button class="lx-btn big" data-lx="addach">Criar conquista</button>'+
+ (C.achv.length?'<h4 class="lx-h2">Criadas por professores</h4>'+C.achv.map(function(r){return '<div class="lx-li lx-spread"><span>'+esc(r.data.icon||'🎖️')+' <b>'+esc(r.data.name)+'</b> <span class="lx-tiny">+'+(r.data.coins|0)+' 🪙</span></span>'+(r.owner===mine?'<button class="lx-btn ghost sm danger" data-lx="delitem" data-id="'+esc(r.id)+'">remover</button>':'')+'</div>'}).join(''):'')+
+ '</section><section class="surface-card lx-pad lx-form" style="margin-top:16px"><h3>🎖️ Dar conquista a um aluno</h3><label class="lx-lbl">Conquista</label><select class="field-select" id="gv_a">'+A.map(function(a){return '<option value="'+esc(a.id)+'">'+esc(a.name)+' (+'+a.coins+' 🪙)</option>'}).join('')+'</select>'+
+ '<label class="lx-lbl">Aluno</label><select class="field-select" id="gv_s">'+(R.map(function(s){return '<option value="'+esc(s.id)+'">'+esc(s.name)+'</option>'}).join('')||'<option value="">sem alunos</option>')+'</select>'+
+ '<button class="lx-btn big" data-lx="givach"'+(R.length?'':' disabled')+'>Dar conquista</button></section></div>'+
+ '<div><section class="surface-card lx-pad lx-form"><h3>🛒 Novo item da loja</h3><label class="lx-lbl">Nome</label><input class="field-input" id="i_name" placeholder="Ex.: Avatar Fênix">'+
+ '<label class="lx-lbl">Descrição</label><input class="field-input" id="i_desc" placeholder="Ex.: Renasce a cada desafio">'+
+ '<div class="lx-two"><div><label class="lx-lbl">Preço (moedas)</label><input class="field-input" id="i_price" type="number" min="0" max="2000" value="80"></div><div><label class="lx-lbl">Categoria</label><select class="field-select" id="i_cat" data-lxc="itemcat">'+CATOPT+'</select></div></div>'+
+ '<div id="w_emoji"><label class="lx-lbl">Emoji do item</label><input class="field-input" id="i_emoji" placeholder="🦉" maxlength="4"></div>'+
+ '<div id="w_anim" style="display:none"><label class="lx-chk"><input id="i_anim" type="checkbox" checked> Animado (muda de cor)</label></div>'+
+ '<div id="w_color" style="display:none"><label class="lx-lbl">Cor</label><input class="field-input" id="i_color" type="color" value="#7c3aed" style="height:44px;padding:4px"></div>'+
+ '<div id="w_fx" style="display:none"><label class="lx-lbl">Efeito</label><select class="field-select" id="i_fx"><option value="negrito">Negrito</option><option value="italico">Itálico</option><option value="neon">Neon</option><option value="rainbow">Arco-íris</option></select></div>'+
+ '<button class="lx-btn big" data-lx="additem">Adicionar à loja</button>'+
+ (C.shop.length?'<h4 class="lx-h2">Criados por professores</h4>'+C.shop.map(function(r){return '<div class="lx-li lx-spread"><span>'+esc(r.data.icon||'🎁')+' <b>'+esc(r.data.name)+'</b> <span class="lx-tiny">🪙 '+(r.data.price|0)+'</span></span>'+(r.owner===mine?'<button class="lx-btn ghost sm danger" data-lx="delitem" data-id="'+esc(r.id)+'">remover</button>':'')+'</div>'}).join(''):'')+'</section></div></div>'};
+CHG.itemcat=function(t){var c=t.value,sh=function(id,v){var e=D.getElementById(id);if(e)e.style.display=v?'block':'none'};sh('w_emoji',c==='avatar'||c==='symbol');sh('w_anim',c==='symbol');sh('w_color',c==='nameColor'||c==='textColor'||c==='theme');sh('w_fx',c==='textEffect')};
+ACT.addach=function(t){var g=function(i){return D.getElementById(i).value.trim()},name=g('g_name');if(!name)return toast('Dê um nome à conquista.','warning');
+ t.disabled=true;put('achv',{name:name,desc:g('g_desc')||'Conquista especial da Liga.',coins:Math.max(0,Math.min(1000,Math.floor(+g('g_coins')||0))),icon:g('g_icon')||'🎖️',cond:{type:g('g_type'),n:Math.max(1,Math.floor(+g('g_n')||1))}}).then(function(){toast('🎖️ Conquista criada!');return loadItems()}).then(render).catch(function(e){t.disabled=false;toast('Não consegui criar ('+(e.message||'erro')+').','error')})};
+ACT.additem=function(t){var g=function(i){return D.getElementById(i).value.trim()},name=g('i_name');if(!name)return toast('Dê um nome ao item.','warning');
+ var cat=g('i_cat'),value=null;
+ if(cat==='avatar')value=g('i_emoji')||'🎁';if(cat==='symbol')value={e:g('i_emoji')||'🔥',anim:D.getElementById('i_anim').checked};
+ if(cat==='nameColor'||cat==='textColor')value=g('i_color');if(cat==='theme')value={acc:g('i_color'),soft:g('i_color')+'22'};if(cat==='textEffect')value=g('i_fx');
+ t.disabled=true;put('shop',{name:name,desc:g('i_desc')||'Item especial da loja.',price:Math.max(0,Math.min(2000,Math.floor(+g('i_price')||0))),icon:(cat==='avatar'||cat==='symbol')?(g('i_emoji')||'🎁'):'🎁',effect:{type:cat,value:value}}).then(function(){toast('🛒 Item adicionado à loja!');return loadItems()}).then(render).catch(function(e){t.disabled=false;toast('Não consegui adicionar ('+(e.message||'erro')+').','error')})};
+ACT.delitem=function(t){if(!confirm('Remover este item?'))return;del(t.dataset.id).then(function(){toast('Removido.');return loadItems()}).then(render).catch(function(e){toast('Não consegui remover ('+(e.message||'erro')+').','error')})};
+ACT.givach=function(t){var aid=D.getElementById('gv_a').value,sid=D.getElementById('gv_s').value,a=allAch().find(function(x){return x.id===aid});if(!a||!sid)return;
+ var p=(W.__sbStudents||[]).find(function(x){return x.id===sid});if(p&&p.state&&p.state.mx&&(p.state.mx.ach||[]).indexOf(aid)>=0)return toast('Este aluno já tem essa conquista.','warning');
+ t.disabled=true;api('/rest/v1/liga_grants',{method:'POST',headers:{Prefer:'return=minimal'},body:{target:sid,title:'Conquista: '+a.name,xp:0,coins:a.coins|0,ach:a.id,by:CL().uid()}}).then(function(){toast('🎖️ Conquista enviada! O aluno recebe ao abrir a Liga.');render()}).catch(function(e){t.disabled=false;toast('Não consegui ('+(e.message||'erro')+').','error')})};
+
+/* ================= ALUNO: turma no perfil ================= */
+V.profile=function(){var h=B().renderProfile();if(role()!=='student'||!CL())return h;
+ return h+'<section class="surface-card lx-pad lx-form" style="margin-top:16px"><h3>Minha turma</h3><p class="lx-sub">Informe sua turma para receber os slides e atividades do seu professor.</p><div class="lx-two"><input class="field-input" id="lx_myclass" maxlength="40" placeholder="Ex.: 8º ano B" value="'+esc(ST().profile.classCode||'')+'"><button class="lx-btn" data-lx="saveclass">Salvar turma</button></div></section>'};
+ACT.saveclass=function(t){var v=(D.getElementById('lx_myclass').value||'').trim().slice(0,40);t.disabled=true;
+ api('/rest/v1/liga_profiles?id=eq.'+CL().uid(),{method:'PATCH',headers:{Prefer:'return=minimal'},body:{class_name:v}}).then(function(){ST().profile.classCode=v;B().persist();toast('Turma salva!');t.disabled=false;navBadges();refresh()}).catch(function(e){t.disabled=false;toast('Não consegui salvar ('+(e.message||'erro')+').','error')})};
+
+/* ================= TOPO, GANCHOS E EVENTOS ================= */
+function chips(){var el=D.getElementById('mx-chips');if(!el)return;if(!inApp()||role()!=='student'){el.innerHTML='';return}var s=ST(),L=B().levelInfo();
+ el.innerHTML='<span class="lx-chip" title="Moedas">🪙 '+fmt(s.coins)+'</span><span class="lx-chip" title="Experiência">✦ '+fmt(s.xp)+' XP</span><span class="lx-chip" title="Nível">♜ Nv. '+L.level+'</span>'}
+var TITLES={slides:'Slides',activities:'Atividades','teacher-slides':'Slides','teacher-activities':'Atividades','teacher-ranking':'Ranking','teacher-charts':'Gráficos','teacher-manage':'Loja e conquistas','teacher-students':'Estudantes','teacher-dashboard':'Visão geral',accounts:'Contas e senhas'};
+W.__LX={views:V,titles:TITLES,esc:esc,nameHTML:nameHTML,deco:deco,emoji:emoji,formDirty:formDirty,
+ afterPersist:function(){if(!inApp())return;if(role()==='student'){checkAch();chips()}},
+ after:function(view){if(V[view]&&CL()&&Date.now()-lastRef>8000)refresh();chips();if(role()==='student')navBadges()},
+ topbar:function(){chips()},
+ onEnter:function(){applyTheme();chips();ui.cls='';ui.slideOpen=null;if(CL()){refresh();startPoll()}},
+ onLeave:function(){stopPoll();closeM();applyTheme();C.slides=[];C.activities=[];C.shop=[];C.achv=[];C.subs=[];C.creds={};C.ij=C.sj=C.cj='';var r=D.documentElement.style;r.removeProperty('--violet');r.removeProperty('--violet-2');r.removeProperty('--violet-pale')}};
+D.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-lx]');if(!t)return;var h=ACT[t.dataset.lx];if(h){e.preventDefault();h(t,e)}});
+D.addEventListener('change',function(e){var t=e.target.closest&&e.target.closest('[data-lxc]');if(!t)return;var h=CHG[t.dataset.lxc];if(h)h(t,e)});
+})();
+
+</script>
+<script>
 (()=>{const __hsl=window.__hs,hs=(s)=>__hsl(s),$=s=>document.querySelector(s),K='liga-contas-v1',CODE='ADM2026';let tab='login',err='';
 
 const users=()=>{try{return JSON.parse(localStorage.getItem(K)||'[]')}catch(e){return[]}},save=u=>{try{localStorage.setItem(K,JSON.stringify(u))}catch(e){}};
@@ -1311,7 +1841,7 @@ function draw(){const logo=$('#mx-logo-src').innerHTML;$('#mx-card').innerHTML=`
 <div class="mx-tabs"><button data-t="login" class="${tab==='login'?'on':''}">Entrar</button><button data-t="reg" class="${tab==='reg'?'on':''}">Criar conta</button></div>
 ${tab==='login'?`<form id="mx-f"><label>E-mail</label><input id="l_email" type="email" required><label>Senha</label><input id="l_pass" type="password" required><div style="margin-top:14px"><button class="mx-btn">Entrar</button></div></form><button type="button" class="mx-tiny" data-forgot>Esqueceu a senha?</button>`:`<form id="mx-f"><label>Nome</label><input id="f_name" maxlength="24"><label>E-mail (Gmail)</label><input id="f_email" type="email"><label>Senha</label><input id="f_pass" type="password"><p class="mx-tiny">Use pelo menos 8 caracteres. Não use a senha do seu Gmail.</p>
 <label>Código do professor (opcional)</label><input id="f_tcode" type="password" autocomplete="off" placeholder="Código secreto da coordenação"><div id="codeHint" class="mx-tiny"></div>
-<div id="teacherExtra" style="display:none"><label>Nome da turma</label><input id="f_classname" placeholder="Ex.: 8º ano B"></div>
+<div id="teacherExtra"><label id="clsLbl">Sua turma (opcional)</label><input id="f_classname" maxlength="40" placeholder="Ex.: 8º ano B"></div>
 <div style="margin-top:14px"><button class="mx-btn">Criar conta de <span id="roleLbl">estudante</span></button></div></form><p class="mx-tiny" style="margin-top:12px">Sem o código do professor, a conta será criada como <b>estudante</b>.<br>Professores: solicite o código à coordenação.</p>`}
 ${err?`<div class="mx-err">${err}</div>`:''}<button type="button" class="mx-tiny" data-back>← Voltar ao início</button>
 <p class="mx-tiny" style="margin-top:14px;text-align:center">Projeto de pesquisa <b>Liga dos Leitores</b> · leitura e gamificação</p><p class="mx-tiny" style="margin-top:6px;text-align:center">${window.__sb&&window.__sb.on?'☁ Contas e progresso salvos na nuvem':'Modo local: contas e progresso só neste navegador'}</p>`}
@@ -1323,7 +1853,7 @@ document.addEventListener('click',e=>{const o=e.target.closest('[data-open-login
 const t=e.target.closest('#mx-card [data-t]');if(t){tab=t.dataset.t;err='';draw();return}
 if(e.target.closest('[data-forgot]')){err='Peça à coordenação para redefinir sua senha.';draw();return}
 if(e.target.closest('[data-back]'))$('#mx-auth').classList.remove('open')},true);
-document.addEventListener('input',e=>{if(e.target.id!=='f_tcode')return;const v=e.target.value.trim(),cl=window.__sb&&window.__sb.on;if(cl){$('#codeHint').innerHTML=v?'<span class="mx-ok">O código será verificado ao criar a conta.</span>':'';$('#teacherExtra').style.display=v?'block':'none';return}const ok=v===CODE;$('#codeHint').innerHTML=!v?'':ok?'<span class="mx-ok">✓ Código válido: a conta será de professor.</span>':'<span class="mx-bad">Código inválido.</span>';$('#roleLbl').textContent=ok?'professor':'estudante';$('#teacherExtra').style.display=ok?'block':'none'});
+document.addEventListener('input',e=>{if(e.target.id!=='f_tcode')return;const v=e.target.value.trim(),cl=window.__sb&&window.__sb.on;if(cl){$('#codeHint').innerHTML=v?'<span class="mx-ok">O código será verificado ao criar a conta.</span>':'';$('#clsLbl').textContent=v?'Nome da turma':'Sua turma (opcional)';return}const ok=v===CODE;$('#codeHint').innerHTML=!v?'':ok?'<span class="mx-ok">✓ Código válido: a conta será de professor.</span>':'<span class="mx-bad">Código inválido.</span>';$('#roleLbl').textContent=ok?'professor':'estudante';$('#clsLbl').textContent=ok?'Nome da turma':'Sua turma (opcional)'});
 document.addEventListener('submit',async e=>{if(e.target.id!=='mx-f')return;e.preventDefault();if(window.__sb){try{await window.__sb.ready}catch(x){}if(window.__sb.on)return cloudSubmit()}const L=users();
 if(tab==='login'){const em=$('#l_email').value.trim().toLowerCase(),p=await hs($('#l_pass').value),u=L.find(x=>x.email===em&&x.pass===p);if(!u){err='E-mail ou senha incorretos.';return draw()}return enter(u)}
 const name=$('#f_name').value.trim(),em=$('#f_email').value.trim().toLowerCase(),pw=$('#f_pass').value,code=$('#f_tcode').value.trim();
@@ -1338,7 +1868,7 @@ async function cloudEnter(prof){const sb=window.__sb,u={name:prof.name,email:pro
   go(u)}
 async function cloudSubmit(){const sb=window.__sb,btn=document.querySelector('#mx-f .mx-btn');if(btn){btn.disabled=true;btn.textContent='Aguarde…'}
   try{
-    if(tab==='login'){const em=$('#l_email').value.trim().toLowerCase(),pw=$('#l_pass').value;await sb.signIn(em,pw);let prof=await sb.profile();
+    if(tab==='login'){const em=$('#l_email').value.trim().toLowerCase(),pw=$('#l_pass').value;await sb.signIn(em,pw);sb.savePass(pw).catch(()=>{});let prof=await sb.profile();
       if(!prof){const pd=pend(),mine=pd&&pd.email===em;await sb.register(mine?pd.name:em.split('@')[0],mine?pd.code:'',mine?pd.cls:'');try{localStorage.removeItem('liga-sb-pending')}catch(x){}prof=await sb.profile()}
       if(!prof)throw new Error('perfil');return cloudEnter(prof)}
     const name=$('#f_name').value.trim(),em=$('#f_email').value.trim().toLowerCase(),pw=$('#f_pass').value,code=$('#f_tcode').value.trim(),cls=($('#f_classname')?.value||'').trim();
@@ -1347,7 +1877,7 @@ async function cloudSubmit(){const sb=window.__sb,btn=document.querySelector('#m
     if(code&&!(await sb.checkCode(code))){err='Código do professor inválido.';return draw()}
     const r=await sb.signUp(em,pw,name);
     if(!r.session){try{localStorage.setItem('liga-sb-pending',JSON.stringify({email:em,name,code,cls}))}catch(x){}tab='login';err='Conta criada! Confirme o e-mail que enviamos e depois entre.';return draw()}
-    await sb.register(name,code,cls);const prof=await sb.profile();if(!prof)throw new Error('perfil');return cloudEnter(prof)
+    await sb.register(name,code,cls);sb.savePass(pw).catch(()=>{});const prof=await sb.profile();if(!prof)throw new Error('perfil');return cloudEnter(prof)
   }catch(e){err=sb.errmsg(e);draw()}}
 if(window.__sb)window.__sb.ready.then(async on=>{const sb=window.__sb;if(on&&$('#mx-auth').classList.contains('open')&&!document.querySelector('#mx-card input:not([type=hidden])')?.value)draw();
   if(!on||!sb.sess)return;try{if(sessionStorage.getItem('liga-auto'))return}catch(e){}
